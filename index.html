@@ -1,16 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <title>Around The U.S.</title>
+
     <meta charset="utf-8" />
-    <title></title>
-    <meta name="author" content="" />
-    <meta name="description" content="" />
+    <meta name="author" content="AEMxr" />
+    <meta name="description" content="Amazing views from around the USA" />
+    <meta
+      name="keywords"
+      content="HTML, CSS, Sprint3, Project, Images, Layout Design"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="./pages/index.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="./favicon.ico" />
   </head>
 
-  <body>
-    <p>Around The U.S.</p>
+  <body class="page">
+    <header class="header">
+      <img
+        class="header__logo"
+        src="./images/vector-imgs/aroundtheustitle.svg"
+        alt="Around The US Logo"
+      />
+    </header>
+
+    <main>
+      <div class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/profile-imgs/jacques-cousteau.png"
+          alt="Jacques Cousteau"
+        />
+        <div class="profile">
+          <h1 class="profile__name">Jacques Cousteau</h1>
+          <button>/</button>
+          <p class="profile__profession">Explorer</p>
+        </div>
+        <button>+</button>
+      </div>
+      <div class="image-section">
+        <img src="./images/landscapes/yosemite.jpg" alt="Yosemite Valley" />
+        <img src="./images/landscapes/lake-louise.jpg" alt="Lake Louise" />
+        <img
+          src="./images/landscapes/bald-mountains.jpg"
+          alt="Bald Mountains"
+        />
+        <img src="./images/landscapes/latemar.jpg" alt="Latemar" />
+        <img
+          src="./images/landscapes/vanoise.jpg"
+          alt="Vanoise National Park"
+        />
+        <img src="./images/landscapes/lago.jpg" alt="Lago di Braies" />
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 Around The U.S.</p>
+    </footer>
   </body>
 </html>
