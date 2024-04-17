@@ -18,28 +18,33 @@
 
   <body class="page">
     <header class="header">
-      <img
-        class="header__logo"
-        src="./images/vector-imgs/aroundtheustitle.svg"
-        alt="Around The US Logo"
-      />
+      <div class="header__container">
+        <img
+          class="header__logo"
+          src="./images/vector-imgs/aroundtheustitle.svg"
+          alt="Around The US Logo"
+        />
+      </div>
     </header>
 
     <main>
-      <div class="profile">
-        <img
-          class="profile__avatar"
-          src="./images/profile-imgs/jacques-cousteau.png"
-          alt="Jacques Cousteau"
-        />
-        <div class="profile">
-          <h1 class="profile__name">Jacques Cousteau</h1>
-          <button>/</button>
-          <p class="profile__profession">Explorer</p>
+      <section class="profile">
+        <div class="profile__container">
+          <img
+            class="profile__avatar"
+            src="./images/profile-imgs/jacques-cousteau.png"
+            alt="Jacques Cousteau"
+          />
+          <div class="profile__info">
+            <h1 class="profile__name">
+              Jacques Cousteau<button class="profile__name_button">/</button>
+            </h1>
+            <p class="profile__profession">Explorer</p>
+          </div>
+          <button class="profile__add">+</button>
         </div>
-        <button>+</button>
-      </div>
-      <div class="image-section">
+      </section>
+      <section class="images">
         <img src="./images/landscapes/yosemite.jpg" alt="Yosemite Valley" />
         <img src="./images/landscapes/lake-louise.jpg" alt="Lake Louise" />
         <img
@@ -52,7 +57,7 @@
           alt="Vanoise National Park"
         />
         <img src="./images/landscapes/lago.jpg" alt="Lago di Braies" />
-      </div>
+      </section>
     </main>
 
     <footer class="footer">

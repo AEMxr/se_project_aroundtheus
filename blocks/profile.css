@@ -1,0 +1,52 @@
+.profile {
+  margin: 0;
+  padding: 0;
+  max-height: 120px;
+  height: 100vh;
+  max-width: 880px;
+}
+
+.profile__container {
+  display: flex;
+  padding: 40px 0 0 0;
+  margin: 0 200px 0 200px;
+  width: 100%;
+}
+
+.profile__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.profile__info {
+  display: block;
+  max-width: 415px;
+  max-height: 77px;
+  margin: 0 165px 0 30px;
+}
+
+.profile__name {
+  color: white;
+  max-width: 373px;
+  max-height: 48px;
+}
+
+.profile__name_button {
+  margin-left: 18px;
+  width: 24px;
+  height: 24px;
+}
+
+.profile__profession {
+  color: white;
+  max-width: 415px;
+  max-height: 22px;
+}
+
+.profile__add {
+  width: 150px;
+  height: 50px;
+  border-radius: 2px;
+  margin: 35px 0 35px auto;
+}
