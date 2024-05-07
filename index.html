@@ -36,32 +36,88 @@
             alt="Jacques Cousteau"
           />
           <div class="profile__info">
-            <h1 class="profile__name">
-              Jacques Cousteau<button class="profile__name_button">/</button>
-            </h1>
+            <h1 class="profile__name">Jacques Cousteau</h1>
+            <button class="profile__name-button">
+              <img src="./images/vector-imgs/editbutton.svg" alt="edit name" />
+            </button>
+
             <p class="profile__profession">Explorer</p>
           </div>
-          <button class="profile__add">+</button>
+          <button class="profile__add">
+            <img src="./images/vector-imgs/addbutton.svg" alt="add image" />
+          </button>
         </div>
       </section>
-      <section class="images">
-        <img src="./images/landscapes/yosemite.jpg" alt="Yosemite Valley" />
-        <img src="./images/landscapes/lake-louise.jpg" alt="Lake Louise" />
-        <img
-          src="./images/landscapes/bald-mountains.jpg"
-          alt="Bald Mountains"
-        />
-        <img src="./images/landscapes/latemar.jpg" alt="Latemar" />
-        <img
-          src="./images/landscapes/vanoise.jpg"
-          alt="Vanoise National Park"
-        />
-        <img src="./images/landscapes/lago.jpg" alt="Lago di Braies" />
+
+      <section class="cards">
+        <div class="cards__grid">
+          <div class="card">
+            <div class="card__content">
+              <img
+                class="card__image-size"
+                src="./images/landscapes/yosemite.jpg"
+                alt="Yosemite Valley"
+              />
+              <p class="card__label">Yosemite Valley</p>
+              <button class="card__heart"></button>
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              class="card__image-size"
+              src="./images/landscapes/lake-louise.jpg"
+              alt="Lake Louise"
+            />
+            <p class="card__label">Lake Louise</p>
+            <button class="card__heart"></button>
+          </div>
+
+          <div class="card">
+            <img
+              class="card__image-size"
+              src="./images/landscapes/bald-mountains.jpg"
+              alt="Bald Mountains"
+            />
+            <p class="card__label">Bald Mountains</p>
+            <button class="card__heart"></button>
+          </div>
+
+          <div class="card">
+            <img
+              class="card__image-size"
+              src="./images/landscapes/latemar.jpg"
+              alt="Latemar"
+            />
+            <p class="card__label">Latemar</p>
+            <button class="card__heart"></button>
+          </div>
+
+          <div class="card">
+            <img
+              class="card__image-size"
+              src="./images/landscapes/vanoise.jpg"
+              alt="Vanoise National Park"
+            />
+            <p class="card__label">Vanoise National Park</p>
+            <button class="card__heart"></button>
+          </div>
+
+          <div class="card">
+            <img
+              class="card__image-size"
+              src="./images/landscapes/lago.jpg"
+              alt="Lago di Braies"
+            />
+            <p class="card__label">Lago di Braies</p>
+            <button class="card__heart"></button>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>&copy; 2024 Around The U.S.</p>
+      <p class="footer__copywrite">&copy; 2024 Around The U.S.</p>
     </footer>
   </body>
 </html>

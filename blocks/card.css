@@ -1,0 +1,46 @@
+.card {
+  width: 282px;
+  max-height: 361px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.card__image-size {
+  width: 282px;
+  height: 282px;
+}
+
+.card__label {
+  margin: 25px auto 25px 20px;
+  padding: 0;
+  display: inline-block;
+
+  max-width: 219px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-family: "Inter", sans-serif, "Times New Roman", Times, serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+}
+
+.card__heart {
+  background-image: url("../images/vector-imgs/heart.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 18px;
+  width: 21px;
+  border: none;
+  background-color: white;
+  float: right;
+  margin: 31px 20px 30px auto;
+}
+
+.card__heart:hover {
+  color: #00000080;
+  opacity: 50%;
+  cursor: pointer;
+}
