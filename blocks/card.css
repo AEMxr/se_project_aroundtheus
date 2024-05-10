@@ -1,9 +1,9 @@
 .card {
   width: 282px;
-  max-height: 361px;
   border-radius: 10px;
   overflow: hidden;
   background-color: white;
+  position: relative;
 }
 
 .card__image-size {
@@ -21,7 +21,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  font-family: "Inter", sans-serif, "Times New Roman", Times, serif;
+  font-family: "Inter", sans-serif, "Times New Roman";
   font-weight: 900;
   font-size: 24px;
   line-height: 29.05px;
@@ -34,13 +34,14 @@
   height: 18px;
   width: 21px;
   border: none;
-  background-color: white;
-  float: right;
-  margin: 31px 20px 30px auto;
+  background-color: transparent;
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+  padding: 10px;
 }
 
 .card__heart:hover {
-  color: #00000080;
   opacity: 50%;
   cursor: pointer;
 }
