@@ -20,3 +20,16 @@
     margin: 0 auto 41px;
   }
 }
+
+@media all and (max-width: 400px) {
+  .header {
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__logo {
+    margin: 28px auto 32px 27px;
+    height: 24px;
+    width: 126px;
+  }
+}

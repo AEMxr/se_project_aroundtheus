@@ -33,4 +33,10 @@
   .footer {
     margin: 0;
   }
+
+  .footer__copywrite {
+    width: 282px;
+    padding: 48px 0 36px;
+    margin: 0;
+  }
 }
