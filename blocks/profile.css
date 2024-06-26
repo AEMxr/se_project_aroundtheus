@@ -37,7 +37,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 
-  font-family: "Inter", sans-serif, "Times New Roman";
+  font-family: "Inter", "Times New Roman", sans-serif;
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
@@ -65,7 +65,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 
-  font-family: "Inter", sans-serif, "Times New Roman";
+  font-family: "Inter", "Times New Roman", sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -112,7 +112,7 @@
     margin: 0 0 14px;
     display: inline-block;
 
-    font-family: "Inter", sans-serif, "Times New Roman";
+    font-family: "Inter", "Times New Roman", sans-serif;
     font-weight: 500;
     font-size: 22px;
     line-height: 26.63px;
@@ -129,7 +129,7 @@
     max-width: 282px;
     margin: 0 5px;
 
-    font-family: "Inter", sans-serif, "Times New Roman";
+    font-family: "Inter", "Times New Roman", sans-serif;
     font-weight: 400;
     font-size: 14px;
     line-height: 16.94px;

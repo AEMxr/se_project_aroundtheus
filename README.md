@@ -18,6 +18,9 @@ Using Figma, I followed the UI design and exported assets. The HTML and CSS were
 
 - [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)
 
+**Video Explanation**
+https://drive.google.com/file/d/1dntgUV8j2Emr-2n8yiIfPCCQ9m7X-KfW/view?usp=sharing
+
 **Images**
 ![alt text](images/README/FullMonitorWidth.PNG)
 ![alt text](images/README/1280pxScreenWidth.PNG)

@@ -4,6 +4,8 @@
   overflow: hidden;
   background-color: white;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .card__image-size {
@@ -11,17 +13,21 @@
   height: 282px;
 }
 
+.card__content {
+  display: flex;
+  align-items: center;
+}
+
 .card__label {
   margin: 25px auto 25px 20px;
   padding: 0;
-  display: inline-block;
 
   max-width: 219px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  font-family: "Inter", sans-serif, "Times New Roman";
+  font-family: "Inter", "Times New Roman", sans-serif;
   font-weight: 900;
   font-size: 24px;
   line-height: 29.05px;
@@ -35,10 +41,7 @@
   width: 21px;
   border: none;
   background-color: transparent;
-  position: absolute;
-  bottom: 30px;
-  right: 20px;
-  padding: 10px;
+  margin: 31px 20px 30px auto;
 }
 
 .card__heart:hover {
