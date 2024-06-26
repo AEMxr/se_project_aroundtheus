@@ -87,13 +87,11 @@
 
 @media all and (max-width: 794px) {
   .profile {
-    margin: 0 auto;
     padding: 0;
   }
 
   .profile__container {
     width: 282px;
-    margin: 0 auto;
     padding: 42px 0 0 0;
     display: flex;
     flex-direction: column;
@@ -108,12 +106,8 @@
 
   .profile__name {
     max-width: 196px;
-    padding: 0;
     margin: 0 0 14px;
-    display: inline-block;
 
-    font-family: "Inter", "Times New Roman", sans-serif;
-    font-weight: 500;
     font-size: 22px;
     line-height: 26.63px;
   }
@@ -129,15 +123,12 @@
     max-width: 282px;
     margin: 0 5px;
 
-    font-family: "Inter", "Times New Roman", sans-serif;
-    font-weight: 400;
     font-size: 14px;
     line-height: 16.94px;
   }
 
   .profile__add {
     width: 282px;
-    height: 50px;
     margin: 0 19px auto;
   }
 }
