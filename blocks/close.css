@@ -1,0 +1,10 @@
+.close {
+  background: rgba(255, 255, 255, 1);
+  float: right;
+}
+
+.close:hover,
+.close:focus {
+  background: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}

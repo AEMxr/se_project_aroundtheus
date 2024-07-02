@@ -1,0 +1,96 @@
+.modal {
+  background: rgb(black, black, black, 0.8);
+  display: none;
+  width: 430px;
+  height: 370px;
+  /* border-radius: 10px; */
+  position: absolute;
+  top: 195px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* right: auto; */
+  justify-content: center;
+  z-index: 1;
+}
+
+.modal__close {
+  position: absolute;
+  left: 100%;
+  bottom: 100%;
+  background: no-repeat url(../images/vector-imgs/Close\ Icon.svg);
+  height: 40px;
+  width: 40px;
+}
+
+.modal__close:hover,
+.modal__close:focus {
+  background: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
+
+.modal_open {
+  display: flex;
+}
+
+.modal__container {
+  background-color: white;
+  width: 430px;
+  height: 330px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__title {
+  margin: 34px auto 54px 36px;
+
+  font-family: "Inter", "Times New Roman", sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+}
+
+.modal__form {
+}
+
+.modal__form-fieldset {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal__form-label {
+  color: black;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+}
+
+.modal__form-input {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0 36px 30px;
+  padding-bottom: 13px;
+}
+
+.modal__save {
+  background: black;
+  color: white;
+  border: 2px black;
+  height: 50px;
+  width: 358px;
+  margin: 18px 36px 36px;
+
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.78px;
+  text-align: center;
+}
