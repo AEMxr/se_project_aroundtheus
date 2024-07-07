@@ -31,16 +31,16 @@ var btn = document.getElementById("editButton");
 
 var span = document.getElementsByClassName("modal__close")[0];
 
-btn.onclick = function () {
+btn.addEventListener("click", function (event) {
   modal.style.display = "block";
-};
+});
 
-span.onclick = function () {
+span.addEventListener("click", function (event) {
   modal.style.display = "none";
-};
+});
 
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-};
+});
