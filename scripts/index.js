@@ -29,7 +29,6 @@ const initialCards = [
 const modal = document.getElementById("modalEdit");
 const modalOpen = document.getElementById("editButton");
 const modalClose = document.getElementsByClassName("modal__close")[0];
-const modalSave = document.getElementById("modal__save");
 
 modalOpen.addEventListener("click", function (event) {
   modal.style.display = "block";
@@ -51,8 +50,8 @@ window.addEventListener("click", function (event) {
 const profileForm = document.querySelector(".modal__form");
 
 // find the form fields in the DOM
-const nameInput = document.querySelector(".modal__name-input");
-const jobInput = document.querySelector(".modal__job-input");
+const nameInput = document.getElementById("name");
+const jobInput = document.getElementById("description");
 
 // find the profile elements in the DOM
 const profileName = document.querySelector(".profile__name");
