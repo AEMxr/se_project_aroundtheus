@@ -43,7 +43,7 @@
   line-height: 48px;
 }
 
-.profile__name-button {
+.profile__edit-button {
   margin: 5px 0px 0 18px;
   width: 24px;
   height: 24px;
@@ -51,7 +51,7 @@
   background-color: transparent;
 }
 
-.profile__name-button:hover {
+.profile__edit-button:hover {
   opacity: 60%;
   cursor: pointer;
 }
