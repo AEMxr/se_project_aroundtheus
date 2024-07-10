@@ -85,97 +85,15 @@
 
       <section class="cards">
         <div class="cards__grid">
-          <article class="card">
-            <img
-              class="card__image-size"
-              src="./images/landscapes/yosemite.jpg"
-              alt="Yosemite Valley"
-            />
-            <div class="card__content">
-              <h2 class="card__label">Yosemite Valley</h2>
-              <button class="card__heart" type="button"></button>
-            </div>
-          </article>
-
-          <article class="card">
-            <img
-              class="card__image-size"
-              src="./images/landscapes/lake-louise.jpg"
-              alt="Lake Louise"
-            />
-            <div class="card__content">
-              <h2 class="card__label">Lake Louise</h2>
-              <button
-                class="card__heart"
-                type="button"
-                aria-label="heart"
-              ></button>
-            </div>
-          </article>
-
-          <article class="card">
-            <img
-              class="card__image-size"
-              src="./images/landscapes/bald-mountains.jpg"
-              alt="Bald Mountains"
-            />
-            <div class="card__content">
-              <h2 class="card__label">Bald Mountains</h2>
-              <button
-                class="card__heart"
-                type="button"
-                aria-label="heart"
-              ></button>
-            </div>
-          </article>
-
-          <article class="card">
-            <img
-              class="card__image-size"
-              src="./images/landscapes/latemar.jpg"
-              alt="Latemar"
-            />
-            <div class="card__content">
-              <h2 class="card__label">Latemar</h2>
-              <button
-                class="card__heart"
-                type="button"
-                aria-label="heart"
-              ></button>
-            </div>
-          </article>
-
-          <article class="card">
-            <img
-              class="card__image-size"
-              src="./images/landscapes/vanoise.jpg"
-              alt="Vanoise National Park"
-            />
-            <div class="card__content">
-              <h2 class="card__label">Vanoise National Park</h2>
-              <button
-                class="card__heart"
-                type="button"
-                aria-label="heart"
-              ></button>
-            </div>
-          </article>
-
-          <article class="card">
-            <img
-              class="card__image-size"
-              src="./images/landscapes/lago.jpg"
-              alt="Lago di Braies"
-            />
-            <div class="card__content">
-              <h2 class="card__label">Lago di Braies</h2>
-              <button
-                class="card__heart"
-                type="button"
-                aria-label="heart"
-              ></button>
-            </div>
-          </article>
+          <template id="card-template">
+            <article class="card">
+              <img class="card__image-size" src="" alt="" />
+              <div class="card__content">
+                <h2 class="card__label"></h2>
+                <button class="card__heart" type="button"></button>
+              </div>
+            </article>
+          </template>
         </div>
       </section>
     </main>
