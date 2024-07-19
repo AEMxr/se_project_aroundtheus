@@ -11,6 +11,10 @@
   z-index: 1;
 }
 
+.modal_opened {
+  display: flex;
+}
+
 .modal__close {
   position: absolute;
   left: 100%;
@@ -25,10 +29,6 @@
   opacity: 60%;
   cursor: pointer;
   text-decoration: none;
-}
-
-.modal_open {
-  display: flex;
 }
 
 .modal__container {

@@ -48,3 +48,7 @@
   opacity: 50%;
   cursor: pointer;
 }
+
+.card__heart_active {
+  background-image: url("../images/vector-imgs/heartFilled.svg");
+}
