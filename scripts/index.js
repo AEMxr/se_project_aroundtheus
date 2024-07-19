@@ -43,24 +43,15 @@ const modalOpen = document.getElementById("editButton");
 const modalClose = document.getElementsByClassName("modal__close")[0];
 
 function openProfileModal() {
-  modalOpen.addEventListener("click", () => {
-    modal.classList.add("modal_opened");
-  });
+  modal.classList.add("modal_opened");
 }
 
 function closeProfileModal() {
-  modalClose.addEventListener("click", () => {
-    modal.classList.remove("modal_opened");
-  });
+  modal.classList.remove("modal_opened");
 }
 
-// modalOpen.addEventListener("click", () => {
-//   modal.classList.add("modal_opened");
-// });
-
-// modalClose.addEventListener("click", () => {
-//   modal.classList.remove("modal_opened");
-// });
+modalOpen.addEventListener("click", openProfileModal);
+modalClose.addEventListener("click", closeProfileModal);
 
 // the form submission handler
 function saveChanges(evt) {
@@ -72,7 +63,8 @@ function saveChanges(evt) {
   profileName.textContent = newName;
   profileJob.textContent = newJob;
 
-  modal.style.display = "none";
+  closeProfileModal();
+  // modal.style.display = "none";
 }
 
 // connect the handler to the form
