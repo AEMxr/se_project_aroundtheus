@@ -76,7 +76,7 @@
   border-left: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin: 0 36px 30px;
-  padding-bottom: 13px;
+  padding: 0 0 13px;
 }
 
 .modal__save {
@@ -97,4 +97,38 @@
 
 .modal__save:hover {
   opacity: 80%;
+}
+
+@media all and (max-width: 794px) {
+  .modal {
+    width: 282px;
+    height: 322px;
+    top: 130px;
+  }
+
+  .modal__close {
+    left: 88%;
+  }
+
+  .modal__container {
+    width: 282px;
+    height: 322px;
+    margin: 0 19px;
+  }
+
+  .modal__title {
+    width: 238px;
+    height: 22px;
+    margin: 25px 22px 60px;
+  }
+
+  .modal__input {
+    width: 238px;
+    margin: 0 22px 30px;
+  }
+
+  .modal__save {
+    width: 238px;
+    margin: 15px 22px 25px;
+  }
 }

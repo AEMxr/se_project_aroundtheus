@@ -30,7 +30,7 @@ const initialCards = [
 const userTemplate = document.querySelector("#card-template").content;
 const cardsContainer = document.querySelector(".cards__grid");
 
-//Save submit button event
+//save submit button event
 const profileForm = document.querySelector(".modal__form");
 const nameInput = document.getElementById("name");
 const jobInput = document.getElementById("description");
@@ -88,7 +88,7 @@ function getCardElement(data) {
   return userElement;
 }
 
-// Iterate the cards array and appendment
+// iterate the cards array and appendment
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
 
