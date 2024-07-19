@@ -10,7 +10,7 @@
 
 **Intro**
 
-Around The U.S. is project 3 and 4 of the software engineer online course from TripleTen. It displays a header, a profile section, cards for 6 scenic locations from The United States, and a footer. The project is focused on responsive design, accessibility, best practices for formatting, and deploying to github using gitbash. Project 4 illustrates the javascript functionality of the buttons and modal.
+Around The U.S. is project 3 and 4 of the software engineer online course from TripleTen. It displays a header, a profile section, cards for 6 scenic locations from The United States, and a footer. The project is focused on responsive design, accessibility, best practices for formatting, and deploying to github using gitbash. Project 4 illustrates the JavaScript functionality of the buttons and modal.
 
 Using Figma, I followed the UI design and exported assets. The HTML and CSS were coded from scratch using flex display, margins, paddings, and box-sizing for layout and responsive design. Semantic HTML5 elements and accessibility best practices were followed according to BEM standards. CSS features like variables and media queries were used.
 
