@@ -64,7 +64,6 @@ function saveChanges(evt) {
   profileJob.textContent = newJob;
 
   closeProfileModal();
-  // modal.style.display = "none";
 }
 
 // connect the handler to the form
@@ -89,7 +88,7 @@ function getCardElement(data) {
   return userElement;
 }
 
-// Iterate the cards array using forEach with a function expression
+// Iterate the cards array and appendment
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
 
