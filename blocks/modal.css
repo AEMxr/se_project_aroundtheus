@@ -108,6 +108,8 @@
 
   .modal__close {
     left: 88%;
+    height: 26px;
+    width: 26px;
   }
 
   .modal__container {
@@ -120,6 +122,8 @@
     width: 238px;
     height: 22px;
     margin: 25px 22px 60px;
+
+    font-size: 18px;
   }
 
   .modal__input {
