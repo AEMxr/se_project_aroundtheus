@@ -33,9 +33,9 @@ body.modal-backdrop::before {
   opacity: 1;
 }
 
-body.modal-backdrop.modal_opened::before {
+/* body.modal-backdrop.modal_opened::before {
   opacity: 1;
-}
+} */
 
 .modal__close {
   position: absolute;

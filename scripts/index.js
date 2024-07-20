@@ -97,17 +97,7 @@ function getCardElement(data) {
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
 
-  console.log("Appending card element:", cardElement);
-
-  // Ensure the returned element is a node before appending
   if (cardElement instanceof Node) {
     cardsContainer.appendChild(cardElement);
-  } else {
-    console.error(
-      "Returned card element is not a valid DOM node:",
-      cardElement
-    );
   }
 });
-
-console.log("All cards have been processed.");
