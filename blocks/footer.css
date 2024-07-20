@@ -28,7 +28,7 @@
   }
 }
 
-@media all and (max-width: 400px) {
+@media all and (max-width: 580px) {
   .footer {
     margin: 0;
   }

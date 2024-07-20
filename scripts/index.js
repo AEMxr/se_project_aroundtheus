@@ -38,20 +38,25 @@ const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__profession");
 
 // open and close modal events
+const page = document.body;
 const modal = document.getElementById("modalEdit");
-const modalOpen = document.getElementById("editButton");
-const modalClose = document.getElementsByClassName("modal__close")[0];
+const editModalOpen = document.getElementById("editButton");
+const editModalClose = document.getElementsByClassName("modal__close")[0];
 
 function openProfileModal() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
   modal.classList.add("modal_opened");
+  page.classList.add("modal-backdrop");
 }
 
 function closeProfileModal() {
   modal.classList.remove("modal_opened");
+  page.classList.remove("modal-backdrop");
 }
 
-modalOpen.addEventListener("click", openProfileModal);
-modalClose.addEventListener("click", closeProfileModal);
+editModalOpen.addEventListener("click", openProfileModal);
+editModalClose.addEventListener("click", closeProfileModal);
 
 // the form submission handler
 function saveChanges(evt) {
