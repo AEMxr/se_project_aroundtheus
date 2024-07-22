@@ -43,9 +43,6 @@ const imageTitle = document.querySelector("#title");
 const imageLink = document.querySelector("#link");
 
 // view image modal
-const viewImageModal = document.getElementById("viewImageModal");
-const fullImage = document.getElementById("fullImage");
-const viewImageClose = document.getElementById("viewImageClose");
 
 // profile modal constants
 const profileModal = document.getElementById("profileModal");
@@ -86,26 +83,6 @@ function closeImageModal() {
   page.classList.remove("modal-backdrop");
 }
 
-// view image functions
-function openViewImageModal(link) {
-  fullImage.src = link;
-  viewImageModal.classList.add("modal_opened");
-  page.classList.add("modal-backdrop");
-}
-
-function closeViewImageModal() {
-  viewImageModal.classList.remove("modal_opened");
-  page.classList.remove("modal-backdrop");
-}
-
-const cardImages = document.querySelectorAll(".card__image-size");
-
-cardImages.forEach((image) => {
-  image.addEventListener("click", () => {
-    openViewImageModal(image.src);
-  });
-});
-
 // profile form submission handler
 function saveChanges(evt) {
   evt.preventDefault();
@@ -123,7 +100,7 @@ function saveChanges(evt) {
 function getCardElement(data) {
   const userElement = userTemplate.cloneNode(true);
 
-  const cardImage = userElement.querySelector(".card__image-size");
+  const cardImage = userElement.querySelector(".card__image");
   const cardLabel = userElement.querySelector(".card__label");
   const cardHeart = userElement.querySelector(".card__heart");
 
@@ -177,9 +154,6 @@ profileForm.addEventListener("submit", saveChanges);
 // image event listener
 imageModalOpen.addEventListener("click", openImageModal);
 imageModalClose.addEventListener("click", closeImageModal);
-
-// view image event listener
-viewImageClose.addEventListener("click", closeViewImageModal);
 
 // card array event listener
 imageForm.addEventListener("submit", addCard);

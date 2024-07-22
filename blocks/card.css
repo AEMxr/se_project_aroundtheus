@@ -8,9 +8,31 @@
   flex-direction: column;
 }
 
-.card__image-size {
+.card__delete {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
+  height: 19.3px;
+  border: none;
+  background-image: url("../images/vector-imgs/Trash.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.card__delete:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
+
+.card__image {
   width: 282px;
   height: 282px;
+}
+
+.card__image:hover {
+  cursor: pointer;
 }
 
 .card__content {
