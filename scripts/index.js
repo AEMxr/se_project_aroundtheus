@@ -30,11 +30,17 @@ const initialCards = [
 const userTemplate = document.querySelector("#card-template").content;
 const cardsContainer = document.querySelector(".cards__grid");
 
-//general modal constants
-const page = document.body;
-const profileForm = document.querySelector(".modal__form");
-const nameInput = document.getElementById("name");
-const descriptionInput = document.getElementById("description");
+// Form for adding new cards
+const imageForm = document.querySelector("#imageModal .modal__form");
+const imageTitleInput = document.getElementById("title");
+const imageLinkInput = document.getElementById("link");
+
+//image modal constants
+const imageModal = document.getElementById("imageModal");
+const imageModalOpen = document.getElementById("imageEditButton");
+const imageModalClose = document.getElementById("imageClose");
+const imageTitle = document.querySelector("#title");
+const imageLink = document.querySelector("#link");
 
 // profile modal constants
 const profileModal = document.getElementById("profileModal");
@@ -43,12 +49,11 @@ const profileModalClose = document.getElementById("profileClose");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__profession");
 
-//image modal constants
-const imageModal = document.getElementById("imageModal");
-const imageModalOpen = document.getElementById("imageEditButton");
-const imageModalClose = document.getElementById("imageClose");
-const imageTitle = document.querySelector("#title");
-const imageLink = document.querySelector("#link");
+//general modal constants
+const page = document.body;
+const profileForm = document.querySelector(".modal__form");
+const nameInput = document.getElementById("name");
+const descriptionInput = document.getElementById("description");
 
 // profile modal open/close functions
 function openProfileModal() {
@@ -88,6 +93,35 @@ function saveChanges(evt) {
 
   closeProfileModal();
 }
+
+// Function to add new card
+function addCard(evt) {
+  evt.preventDefault();
+
+  const newCardData = {
+    name: imageTitleInput.value,
+    link: imageLinkInput.value,
+  };
+
+  // Add new card to the array
+  initialCards.push(newCardData);
+
+  // Create card element and add to the container
+  const cardElement = getCardElement(newCardData);
+  if (cardElement instanceof Node) {
+    cardsContainer.appendChild(cardElement);
+  }
+
+  // Clear input fields
+  imageTitleInput.value = "";
+  imageLinkInput.value = "";
+
+  // Close the modal
+  closeImageModal();
+}
+
+// Listen for form submission
+imageForm.addEventListener("submit", addCard);
 
 // profile event listener
 profileModalOpen.addEventListener("click", openProfileModal);
