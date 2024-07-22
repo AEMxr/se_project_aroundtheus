@@ -30,40 +30,58 @@ const initialCards = [
 const userTemplate = document.querySelector("#card-template").content;
 const cardsContainer = document.querySelector(".cards__grid");
 
-//save submit button event
+//general modal constants
+const page = document.body;
 const profileForm = document.querySelector(".modal__form");
 const nameInput = document.getElementById("name");
-const jobInput = document.getElementById("description");
+const descriptionInput = document.getElementById("description");
+
+// profile modal constants
+const profileModal = document.getElementById("profileModal");
+const profileModalOpen = document.getElementById("profileEditButton");
+const profileModalClose = document.getElementById("profileClose");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__profession");
 
-// open and close modal events
-const page = document.body;
-const modal = document.getElementById("modalEdit");
-const editModalOpen = document.getElementById("editButton");
-const editModalClose = document.getElementsByClassName("modal__close")[0];
+//image modal constants
+const imageModal = document.getElementById("imageModal");
+const imageModalOpen = document.getElementById("imageEditButton");
+const imageModalClose = document.getElementById("imageClose");
+const imageTitle = document.querySelector("#title");
+const imageLink = document.querySelector("#link");
 
+// profile modal open/close functions
 function openProfileModal() {
   nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-  modal.classList.add("modal_opened");
+  descriptionInput.value = profileJob.textContent;
+  profileModal.classList.add("modal_opened");
   page.classList.add("modal-backdrop");
 }
 
 function closeProfileModal() {
-  modal.classList.remove("modal_opened");
+  profileModal.classList.remove("modal_opened");
   page.classList.remove("modal-backdrop");
 }
 
-editModalOpen.addEventListener("click", openProfileModal);
-editModalClose.addEventListener("click", closeProfileModal);
+// image modal open/close functions
+function openImageModal() {
+  nameInput.value = imageTitle.textContent;
+  descriptionInput.value = imageLink.textContent;
+  imageModal.classList.add("modal_opened");
+  page.classList.add("modal-backdrop");
+}
 
-// the form submission handler
+function closeImageModal() {
+  imageModal.classList.remove("modal_opened");
+  page.classList.remove("modal-backdrop");
+}
+
+// profile form submission handler
 function saveChanges(evt) {
   evt.preventDefault();
 
   const newName = nameInput.value;
-  const newJob = jobInput.value;
+  const newJob = descriptionInput.value;
 
   profileName.textContent = newName;
   profileJob.textContent = newJob;
@@ -71,8 +89,14 @@ function saveChanges(evt) {
   closeProfileModal();
 }
 
-// connect the handler to the form
+// profile event listener
+profileModalOpen.addEventListener("click", openProfileModal);
+profileModalClose.addEventListener("click", closeProfileModal);
 profileForm.addEventListener("submit", saveChanges);
+
+// image event listener
+imageModalOpen.addEventListener("click", openImageModal);
+imageModalClose.addEventListener("click", closeImageModal);
 
 //template clone and card__heart like button
 function getCardElement(data) {

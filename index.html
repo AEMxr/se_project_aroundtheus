@@ -36,7 +36,7 @@
           <div class="profile__info">
             <h1 class="profile__name">Jacques Cousteau</h1>
             <button
-              id="editButton"
+              id="profileEditButton"
               class="profile__edit-button"
               type="button"
               aria-label="edit name"
@@ -44,8 +44,8 @@
               <img src="./images/vector-imgs/editbutton.svg" alt="edit name" />
             </button>
 
-            <div id="modalEdit" class="modal">
-              <span class="modal__close"></span>
+            <div id="profileModal" class="modal">
+              <span class="modal__close" id="profileClose"></span>
               <div class="modal__container">
                 <h2 class="modal__title">Edit profile</h2>
 
@@ -67,7 +67,11 @@
                       placeholder="Explorer"
                     />
 
-                    <button type="submit" id="modal__save" class="modal__save">
+                    <button
+                      type="submit"
+                      id="modal__submit"
+                      class="modal__submit"
+                    >
                       Save
                     </button>
                   </fieldset>
@@ -77,9 +81,49 @@
 
             <p class="profile__profession">Explorer</p>
           </div>
-          <button class="profile__add" type="button" aria-label="add image">
+          <button
+            class="profile__add"
+            id="imageEditButton"
+            type="button"
+            aria-label="add image"
+          >
             <img src="./images/vector-imgs/addbutton.svg" alt="add image" />
           </button>
+
+          <div id="imageModal" class="modal">
+            <span class="modal__close" id="imageClose"></span>
+            <div class="modal__container">
+              <h2 class="modal__title">New Place</h2>
+
+              <form class="modal__form" autocomplete="off">
+                <fieldset class="modal__form-fieldset">
+                  <label class="modal__form-label" for="name"></label>
+                  <input
+                    type="text"
+                    class="modal__input"
+                    id="title"
+                    placeholder="Title"
+                  />
+
+                  <label class="modal__form-label" for="description"></label>
+                  <input
+                    type="text"
+                    class="modal__input"
+                    id="link"
+                    placeholder="Image link"
+                  />
+
+                  <button
+                    type="submit"
+                    id="modal__submit"
+                    class="modal__submit"
+                  >
+                    Create
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -3,6 +3,9 @@
   padding: 0 20px;
 }
 
+/* refactor - eliminate container 
+(or put the profile name, info, and edit button inside)
+and fix grid without the avatar or the add picture button*/
 .profile__container {
   max-width: 880px;
   margin: 0 auto;

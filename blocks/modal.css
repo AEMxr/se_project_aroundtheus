@@ -102,7 +102,7 @@ body.modal-backdrop::before {
   padding: 0 0 13px;
 }
 
-.modal__save {
+.modal__submit {
   background: black;
   color: white;
   border: 2px black;
@@ -118,7 +118,7 @@ body.modal-backdrop::before {
   text-align: center;
 }
 
-.modal__save:hover {
+.modal__submit:hover {
   opacity: 80%;
 }
 
@@ -155,7 +155,7 @@ body.modal-backdrop::before {
     margin: 0 22px 30px;
   }
 
-  .modal__save {
+  .modal__submit {
     width: 238px;
     height: 46px;
     margin: 15px 22px 25px;
