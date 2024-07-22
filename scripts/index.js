@@ -103,6 +103,7 @@ function getCardElement(data) {
   const cardImage = userElement.querySelector(".card__image");
   const cardLabel = userElement.querySelector(".card__label");
   const cardHeart = userElement.querySelector(".card__heart");
+  const cardDelete = userElement.querySelector(".card__delete");
 
   cardImage.src = data.link;
   cardImage.alt = data.name;
@@ -110,6 +111,13 @@ function getCardElement(data) {
 
   cardHeart.addEventListener("click", () => {
     cardHeart.classList.toggle("card__heart_active");
+  });
+
+  cardDelete.addEventListener("click", () => {
+    const card = cardDelete.closest(".card");
+    if (card) {
+      card.remove();
+    }
   });
 
   return userElement;
