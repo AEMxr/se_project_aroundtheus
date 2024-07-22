@@ -35,12 +35,17 @@ const imageForm = document.querySelector("#imageModal .modal__form");
 const imageTitleInput = document.getElementById("title");
 const imageLinkInput = document.getElementById("link");
 
-//image modal constants
+// image modal constants
 const imageModal = document.getElementById("imageModal");
 const imageModalOpen = document.getElementById("imageEditButton");
 const imageModalClose = document.getElementById("imageClose");
 const imageTitle = document.querySelector("#title");
 const imageLink = document.querySelector("#link");
+
+// view image modal
+const viewImageModal = document.getElementById("viewImageModal");
+const fullImage = document.getElementById("fullImage");
+const viewImageClose = document.getElementById("viewImageClose");
 
 // profile modal constants
 const profileModal = document.getElementById("profileModal");
@@ -68,7 +73,7 @@ function closeProfileModal() {
   page.classList.remove("modal-backdrop");
 }
 
-// image modal open/close functions
+// image modal open/close functions - need help with textcontent input field
 function openImageModal() {
   nameInput.value = imageTitle.textContent;
   descriptionInput.value = imageLink.textContent;
@@ -80,6 +85,26 @@ function closeImageModal() {
   imageModal.classList.remove("modal_opened");
   page.classList.remove("modal-backdrop");
 }
+
+// view image functions
+function openViewImageModal(link) {
+  fullImage.src = link;
+  viewImageModal.classList.add("modal_opened");
+  page.classList.add("modal-backdrop");
+}
+
+function closeViewImageModal() {
+  viewImageModal.classList.remove("modal_opened");
+  page.classList.remove("modal-backdrop");
+}
+
+const cardImages = document.querySelectorAll(".card__image-size");
+
+cardImages.forEach((image) => {
+  image.addEventListener("click", () => {
+    openViewImageModal(image.src);
+  });
+});
 
 // profile form submission handler
 function saveChanges(evt) {
@@ -93,44 +118,6 @@ function saveChanges(evt) {
 
   closeProfileModal();
 }
-
-// Function to add new card
-function addCard(evt) {
-  evt.preventDefault();
-
-  const newCardData = {
-    name: imageTitleInput.value,
-    link: imageLinkInput.value,
-  };
-
-  // Add new card to the array
-  initialCards.push(newCardData);
-
-  // Create card element and add to the container
-  const cardElement = getCardElement(newCardData);
-  if (cardElement instanceof Node) {
-    cardsContainer.appendChild(cardElement);
-  }
-
-  // Clear input fields
-  imageTitleInput.value = "";
-  imageLinkInput.value = "";
-
-  // Close the modal
-  closeImageModal();
-}
-
-// Listen for form submission
-imageForm.addEventListener("submit", addCard);
-
-// profile event listener
-profileModalOpen.addEventListener("click", openProfileModal);
-profileModalClose.addEventListener("click", closeProfileModal);
-profileForm.addEventListener("submit", saveChanges);
-
-// image event listener
-imageModalOpen.addEventListener("click", openImageModal);
-imageModalClose.addEventListener("click", closeImageModal);
 
 //template clone and card__heart like button
 function getCardElement(data) {
@@ -151,6 +138,28 @@ function getCardElement(data) {
   return userElement;
 }
 
+// add new card
+function addCard(evt) {
+  evt.preventDefault();
+
+  const newCardData = {
+    name: imageTitleInput.value,
+    link: imageLinkInput.value,
+  };
+
+  initialCards.unshift(newCardData);
+
+  const cardElement = getCardElement(newCardData);
+  if (cardElement instanceof Node) {
+    cardsContainer.prepend(cardElement);
+  }
+
+  imageTitleInput.value = "";
+  imageLinkInput.value = "";
+
+  closeImageModal();
+}
+
 // iterate the cards array and appendment
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
@@ -159,3 +168,18 @@ initialCards.forEach((cardData) => {
     cardsContainer.appendChild(cardElement);
   }
 });
+
+// profile event listener
+profileModalOpen.addEventListener("click", openProfileModal);
+profileModalClose.addEventListener("click", closeProfileModal);
+profileForm.addEventListener("submit", saveChanges);
+
+// image event listener
+imageModalOpen.addEventListener("click", openImageModal);
+imageModalClose.addEventListener("click", closeImageModal);
+
+// view image event listener
+viewImageClose.addEventListener("click", closeViewImageModal);
+
+// card array event listener
+imageForm.addEventListener("submit", addCard);
