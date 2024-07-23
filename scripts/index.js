@@ -42,8 +42,6 @@ const imageModalClose = document.getElementById("imageClose");
 const imageTitle = document.querySelector("#title");
 const imageLink = document.querySelector("#link");
 
-// view image modal
-
 // profile modal constants
 const profileModal = document.getElementById("profileModal");
 const profileModalOpen = document.getElementById("profileEditButton");
@@ -96,7 +94,7 @@ function saveChanges(evt) {
   closeProfileModal();
 }
 
-//template clone and card__heart like button
+//template clone, like, delete
 function getCardElement(data) {
   const userElement = userTemplate.cloneNode(true);
 
@@ -122,6 +120,27 @@ function getCardElement(data) {
 
   return userElement;
 }
+
+// image preview
+document.addEventListener("DOMContentLoaded", () => {
+  const previewModal = document.getElementById("previewModal");
+  const previewClose = document.getElementById("previewClose");
+  const previewImage = document.getElementById("previewImage");
+
+  document.querySelectorAll(".card__image").forEach((image) => {
+    image.addEventListener("click", () => {
+      previewImage.src = image.src;
+
+      previewModal.classList.add("modal_opened");
+      page.classList.add("modal-backdrop");
+    });
+  });
+
+  previewClose.addEventListener("click", () => {
+    previewModal.classList.remove("modal_opened");
+    page.classList.remove("modal-backdrop");
+  });
+});
 
 // add new card
 function addCard(evt) {
