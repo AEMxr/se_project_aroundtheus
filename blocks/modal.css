@@ -123,12 +123,10 @@ body.modal-backdrop::before {
 }
 
 .modal__content {
-  margin: 15% auto;
-  padding: 20px;
-  width: 80%;
-  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
   position: relative;
-  background-color: white;
+  background-color: transparent;
   border-radius: 10px;
   text-align: center;
 }

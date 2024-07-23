@@ -1,4 +1,4 @@
-// Card data array
+/*~>. Card data array '<~*/
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -26,11 +26,11 @@ const initialCards = [
   },
 ];
 
-// Template and containers
+/*~>. Template and containers '<~*/
 const userTemplate = document.querySelector("#card-template").content;
 const cardsContainer = document.querySelector(".cards__grid");
 
-// Modals and forms
+/*~>. Modals and forms '<~*/
 const modals = {
   profile: document.getElementById("profileModal"),
   image: document.getElementById("imageModal"),
@@ -53,11 +53,11 @@ const inputs = {
   },
 };
 
-// Profile elements
+/*~>. Profile elements '<~*/
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__profession");
 
-// Open/close modal functions
+/*~>. Open/close modal functions '<~*/
 function openModal(modal) {
   modal.classList.add("modal_opened");
   document.body.classList.add("modal-backdrop");
@@ -68,7 +68,7 @@ function closeModal(modal) {
   document.body.classList.remove("modal-backdrop");
 }
 
-// Event listeners
+/*~>. Event listeners '<~*/
 function addModalListeners(modal, openButton, closeButton, openCallback) {
   openButton.addEventListener("click", () => {
     openCallback && openCallback();
@@ -77,7 +77,7 @@ function addModalListeners(modal, openButton, closeButton, openCallback) {
   closeButton.addEventListener("click", () => closeModal(modal));
 }
 
-// Profile modal setup
+/*~>. Profile modal setup '<~*/
 addModalListeners(
   modals.profile,
   document.getElementById("profileEditButton"),
@@ -95,7 +95,7 @@ forms.profile.addEventListener("submit", (evt) => {
   closeModal(modals.profile);
 });
 
-// Image modal setup
+/*~>. Image modal setup '<~*/
 addModalListeners(
   modals.image,
   document.getElementById("imageEditButton"),
@@ -115,7 +115,7 @@ forms.image.addEventListener("submit", (evt) => {
   closeModal(modals.image);
 });
 
-// Card creation
+/*~>. Card creation '<~*/
 function getCardElement(data) {
   const userElement = userTemplate.cloneNode(true);
   const cardImage = userElement.querySelector(".card__image");
@@ -148,7 +148,7 @@ document
   .getElementById("previewClose")
   .addEventListener("click", () => closeModal(modals.preview));
 
-// Initial card rendering
+/*~>. Initial card rendering '<~*/
 initialCards.forEach((cardData) => {
   cardsContainer.appendChild(getCardElement(cardData));
 });
