@@ -14,6 +14,12 @@
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
+.modal_view {
+  width: 75vw;
+  height: 75vh;
+  background-color: transparent;
+}
+
 body.modal-backdrop::before {
   content: "";
   position: fixed;
@@ -125,6 +131,8 @@ body.modal-backdrop::before {
 .modal__content {
   margin: 0 auto;
   padding: 0;
+  width: 75vw;
+  height: 75vh;
   position: relative;
   background-color: transparent;
   border-radius: 10px;
