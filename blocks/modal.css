@@ -47,21 +47,31 @@ body.modal-backdrop::before {
 }
 
 .modal__container {
+  padding: 36px;
   background-color: white;
-  width: 430px;
-  height: 330px;
+  width: 360px;
+  height: 294px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
 }
 
 .modal__title {
-  margin: 34px auto 54px 36px;
+  margin: 0;
+  padding: 0;
 
   font-family: "Inter", "Times New Roman", sans-serif;
   font-weight: 900;
   font-size: 24px;
   line-height: 29.05px;
+}
+
+.modal__title_image-view {
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  text-align: left;
 }
 
 .modal__form {
@@ -72,7 +82,7 @@ body.modal-backdrop::before {
   flex-direction: column;
   border: none;
   padding: 0;
-  margin: 0;
+  margin: 54px 0 0;
 }
 
 .modal__form-label {
@@ -90,8 +100,9 @@ body.modal-backdrop::before {
   border-right: none;
   border-left: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 0 36px 30px;
+  margin: 0 0 30px;
   padding: 0 0 13px;
+  height: 28px;
 }
 
 .modal__submit {
@@ -100,7 +111,7 @@ body.modal-backdrop::before {
   border: 2px black;
   height: 50px;
   width: 358px;
-  margin: 18px 36px 36px;
+  margin: 18px 0 0 0;
   cursor: pointer;
 
   font-family: Inter;
@@ -132,39 +143,48 @@ body.modal-backdrop::before {
   .modal {
     width: 282px;
     height: 322px;
-    top: 130px;
+    top: 123px;
+    margin: 0 auto;
   }
 
   .modal__close {
-    top: -39.62px;
-    left: 245.62px;
     height: 26px;
     width: 26px;
+    left: calc(100% - 28px);
+    bottom: calc(100% + 13px);
+  }
+
+  .modal__close_image-preview {
+    height: 30px;
+    width: 30px;
+    left: calc(100% + 6px);
+    bottom: calc(100% + 6px);
   }
 
   .modal__container {
-    width: 282px;
-    height: 322px;
-    margin: 0 19px;
+    width: 295px;
+    height: 278px;
+    padding: 25px 22px;
+  }
+
+  .modal__form-fieldset {
+    margin: 62px 0 0;
   }
 
   .modal__title {
-    width: 238px;
     height: 22px;
-    margin: 25px 22px 60px;
 
     font-size: 18px;
   }
 
   .modal__input {
-    width: 238px;
-    margin: 0 22px 30px;
+    padding: 0 0 9px;
   }
 
   .modal__submit {
     width: 238px;
     height: 46px;
-    margin: 15px 22px 25px;
-    padding: 0 auto;
+    margin: 16px 0 0;
+    padding: 0;
   }
 }
