@@ -78,8 +78,8 @@
     </footer>
 
     <div id="profileModal" class="modal">
-      <span class="modal__close" id="profileClose"></span>
       <div class="modal__container">
+        <button class="modal__close" id="profileClose"></button>
         <h2 class="modal__title">Edit profile</h2>
 
         <form class="modal__form" autocomplete="off">
@@ -109,8 +109,8 @@
     </div>
 
     <div id="imageModal" class="modal">
-      <span class="modal__close" id="imageClose"></span>
       <div class="modal__container">
+        <button class="modal__close" id="imageClose"></button>
         <h2 class="modal__title">New Place</h2>
 
         <form class="modal__form" autocomplete="off">
@@ -139,12 +139,12 @@
       </div>
     </div>
 
-    <div id="previewModal" class="modal">
+    <div id="previewModal" class="modal modal_preview">
       <div class="modal__content">
-        <span
+        <button
           class="modal__close modal__close_image-preview"
           id="previewClose"
-        ></span>
+        ></button>
         <img id="previewImage" src="" alt="" class="modal__image" />
         <p class="modal__title modal__title_image-view" id="imageViewTitle"></p>
       </div>
