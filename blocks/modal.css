@@ -140,12 +140,12 @@ body.modal-backdrop::before {
 }
 
 @media all and (max-width: 794px) {
-  .modal {
+  /* .modal {
     width: 282px;
     height: 322px;
     top: 123px;
     margin: 0 auto;
-  }
+  } */
 
   .modal__close {
     height: 26px;
@@ -173,8 +173,11 @@ body.modal-backdrop::before {
 
   .modal__title {
     height: 22px;
-
     font-size: 18px;
+  }
+
+  .modal__title_image-view {
+    font-size: 12px;
   }
 
   .modal__input {
