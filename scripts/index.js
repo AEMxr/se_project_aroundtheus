@@ -75,7 +75,9 @@ closeButtons.forEach((button) => {
 });
 
 /*~----=)>. Event listeners '<(=----~*/
-function addModalListeners(modal, openButton, closeButton, openCallback) {
+// I deleted the closeButton arguement,
+// but I don't know how else to do the data insert
+function addModalListeners(modal, openButton, openCallback) {
   openButton.addEventListener("click", () => {
     openCallback && openCallback();
     openModal(modal);
@@ -108,7 +110,8 @@ forms.image.addEventListener("submit", (evt) => {
     name: inputs.image.title.value,
     link: inputs.image.link.value,
   };
-  cardsContainer.prepend(getCardElement(newCardData));
+
+  renderCard(newCardData, "prepend");
   evt.target.reset();
   closeModal(modals.image);
 });
@@ -125,6 +128,7 @@ function getCardElement(data) {
   const imageViewTitle = document.getElementById("imageViewTitle");
 
   cardImage.src = data.link;
+  // This line sets the alt attribute
   cardImage.alt = data.name;
   cardLabel.textContent = data.name;
 
@@ -154,3 +158,9 @@ document
 initialCards.forEach((cardData) => {
   cardsContainer.appendChild(getCardElement(cardData));
 });
+
+/*~----=)>. Universal function for rendering cards '<(=----~*/
+function renderCard(item, method = "prepend") {
+  const cardElement = getCardElement(item);
+  cardsContainer[method](cardElement);
+}
