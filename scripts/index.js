@@ -75,8 +75,6 @@ closeButtons.forEach((button) => {
 });
 
 /*~----=)>. Event listeners '<(=----~*/
-// I deleted the closeButton arguement,
-// but I don't know how else to do the data insert
 function addModalListeners(modal, openButton, openCallback) {
   openButton.addEventListener("click", () => {
     openCallback && openCallback();
@@ -150,13 +148,9 @@ function getCardElement(data) {
   return userElement;
 }
 
-document
-  .getElementById("previewClose")
-  .addEventListener("click", () => closeModal(modals.preview));
-
 /*~----=)>. Initial card rendering '<(=----~*/
 initialCards.forEach((cardData) => {
-  cardsContainer.appendChild(getCardElement(cardData));
+  renderCard(cardData);
 });
 
 /*~----=)>. Universal function for rendering cards '<(=----~*/
@@ -164,3 +158,5 @@ function renderCard(item, method = "prepend") {
   const cardElement = getCardElement(item);
   cardsContainer[method](cardElement);
 }
+
+/*~----=)>. Thank you for your time and help! '<(=----~*/
