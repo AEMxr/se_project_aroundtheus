@@ -34,16 +34,20 @@
             alt="Jacques Cousteau"
           />
           <div class="profile__info">
-            <h1 class="profile__name">Jacques Cousteau</h1>
-            <button
-              id="profileEditButton"
-              class="profile__edit-button"
-              type="button"
-              aria-label="edit name"
-            >
-              <img src="./images/vector-imgs/editbutton.svg" alt="edit name" />
-            </button>
-
+            <div class="profile__bar">
+              <h1 class="profile__name">Jacques Cousteau</h1>
+              <button
+                id="profileEditButton"
+                class="profile__edit-button"
+                type="button"
+                aria-label="edit name"
+              >
+                <img
+                  src="./images/vector-imgs/editbutton.svg"
+                  alt="edit name"
+                />
+              </button>
+            </div>
             <p class="profile__profession">Explorer</p>
           </div>
           <button
@@ -77,12 +81,12 @@
       <p class="footer__copywrite">&copy; 2024 AEM</p>
     </footer>
 
-    <div id="profileModal" class="modal">
+    <div id="profileModal" class="modal body__modal">
       <div class="modal__container">
         <button class="modal__close" id="profileClose"></button>
         <h2 class="modal__title">Edit profile</h2>
 
-        <form class="modal__form" autocomplete="off">
+        <form class="modal__form" name="profileForm" autocomplete="off">
           <fieldset class="modal__form-fieldset">
             <label class="modal__form-label" for="name"></label>
             <input
@@ -113,7 +117,7 @@
         <button class="modal__close" id="imageClose"></button>
         <h2 class="modal__title">New Place</h2>
 
-        <form class="modal__form" autocomplete="off">
+        <form class="modal__form" name="imageForm" autocomplete="off">
           <fieldset class="modal__form-fieldset">
             <label class="modal__form-label" for="name"></label>
             <input

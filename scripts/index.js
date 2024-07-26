@@ -42,8 +42,8 @@ const modals = {
 };
 
 const forms = {
-  profile: document.querySelector("#profileModal .modal__form"),
-  image: document.querySelector("#imageModal .modal__form"),
+  profile: document.forms.profileForm,
+  image: document.forms.imageForm,
 };
 
 const inputs = {
@@ -60,13 +60,19 @@ const inputs = {
 /*~----=)>. Open/close modal functions '<(=----~*/
 function openModal(modal) {
   modal.classList.add("modal_opened");
-  document.body.classList.add("modal-backdrop");
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  document.body.classList.remove("modal-backdrop");
 }
+
+/*~----=)>. Universal close button handler '<(=----~*/
+const closeButtons = document.querySelectorAll(".modal__close");
+
+closeButtons.forEach((button) => {
+  const popup = button.closest(".modal");
+  button.addEventListener("click", () => closeModal(popup));
+});
 
 /*~----=)>. Event listeners '<(=----~*/
 function addModalListeners(modal, openButton, closeButton, openCallback) {
@@ -74,14 +80,12 @@ function addModalListeners(modal, openButton, closeButton, openCallback) {
     openCallback && openCallback();
     openModal(modal);
   });
-  closeButton.addEventListener("click", () => closeModal(modal));
 }
 
 /*~----=)>. Profile modal setup '<(=----~*/
 addModalListeners(
   modals.profile,
   document.getElementById("profileEditButton"),
-  document.getElementById("profileClose"),
   () => {
     inputs.profile.name.value = profileName.textContent;
     inputs.profile.description.value = profileJob.textContent;
@@ -96,11 +100,7 @@ forms.profile.addEventListener("submit", (evt) => {
 });
 
 /*~----=)>. Image modal setup '<(=----~*/
-addModalListeners(
-  modals.image,
-  document.getElementById("imageEditButton"),
-  document.getElementById("imageClose")
-);
+addModalListeners(modals.image, document.getElementById("imageEditButton"));
 
 forms.image.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -108,10 +108,8 @@ forms.image.addEventListener("submit", (evt) => {
     name: inputs.image.title.value,
     link: inputs.image.link.value,
   };
-  initialCards.unshift(newCardData);
   cardsContainer.prepend(getCardElement(newCardData));
-  inputs.image.title.value = "";
-  inputs.image.link.value = "";
+  evt.target.reset();
   closeModal(modals.image);
 });
 
@@ -122,6 +120,9 @@ function getCardElement(data) {
   const cardLabel = userElement.querySelector(".card__label");
   const cardHeart = userElement.querySelector(".card__heart");
   const cardDelete = userElement.querySelector(".card__delete");
+
+  const previewImage = document.getElementById("previewImage");
+  const imageViewTitle = document.getElementById("imageViewTitle");
 
   cardImage.src = data.link;
   cardImage.alt = data.name;
@@ -137,8 +138,8 @@ function getCardElement(data) {
   });
 
   cardImage.addEventListener("click", () => {
-    document.getElementById("previewImage").src = cardImage.src;
-    document.getElementById("imageViewTitle").textContent = data.name;
+    previewImage.src = cardImage.src;
+    imageViewTitle.textContent = data.name;
     openModal(modals.preview);
   });
 

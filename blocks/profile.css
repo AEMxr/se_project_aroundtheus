@@ -3,9 +3,6 @@
   padding: 0 20px;
 }
 
-/* refactor - eliminate container 
-(or put the profile name, info, and edit button inside)
-and fix grid without the avatar or the add picture button*/
 .profile__container {
   max-width: 880px;
   margin: 0 auto;
@@ -28,7 +25,12 @@ and fix grid without the avatar or the add picture button*/
   flex-wrap: wrap;
   align-items: center;
   white-space: nowrap;
-  margin: 22px 0 0 0;
+}
+
+.profile__bar {
+  display: flex;
+  max-width: 417px;
+  align-items: center;
 }
 
 .profile__name {
@@ -47,7 +49,7 @@ and fix grid without the avatar or the add picture button*/
 }
 
 .profile__edit-button {
-  margin: 5px 0px 0 18px;
+  margin: 5px 0 0 18px;
   width: 24px;
   height: 24px;
   border: 1px solid white;
@@ -115,10 +117,10 @@ and fix grid without the avatar or the add picture button*/
     line-height: 26.63px;
   }
 
-  .profile__name-button {
-    margin: 0 10px 8px 10px;
-    width: 18px;
-    height: 18px;
+  .profile__edit-button {
+    margin: 0 0 18px 18px;
+    width: 24px;
+    height: 24px;
     padding: 0;
   }
 
