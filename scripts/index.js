@@ -128,7 +128,6 @@ function getCardElement(data) {
   const imageViewTitle = document.getElementById("imageViewTitle");
 
   cardImage.src = data.link;
-  // This line sets the alt attribute
   cardImage.alt = data.name;
   cardLabel.textContent = data.name;
 
@@ -143,6 +142,7 @@ function getCardElement(data) {
 
   cardImage.addEventListener("click", () => {
     previewImage.src = cardImage.src;
+    previewImage.alt = cardImage.alt;
     imageViewTitle.textContent = data.name;
     openModal(modals.preview);
   });
