@@ -74,6 +74,12 @@ closeButtons.forEach((button) => {
   button.addEventListener("click", () => closeModal(popup));
 });
 
+/*~----=)>. Universal function for rendering cards '<(=----~*/
+function renderCard(item, method = "prepend") {
+  const cardElement = getCardElement(item);
+  cardsContainer[method](cardElement);
+}
+
 /*~----=)>. Event listeners '<(=----~*/
 function addModalListeners(modal, openButton, openCallback) {
   openButton.addEventListener("click", () => {
@@ -148,15 +154,15 @@ function getCardElement(data) {
   return userElement;
 }
 
-/*~----=)>. Initial card rendering '<(=----~*/
-initialCards.forEach((cardData) => {
-  renderCard(cardData);
-});
-
 /*~----=)>. Universal function for rendering cards '<(=----~*/
 function renderCard(item, method = "prepend") {
   const cardElement = getCardElement(item);
   cardsContainer[method](cardElement);
 }
+
+/*~----=)>. Initial card rendering '<(=----~*/
+initialCards.forEach((cardData) => {
+  renderCard(cardData, "append");
+});
 
 /*~----=)>. Thank you for your time and help! '<(=----~*/
