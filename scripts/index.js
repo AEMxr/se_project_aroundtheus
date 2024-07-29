@@ -66,11 +66,11 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
-/*~----=)>. Universal function for rendering cards '<(=----~*/
-function renderCard(item, method = "prepend") {
-  const cardElement = getCardElement(item);
-  cardsContainer[method](cardElement);
-}
+// /*~----=)>. Universal function for rendering cards '<(=----~*/
+// function renderCard(item, method = "prepend") {
+//   const cardElement = getCardElement(item);
+//   cardsContainer[method](cardElement);
+// }
 
 /*~----=)>. Universal close button handler '<(=----~*/
 const closeButtons = document.querySelectorAll(".modal__close");
@@ -93,6 +93,8 @@ function addModalListeners(modal, openButton, openCallback) {
     openModal(modal);
   });
 }
+
+// add verification even listeners
 
 /*~----=)>. Profile modal setup '<(=----~*/
 addModalListeners(
