@@ -185,6 +185,14 @@
     padding: 0 0 9px;
   }
 
+  .modal__input:invalid {
+    border-bottom: 1px solid red;
+  }
+
+  .modal__input:valid {
+    border-bottom: 1px solid green;
+  }
+
   .modal__submit {
     width: 238px;
     height: 46px;

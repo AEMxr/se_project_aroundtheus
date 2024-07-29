@@ -94,7 +94,7 @@ function addModalListeners(modal, openButton, openCallback) {
   });
 }
 
-// add verification even listeners
+// add verification event listeners
 
 /*~----=)>. Profile modal setup '<(=----~*/
 addModalListeners(
