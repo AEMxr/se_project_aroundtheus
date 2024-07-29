@@ -66,6 +66,12 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
+/*~----=)>. Universal function for rendering cards '<(=----~*/
+function renderCard(item, method = "prepend") {
+  const cardElement = getCardElement(item);
+  cardsContainer[method](cardElement);
+}
+
 /*~----=)>. Universal close button handler '<(=----~*/
 const closeButtons = document.querySelectorAll(".modal__close");
 
@@ -154,15 +160,7 @@ function getCardElement(data) {
   return userElement;
 }
 
-/*~----=)>. Universal function for rendering cards '<(=----~*/
-function renderCard(item, method = "prepend") {
-  const cardElement = getCardElement(item);
-  cardsContainer[method](cardElement);
-}
-
 /*~----=)>. Initial card rendering '<(=----~*/
 initialCards.forEach((cardData) => {
   renderCard(cardData, "append");
 });
-
-/*~----=)>. Thank you for your time and help! '<(=----~*/
