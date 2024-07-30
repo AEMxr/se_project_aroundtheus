@@ -95,6 +95,117 @@ function addModalListeners(modal, openButton, openCallback) {
 }
 
 // add verification event listeners
+const formElement = document.querySelector(".modal__form");
+const formInput = formElement.querySelector(".modal__input");
+document.forms;
+const formError = formElement.querySelector(`.${formInput.id}-error`);
+
+formInput.addEventListener("input", function (evt) {
+  console.log(evt.target.validity.valid);
+});
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  // Find the error message element inside the very function
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // The rest remains unchanged
+  inputElement.classList.add("form__input_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("form__input-error_active");
+};
+
+const hideInputError = (formElement, inputElement) => {
+  // Find the error message element
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // The rest remains unchanged
+  inputElement.classList.remove("form__input_type_error");
+  errorElement.classList.remove("form__input-error_active");
+  errorElement.textContent = "";
+};
+
+formElement.addEventListener("submit", function (evt) {
+  // Cancel the browser default action, so that clicking on the submit button won't refresh the page
+  evt.preventDefault();
+});
+
+const setEventListeners = (formElement) => {
+  // Find all the form fields and make an array of them
+  const inputList = Array.from(formElement.querySelectorAll(".form__input"));
+  // Find the submit button in the current form
+  const buttonElement = formElement.querySelector(".form__submit");
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
+      checkInputValidity(formElement, inputElement);
+
+      // Call the toggleButtonState() and pass an array of fields and the button to it
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+// Change checkInputValidity() so that it has formElement and inputElement
+// parameters instead of taking corresponding variables from the outer scope
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    // The parameter of showInputError() is now a form,
+    // which contains a field to be checked
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    // The same for hideInputError(), Its parameter is now a form,
+    // which contains a field to be checked
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const enableValidation = () => {
+  // It will find all forms with the specified class in DOM, and
+  // make an array from them using the Array.from() method
+  const formList = Array.from(document.querySelectorAll(".form"));
+
+  // Iterate over the resulting array
+  formList.forEach((formElement) => {
+    formElement.addEventListener("submit", (evt) => {
+      // Cancel default behavior for each form
+      evt.preventDefault();
+    });
+
+    // Call the setEventListeners() function for each form,
+    // taking a form element as an argument
+    setEventListeners(formElement);
+  });
+};
+
+// Call the function
+enableValidation();
+
+// The function takes an array of fields
+
+const hasInvalidInput = (inputList) => {
+  // iterate over the array using the some() method
+  return inputList.some((inputElement) => {
+    // If the field is invalid, the callback will return true.
+    // The method will then stop, and hasInvalidInput() function will return true
+    // hasInvalidInput returns true
+
+    return !inputElement.validity.valid;
+  });
+};
+
+// The function takes an array of input fields
+// and the button element, whose state you need to change
+
+const toggleButtonState = (inputList, buttonElement) => {
+  // If there is at least one invalid input
+  if (hasInvalidInput(inputList)) {
+    // make the button inactive
+    buttonElement.classList.add("form__submit_inactive");
+  } else {
+    // otherwise, make it active
+    buttonElement.classList.remove("form__submit_inactive");
+  }
+};
 
 /*~----=)>. Profile modal setup '<(=----~*/
 addModalListeners(

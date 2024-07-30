@@ -86,7 +86,12 @@
         <button class="modal__close" id="profileClose"></button>
         <h2 class="modal__title">Edit profile</h2>
 
-        <form class="modal__form" name="profileForm" autocomplete="off">
+        <form
+          class="modal__form"
+          name="profileForm"
+          autocomplete="off"
+          novalidate
+        >
           <fieldset class="modal__form-fieldset">
             <label class="modal__form-label" for="name"></label>
             <input
@@ -95,6 +100,8 @@
               id="name"
               placeholder="Name"
               minlength="3"
+              required
+              pattern=""
             />
 
             <label class="modal__form-label" for="description"></label>
@@ -104,6 +111,8 @@
               id="description"
               placeholder="Job"
               minlength="3"
+              required
+              pattern=""
             />
 
             <button type="submit" id="modal__submit" class="modal__submit">
@@ -119,7 +128,12 @@
         <button class="modal__close" id="imageClose"></button>
         <h2 class="modal__title">New Place</h2>
 
-        <form class="modal__form" name="imageForm" autocomplete="off">
+        <form
+          class="modal__form"
+          name="imageForm"
+          autocomplete="off"
+          novalidate
+        >
           <fieldset class="modal__form-fieldset">
             <label class="modal__form-label" for="name"></label>
             <input
@@ -128,6 +142,8 @@
               id="title"
               placeholder="Title"
               minlength="3"
+              required
+              pattern=""
             />
 
             <label class="modal__form-label" for="description"></label>
@@ -136,6 +152,7 @@
               class="modal__input"
               id="link"
               placeholder="Image link"
+              pattern=""
             />
 
             <button type="submit" id="modal__submit" class="modal__submit">
