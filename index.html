@@ -8,7 +8,7 @@
     <meta name="description" content="Amazing views from around the USA" />
     <meta
       name="keywords"
-      content="HTML, CSS, Sprint3, Project, Images, Layout Design"
+      content="HTML, CSS, JavaScript, Project, Images, Layout Design, TripleTen, AEMxr"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -81,41 +81,45 @@
       <p class="footer__copywrite">&copy; 2024 AEM</p>
     </footer>
 
-    <div id="profileModal" class="modal body__modal">
+    <div id="profileModal" class="modal">
       <div class="modal__container">
         <button class="modal__close" id="profileClose"></button>
         <h2 class="modal__title">Edit profile</h2>
 
-        <form
-          class="modal__form"
-          name="profileForm"
-          autocomplete="off"
-          novalidate
-        >
-          <fieldset class="modal__form-fieldset">
-            <label class="modal__form-label" for="name"></label>
-            <input
-              type="text"
-              class="modal__input"
-              id="name"
-              placeholder="Name"
-              minlength="3"
-              required
-              pattern=""
-            />
+        <form class="form" name="profileForm" autocomplete="off" novalidate>
+          <fieldset class="form__fieldset" id="profileFormFieldset">
+            <label class="form__label" for="name" id="nameLabel">
+              <input
+                type="text"
+                class="form__input"
+                id="name"
+                placeholder="Name"
+                minlength="2"
+                maxlength="40"
+                required
+                pattern=""
+              />
+              <span class="" id="nameError"></span>
+            </label>
 
-            <label class="modal__form-label" for="description"></label>
+            <label
+              class="form__label"
+              for="description"
+              id="descriptionLabel"
+            ></label>
             <input
               type="text"
-              class="modal__input"
+              class="form__input"
               id="description"
               placeholder="Job"
-              minlength="3"
+              minlength="2"
+              maxlength="400"
               required
               pattern=""
             />
+            <span class="" id="descriptionError"></span>
 
-            <button type="submit" id="modal__submit" class="modal__submit">
+            <button type="submit" id="modalSubmit" class="modal__submit">
               Save
             </button>
           </fieldset>
@@ -128,30 +132,28 @@
         <button class="modal__close" id="imageClose"></button>
         <h2 class="modal__title">New Place</h2>
 
-        <form
-          class="modal__form"
-          name="imageForm"
-          autocomplete="off"
-          novalidate
-        >
-          <fieldset class="modal__form-fieldset">
-            <label class="modal__form-label" for="name"></label>
+        <form class="form" name="imageForm" autocomplete="off" novalidate>
+          <fieldset class="form__fieldset">
+            <label class="form__label" for="name"></label>
             <input
               type="text"
-              class="modal__input"
+              class="form__input"
               id="title"
               placeholder="Title"
               minlength="3"
               required
               pattern=""
+              minlength="1"
+              maxlength="30"
             />
 
-            <label class="modal__form-label" for="description"></label>
+            <label class="form__label" for="description"></label>
             <input
               type="url"
-              class="modal__input"
+              class="form__input"
               id="link"
               placeholder="Image link"
+              required
               pattern=""
             />
 
@@ -174,6 +176,6 @@
       </div>
     </div>
 
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" type="module"></script>
   </body>
 </html>

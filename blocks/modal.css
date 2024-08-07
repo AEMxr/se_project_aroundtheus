@@ -64,61 +64,6 @@
   text-align: left;
 }
 
-.modal__form {
-}
-
-.modal__form-fieldset {
-  display: flex;
-  flex-direction: column;
-  border: none;
-  padding: 0;
-  margin: 54px 0 0;
-}
-
-.modal__form-label {
-  color: black;
-
-  font-family: Inter;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.94px;
-  text-align: left;
-}
-
-.modal__input {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 0 0 30px;
-  padding: 0 0 13px;
-  height: 28px;
-
-  font-family: Inter;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.94px;
-}
-
-/* form validation */
-.form__input_type_error {
-  border-bottom-color: red;
-
-  /* The bottom border will become red every time
-  the input data is invalid */
-}
-
-/* Initially, input error elements will be invisible. */
-.form__input-error {
-  color: red;
-  opacity: 0;
-}
-
-/* Applying the modifier class will make it visible. */
-.form__input-error_active {
-  opacity: 1;
-}
-
 .modal__submit {
   background: black;
   color: white;
@@ -137,6 +82,16 @@
 
 .modal__submit:hover {
   opacity: 80%;
+}
+
+.button_inactive {
+  color: #b8b8b8;
+  background: #ededed;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .modal__content {
@@ -186,10 +141,6 @@
     padding: 25px 22px;
   }
 
-  .modal__form-fieldset {
-    margin: 62px 0 0;
-  }
-
   .modal__title {
     height: 22px;
     font-size: 18px;
@@ -198,18 +149,6 @@
 
   .modal__title_image-view {
     font-size: 12px;
-  }
-
-  .modal__input {
-    padding: 0 0 9px;
-  }
-
-  .modal__input:invalid {
-    border-bottom: 1px solid red;
-  }
-
-  .modal__input:valid {
-    border-bottom: 1px solid green;
   }
 
   .modal__submit {
