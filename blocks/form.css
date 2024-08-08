@@ -53,10 +53,6 @@
   opacity: 1;
 }
 
-.form__submit_inactive {
-  opacity: 50%;
-}
-
 @media all and (max-width: 794px) {
   .form__fieldset {
     margin: 62px 0 0;
@@ -66,11 +62,11 @@
     padding: 0 0 9px;
   }
 
-  .form__input:invalid {
+  /* .form__input:invalid {
     border-bottom: 1px solid red;
   }
 
   .form__input:valid {
     border-bottom: 1px solid green;
-  }
+  } */
 }

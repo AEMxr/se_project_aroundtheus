@@ -9,4 +9,14 @@ const profileJob = document.querySelector(".profile__profession");
 /*~----=)>. Universal close button handler '<(=----~*/
 const closeButtons = document.querySelectorAll(".modal__close");
 
-export { userTemplate, cardsContainer, profileName, profileJob, closeButtons };
+/*~----=)>. Modal Submit reference '<(=----~*/
+const modalSubmit = document.querySelector(".modal__submit");
+
+export {
+  userTemplate,
+  cardsContainer,
+  profileName,
+  profileJob,
+  closeButtons,
+  modalSubmit,
+};

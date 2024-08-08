@@ -84,14 +84,9 @@
   opacity: 80%;
 }
 
-.button_inactive {
-  color: #b8b8b8;
-  background: #ededed;
+.modal__submit_disabled {
+  opacity: 50%;
   pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .modal__content {

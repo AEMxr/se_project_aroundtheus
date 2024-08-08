@@ -1,6 +1,6 @@
 import { openModal } from "./openCloseFunctions.js";
 
-/*~----=)>. Event listeners '<(=----~*/
+/*~----=)>. Modal opener '<(=----~*/
 function addModalListeners(modal, openButton, openCallback) {
   openButton.addEventListener("click", () => {
     openCallback && openCallback();

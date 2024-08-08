@@ -8,7 +8,7 @@ function closeModal(modal) {
 }
 
 /*~----=)>. Universal close modal overlay event handler '<(=----~*/
-function setupModalCloseHandlers() {
+function universalClose() {
   document.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("modal_opened")) {
       closeModal(evt.target);
@@ -16,4 +16,4 @@ function setupModalCloseHandlers() {
   });
 }
 
-export { openModal, closeModal, setupModalCloseHandlers };
+export { openModal, closeModal, universalClose };
