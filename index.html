@@ -88,33 +88,31 @@
 
         <form class="form" name="profileForm" autocomplete="off" novalidate>
           <fieldset class="form__fieldset" id="profileFormFieldset">
-            <label class="form__label" for="name" id="nameLabel"></label>
-            <input
-              type="text"
-              class="form__input"
-              id="name"
-              placeholder="Name"
-              minlength="2"
-              maxlength="40"
-              required
-            />
-            <span class="form__input-error" id="name-error"></span>
+            <label class="form__label" for="name" id="nameLabel">
+              <input
+                type="text"
+                class="form__input"
+                id="name"
+                placeholder="Name"
+                minlength="2"
+                maxlength="40"
+                required
+              />
+              <span class="form__input-error" id="name-error"></span>
+            </label>
 
-            <label
-              class="form__label"
-              for="description"
-              id="descriptionLabel"
-            ></label>
-            <input
-              type="text"
-              class="form__input"
-              id="description"
-              placeholder="Job"
-              minlength="2"
-              maxlength="400"
-              required
-            />
-            <span class="form__input-error" id="description-error"></span>
+            <label class="form__label" for="description" id="descriptionLabel">
+              <input
+                type="text"
+                class="form__input"
+                id="description"
+                placeholder="Job"
+                minlength="2"
+                maxlength="400"
+                required
+              />
+              <span class="form__input-error" id="description-error"></span>
+            </label>
 
             <button
               type="submit"
@@ -136,27 +134,29 @@
 
         <form class="form" name="imageForm" autocomplete="off" novalidate>
           <fieldset class="form__fieldset">
-            <label class="form__label" for="name"></label>
-            <input
-              type="text"
-              class="form__input"
-              id="title"
-              placeholder="Title"
-              minlength="1"
-              maxlength="30"
-              required
-            />
-            <span class="form__input-error" id="title-error"></span>
+            <label class="form__label" for="name">
+              <input
+                type="text"
+                class="form__input"
+                id="title"
+                placeholder="Title"
+                minlength="1"
+                maxlength="30"
+                required
+              />
+              <span class="form__input-error" id="title-error"></span>
+            </label>
 
-            <label class="form__label" for="description"></label>
-            <input
-              type="url"
-              class="form__input"
-              id="link"
-              placeholder="Image link"
-              required
-            />
-            <span class="form__input-error" id="link-error"></span>
+            <label class="form__label" for="description">
+              <input
+                type="url"
+                class="form__input"
+                id="link"
+                placeholder="Image link"
+                required
+              />
+              <span class="form__input-error" id="link-error"></span>
+            </label>
 
             <button
               type="submit"

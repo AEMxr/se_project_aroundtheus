@@ -7,6 +7,7 @@
   border: none;
   padding: 0;
   margin: 54px 0 0;
+  gap: 30px;
 }
 
 .form__label {
@@ -24,9 +25,10 @@
   border-right: none;
   border-left: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 0 0 30px;
-  padding: 0 0 13px;
+  /* margin: 0 0 30px;
+  padding: 0 0 13px; */
   height: 28px;
+  width: 100%;
 
   font-family: Inter;
   font-size: 14px;
@@ -34,22 +36,11 @@
   line-height: 16.94px;
 }
 
-/* form validation */
-.form__input_type_error {
-  border-bottom-color: red;
-
-  /* The bottom border will become red every time
-  the input data is invalid */
-}
-
-/* Initially, input error elements will be invisible. */
 .form__input-error {
-  color: red;
-  opacity: 0;
+  border-bottom-color: red;
 }
 
-/* Applying the modifier class will make it visible. */
-.form__input-error_active {
+.form__input-error_visible {
   opacity: 1;
 }
 
@@ -61,12 +52,4 @@
   .form__input {
     padding: 0 0 9px;
   }
-
-  /* .form__input:invalid {
-    border-bottom: 1px solid red;
-  }
-
-  .form__input:valid {
-    border-bottom: 1px solid green;
-  } */
 }

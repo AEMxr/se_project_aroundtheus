@@ -33,7 +33,6 @@ const modals = {
   preview: document.getElementById("previewModal"),
 };
 
-//fix this to work with validationForms
 const forms = {
   profile: document.forms.profileForm,
   image: document.forms.imageForm,
@@ -49,22 +48,5 @@ const inputs = {
     link: document.getElementById("link"),
   },
 };
-
-/*~----=)>. Validation error messages '<(=----~*/
-// const errorMessages = {
-//   generic: `Please fill out this field`,
-//   textInput: `Please lengthen the text to 2 characters or more. You are currently using ${inputs.value.length} character.`,
-//   link: `Please enter a web address`,
-// };
-
-/*~----=)>. Validation configuration object '<(=----~*/
-// enableValidation({
-//   formSelector: ".popup__form",
-//   inputSelector: ".popup__input",
-//   submitButtonSelector: ".popup__button",
-//   inactiveButtonClass: "popup__button_disabled",
-//   inputErrorClass: "popup__input_type_error",
-//   errorClass: "popup__error_visible",
-// });
 
 export { initialCards, modals, forms, inputs };
