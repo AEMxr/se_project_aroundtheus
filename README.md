@@ -20,9 +20,9 @@ Using Figma, I followed the UI design and exported assets. The HTML and CSS were
 
 - [Link to project 4 on Figma](https://www.figma.com/file/EO5AaNCuzzFL7X5gSY7HwQ/Sprint-4_-Around-The-U.S.-_-desktop-%2B-mobile?t=3hvVWRz9LUFsxyNn-6)
 
-- [Link to project 5 on Figma]()
+- [Link to project 5 on Figma](<https://www.figma.com/file/JFPhASqvZ5pBjQV2ouUlim/Sprint-5_-Around-The-U.S.-_-desktop-%2B-mobile-(Copy)?t=3hvVWRz9LUFsxyNn-6>)
 
-- [Link to project 6 on Figma]()
+- [Link to project 6 on Figma](https://www.figma.com/file/N3zUeequnpvMX807FfYAZW/Sprint-6-Around-The-U.S.?node-id=0-1&t=88iVO80aevkZBggI-0)
 
 - [Link to project 7 on Figma]()
 

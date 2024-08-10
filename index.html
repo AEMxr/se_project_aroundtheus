@@ -88,7 +88,7 @@
 
         <form class="form" name="profileForm" autocomplete="off" novalidate>
           <fieldset class="form__fieldset" id="profileFormFieldset">
-            <label class="form__label" for="name" id="nameLabel">
+            <div class="form__input-container">
               <input
                 type="text"
                 class="form__input"
@@ -99,9 +99,9 @@
                 required
               />
               <span class="form__input-error" id="name-error"></span>
-            </label>
+            </div>
 
-            <label class="form__label" for="description" id="descriptionLabel">
+            <div class="form__input-container">
               <input
                 type="text"
                 class="form__input"
@@ -112,7 +112,7 @@
                 required
               />
               <span class="form__input-error" id="description-error"></span>
-            </label>
+            </div>
 
             <button
               type="submit"
@@ -134,7 +134,7 @@
 
         <form class="form" name="imageForm" autocomplete="off" novalidate>
           <fieldset class="form__fieldset">
-            <label class="form__label" for="name">
+            <div class="form__input-container">
               <input
                 type="text"
                 class="form__input"
@@ -145,9 +145,9 @@
                 required
               />
               <span class="form__input-error" id="title-error"></span>
-            </label>
+            </div>
 
-            <label class="form__label" for="description">
+            <div class="form__input-container">
               <input
                 type="url"
                 class="form__input"
@@ -156,7 +156,7 @@
                 required
               />
               <span class="form__input-error" id="link-error"></span>
-            </label>
+            </div>
 
             <button
               type="submit"
