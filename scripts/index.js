@@ -73,34 +73,36 @@ document.addEventListener("DOMContentLoaded", () => {
   /*~----=)>. Open/close modal functions '<(=----~*/
   function openModal(modal) {
     modal.classList.add("modal_opened");
+    document.addEventListener("keydown", handleEscClose);
   }
 
   function closeModal(modal) {
     modal.classList.remove("modal_opened");
+    document.removeEventListener("keydown", handleEscClose);
   }
 
   /*~----=)>. Universal close modal overlay event handler '<(=----~*/
   function universalClose() {
-    // CLose modal when clicking outside of the modal
+    // Close modal when clicking outside of the modal
     document.addEventListener("mousedown", (evt) => {
       if (evt.target.classList.contains("modal_opened")) {
         closeModal(evt.target);
       }
     });
+  }
 
-    // Close modal when pressing the 'Esc' key
-    document.addEventListener("keydown", (evt) => {
-      if (evt.key === "Escape" || evt.key === "Esc") {
-        const openModals = document.querySelectorAll(".modal_opened");
-        openModals.forEach((modal) => {
-          closeModal(modal);
-        });
+  // Function to handle closing modal on 'Esc' key
+  function handleEscClose(evt) {
+    if (evt.key === "Escape" || evt.key === "Esc") {
+      const openModal = document.querySelector(".modal_opened");
+      if (openModal) {
+        closeModal(openModal);
       }
-    });
+    }
   }
 
   /*~----=)>. Modal opener '<(=----~*/
-  function addModalListeners(modal, openButton, openCallback) {
+  function addOpenModalListeners(modal, openButton, openCallback) {
     openButton.addEventListener("click", () => {
       openCallback && openCallback();
       openModal(modal);
@@ -156,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /*~----=)>. Profile modal setup '<(=----~*/
-  addModalListeners(
+  addOpenModalListeners(
     modals.profile,
     document.getElementById("profileEditButton"),
     () => {
@@ -173,7 +175,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /*~----=)>. Image modal setup '<(=----~*/
-  addModalListeners(modals.image, document.getElementById("imageEditButton"));
+  addOpenModalListeners(
+    modals.image,
+    document.getElementById("imageEditButton")
+  );
 
   forms.image.addEventListener("submit", (evt) => {
     evt.preventDefault();
@@ -193,5 +198,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /*~----=)>. Validation function '<(=----~*/
-  enableValidation(enableValidation);
+  enableValidation();
 });
