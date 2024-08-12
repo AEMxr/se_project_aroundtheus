@@ -82,14 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /*~----=)>. Universal close modal overlay event handler '<(=----~*/
-  function universalClose() {
-    // Close modal when clicking outside of the modal
-    document.addEventListener("mousedown", (evt) => {
-      if (evt.target.classList.contains("modal_opened")) {
-        closeModal(evt.target);
-      }
-    });
-  }
+  // function universalClose() {
+  //   // Close modal when clicking outside of the modal
+  //   document.addEventListener("mousedown", (evt) => {
+  //     if (evt.target.classList.contains("modal_opened")) {
+  //       closeModal(evt.target);
+  //     }
+  //   });
+  // }
 
   // Function to handle closing modal on 'Esc' key
   function handleEscClose(evt) {
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /*~----=)>. Close functionality '<(=----~*/
-  universalClose();
+  // universalClose();
 
   closeButtons.forEach((button) => {
     const popup = button.closest(".modal");
@@ -197,6 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCard(cardData, "append");
   });
 
-  /*~----=)>. Validation function '<(=----~*/
-  enableValidation();
+  // /*~----=)>. Validation function '<(=----~*/
+  // enableValidation();
 });
