@@ -200,3 +200,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // /*~----=)>. Validation function '<(=----~*/
   // enableValidation();
 });
+
+//Thanks for all your help!!!
