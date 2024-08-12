@@ -74,11 +74,23 @@ document.addEventListener("DOMContentLoaded", () => {
   function openModal(modal) {
     modal.classList.add("modal_opened");
     document.addEventListener("keydown", handleEscClose);
+
+    document.addEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("modal_opened")) {
+        closeModal(evt.target);
+      }
+    });
   }
 
   function closeModal(modal) {
     modal.classList.remove("modal_opened");
     document.removeEventListener("keydown", handleEscClose);
+
+    document.removeEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("modal_opened")) {
+        closeModal(evt.target);
+      }
+    });
   }
 
   /*~----=)>. Universal close modal overlay event handler '<(=----~*/
