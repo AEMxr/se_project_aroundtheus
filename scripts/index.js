@@ -75,33 +75,23 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.add("modal_opened");
     document.addEventListener("keydown", handleEscClose);
 
-    document.addEventListener("mousedown", (evt) => {
-      if (evt.target.classList.contains("modal_opened")) {
-        closeModal(evt.target);
-      }
-    });
+    document.addEventListener("mousedown", universalClose);
   }
 
   function closeModal(modal) {
     modal.classList.remove("modal_opened");
     document.removeEventListener("keydown", handleEscClose);
 
-    document.removeEventListener("mousedown", (evt) => {
-      if (evt.target.classList.contains("modal_opened")) {
-        closeModal(evt.target);
-      }
-    });
+    document.removeEventListener("mousedown", universalClose);
   }
 
   /*~----=)>. Universal close modal overlay event handler '<(=----~*/
-  // function universalClose() {
-  //   // Close modal when clicking outside of the modal
-  //   document.addEventListener("mousedown", (evt) => {
-  //     if (evt.target.classList.contains("modal_opened")) {
-  //       closeModal(evt.target);
-  //     }
-  //   });
-  // }
+  function universalClose(evt) {
+    // Close modal when clicking outside of the modal
+    if (evt.target.classList.contains("modal_opened")) {
+      closeModal(evt.target);
+    }
+  }
 
   // Function to handle closing modal on 'Esc' key
   function handleEscClose(evt) {
