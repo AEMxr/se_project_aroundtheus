@@ -7,21 +7,21 @@ export default class Card {
   }
 
   _setEventListeners() {
-    //.card__like-button
+    /*~----=)>. Card like button '<(=----~*/
     this._cardElement
       .querySelector(".card__heart")
       .addEventListener("click", () => {
         this._handleLikeIcon();
       });
 
-    //.card__delete-button
+    /*~----=)>. Card delete button '<(=----~*/
     this._cardElement
       .querySelector(".card__delete")
       .addEventListener("click", () => {
         this._handleDeleteButton();
       });
 
-    //.card__image
+    /*~----=)>. Card preview '<(=----~*/
     this._cardElement
       .querySelector(".card__image")
       .addEventListener("click", () => {
