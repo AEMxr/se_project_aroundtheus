@@ -30,7 +30,7 @@ export default class Card {
   }
 
   _handleDeleteButton() {
-    this._cardElement.remove();
+    this._cardElement = null;
   }
 
   _handleLikeIcon() {

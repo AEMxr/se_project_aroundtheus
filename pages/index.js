@@ -75,24 +75,24 @@ const closeButtons = document.querySelectorAll(".modal__close");
 const previewImage = document.getElementById("previewImage");
 const imageViewTitle = document.getElementById("imageViewTitle");
 
-/*~----=)>. Cards grid for initial card render '<(=----~*/
-const cardsGrid = document.querySelector(".cards__grid");
+// /*~----=)>. Cards grid for initial card render '<(=----~*/
+// const cardsGrid = document.querySelector(".cards__grid");
 
 /*~----=)>. Open/close modal functions '<(=----~*/
 function openModal(modal) {
   modal.classList.add("modal_opened");
   document.addEventListener("keydown", handleEscClose);
-  document.addEventListener("mousedown", universalClose);
+  document.addEventListener("mousedown", handleOverlayClose);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
   document.removeEventListener("keydown", handleEscClose);
-  document.removeEventListener("mousedown", universalClose);
+  document.removeEventListener("mousedown", handleOverlayClose);
 }
 
 /*~----=)>. Universal close modal overlay event handler '<(=----~*/
-function universalClose(evt) {
+function handleOverlayClose(evt) {
   // Close modal when clicking outside of the modal
   if (evt.target.classList.contains("modal_opened")) {
     closeModal(evt.target);
@@ -130,6 +130,7 @@ addOpenModalListeners(
   () => {
     inputs.profile.name.value = profileName.textContent;
     inputs.profile.description.value = profileJob.textContent;
+    profileForm.resetValidation();
   }
 );
 
@@ -150,7 +151,7 @@ forms.image.addEventListener("submit", (evt) => {
     link: inputs.image.link.value,
   };
 
-  renderCard(newCardData, "prepend");
+  renderCard(newCardData);
   evt.target.reset();
   closeModal(modals.image);
 });
@@ -163,20 +164,21 @@ function handlePreviewModal(card) {
   openModal(modals.preview);
 }
 
-/*~----=)>. Initiate initial cards object '<(=----~*/
-initialCards.forEach((cardData) => {
+/*~----=)>. Universal function for rendering cards '<(=----~*/
+function renderCard(cardData, method = "prepend") {
   const card = new Card(cardData, "#card-template", handlePreviewModal);
   const cardElement = card.getCardElement();
-  cardsGrid.append(cardElement);
-});
-
-/*~----=)>. Universal function for rendering cards '<(=----~*/
-function renderCard(cardData, item, method = "prepend") {
-  const card = new Card(cardData, "#card-template", handlePreviewModal);
-  const cardElement = card.getCardElement(item);
   cardsContainer[method](cardElement);
 }
 
+/*~----=)>. Initiate initial cards object '<(=----~*/
+initialCards.forEach((cardData) => {
+  renderCard(cardData, "append");
+});
+
 /*~----=)>. Validation class call '<(=----~*/
-const formValidator = new FormValidator(validationConfig);
-formValidator.enableValidation();
+const profileForm = new FormValidator(validationConfig, forms.profile);
+profileForm.enableValidation();
+
+const addImageForm = new FormValidator(validationConfig, forms.image);
+addImageForm.enableValidation();
