@@ -1,9 +1,11 @@
 export default class FormValidator {
   constructor(options, formElement) {
     this._formElement = formElement;
-    this._submitButton = this._formElement.querySelector(options.submitButton);
-    this._inputElements = this._formElement.querySelectorAll(
-      options.inputSelector
+    this._submitButton = this._formElement.querySelector(
+      options.submitButtonSelector
+    );
+    this._inputElements = Array.from(
+      this._formElement.querySelectorAll(options.inputSelector)
     );
     this._inputSelector = options.inputSelector;
     this._submitButtonSelector = options.submitButtonSelector;
@@ -13,8 +15,8 @@ export default class FormValidator {
   }
 
   /*~----=)>. Function to show input error message '<(=----~*/
-  _showInputError(formElement, inputElement) {
-    const errorMessageElement = formElement.querySelector(
+  _showInputError(inputElement) {
+    const errorMessageElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
     if (!errorMessageElement) return;
@@ -25,8 +27,8 @@ export default class FormValidator {
   }
 
   /*~----=)>. Function to hide input error message '<(=----~*/
-  _hideInputError(formElement, inputElement) {
-    const errorMessageElement = formElement.querySelector(
+  _hideInputError(inputElement) {
+    const errorMessageElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
     if (!errorMessageElement) return;
@@ -37,44 +39,46 @@ export default class FormValidator {
   }
 
   /*~----=)>. Function to check input validity and show/hide error messages accordingly '<(=----~*/
-  _checkInputValidity(formElement, inputElement) {
+  _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
-      this._showInputError(formElement, inputElement);
+      this._showInputError(inputElement);
     } else {
-      this._hideInputError(formElement, inputElement);
+      this._hideInputError(inputElement);
     }
   }
 
   /*~----=)>. Function to check if any input in the list is invalid '<(=----~*/
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => !inputElement.validity.valid);
+  _hasInvalidInput() {
+    return this._inputElements.some(
+      (inputElement) => !inputElement.validity.valid
+    );
   }
 
   /*~----=)>. Function to disable the submit button '<(=----~*/
-  _disableButton(buttonElement) {
-    buttonElement.classList.add(this._inactiveButtonClass);
-    buttonElement.disabled = true;
+  _disableButton() {
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.disabled = true;
   }
 
   /*~----=)>. Function to enable the submit button '<(=----~*/
-  _enableButton(buttonElement) {
-    buttonElement.classList.remove(this._inactiveButtonClass);
-    buttonElement.disabled = false;
+  _enableButton() {
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+    this._submitButton.disabled = false;
   }
 
   /*~----=)>. Function to toggle the button state based on input validity '<(=----~*/
-  _toggleButtonState(inputElements, submitButton) {
-    if (this._hasInvalidInput(inputElements)) {
-      this._disableButton(submitButton);
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._disableButton();
     } else {
-      this._enableButton(submitButton);
+      this._enableButton();
     }
   }
 
   resetValidation() {
     this._toggleButtonState();
-    this._inputList.forEach(() => {
-      this._hideInputError(this._inputSelector);
+    this._inputElements.forEach((inputElement) => {
+      this._hideInputError(inputElement);
     });
   }
 
@@ -84,9 +88,9 @@ export default class FormValidator {
     if (!this._submitButton) return;
 
     this._inputElements.forEach((inputElement) => {
-      this._inputElements.addEventListener("input", () => {
-        this._checkInputValidity(formElement, inputElement);
-        this._toggleButtonState(inputElements, submitButton);
+      inputElement.addEventListener("input", () => {
+        this._checkInputValidity(inputElement);
+        this._toggleButtonState();
       });
     });
   }
