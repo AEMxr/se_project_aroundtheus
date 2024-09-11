@@ -1,0 +1,11 @@
+{
+  "name": "se_project_aroundtheus",
+  "version": "1.0.0",
+  "description": "Triple Ten Project (3-9)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AEMxr",
+  "license": "ISC"
+}

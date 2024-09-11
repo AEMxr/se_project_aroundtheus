@@ -102,4 +102,7 @@ export default class FormValidator {
     });
     this._setEventListeners();
   }
+  disableButton() {
+    this._disableButton();
+  }
 }
