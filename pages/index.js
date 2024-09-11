@@ -179,6 +179,8 @@ initialCards.forEach((cardData) => {
 /*~----=)>. Validation class call '<(=----~*/
 const profileForm = new FormValidator(validationConfig, forms.profile);
 profileForm.enableValidation();
+profileForm.disableButton();
 
 const addImageForm = new FormValidator(validationConfig, forms.image);
 addImageForm.enableValidation();
+addImageForm.disableButton();
