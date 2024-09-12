@@ -139,6 +139,7 @@ forms.profile.addEventListener("submit", (evt) => {
   profileName.textContent = inputs.profile.name.value;
   profileJob.textContent = inputs.profile.description.value;
   closeModal(modals.profile);
+  profileForm.disableButton();
 });
 
 /*~----=)>. Image modal setup '<(=----~*/
@@ -154,6 +155,7 @@ forms.image.addEventListener("submit", (evt) => {
   renderCard(newCardData);
   evt.target.reset();
   closeModal(modals.image);
+  addImageForm.disableButton();
 });
 
 /*~----=)>. Preview image modal '<(=----~*/
@@ -179,8 +181,6 @@ initialCards.forEach((cardData) => {
 /*~----=)>. Validation class call '<(=----~*/
 const profileForm = new FormValidator(validationConfig, forms.profile);
 profileForm.enableValidation();
-profileForm.disableButton();
 
 const addImageForm = new FormValidator(validationConfig, forms.image);
 addImageForm.enableValidation();
-addImageForm.disableButton();
