@@ -12,15 +12,15 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="./pages/index.css" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="./favicon.ico" />
+    <!-- <link href="./pages/index.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="./favicon.ico" /> -->
   </head>
 
   <body class="body">
     <header class="header">
       <img
         class="header__logo"
-        src="./images/vector-imgs/aroundtheustitle.svg"
+        src="<%= require('./images/vector-imgs/aroundtheustitle.svg') %>"
         alt="Around The US Logo"
       />
     </header>
@@ -30,7 +30,7 @@
         <div class="profile__container">
           <img
             class="profile__avatar"
-            src="./images/profile-imgs/jacques-cousteau.png"
+            src="<%= require('./images/profile-imgs/jacques-cousteau.png') %>"
             alt="Jacques Cousteau"
           />
           <div class="profile__info">
@@ -43,7 +43,7 @@
                 aria-label="edit name"
               >
                 <img
-                  src="./images/vector-imgs/editbutton.svg"
+                  src="<%= require('./images/vector-imgs/editbutton.svg') %>"
                   alt="edit name"
                 />
               </button>
@@ -56,7 +56,10 @@
             type="button"
             aria-label="add image"
           >
-            <img src="./images/vector-imgs/addbutton.svg" alt="add image" />
+            <img
+              src="<%= require('./images/vector-imgs/addbutton.svg') %>"
+              alt="add image"
+            />
           </button>
         </div>
       </section>
@@ -182,6 +185,6 @@
       </div>
     </div>
 
-    <script src="./pages/index.js" type="module"></script>
+    <!-- <script src="./pages/index.js" type="module"></script> -->
   </body>
 </html>
