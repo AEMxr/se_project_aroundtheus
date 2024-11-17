@@ -1,6 +1,9 @@
 import "./index.css";
 import Card from "../scripts/components/Card.js";
 import FormValidator from "../scripts/components/FormValidator.js";
+import Popup from "../scripts/components/Popup.js";
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
+// import PopupWithImage from "../scripts/components/PopupWithImage.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const initialCards = [
@@ -81,17 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // const cardsGrid = document.querySelector(".cards__grid");
 
   /*~----=)>. Open/close modal functions '<(=----~*/
-  function openModal(modal) {
-    modal.classList.add("modal_opened");
-    document.addEventListener("keydown", handleEscClose);
-    document.addEventListener("mousedown", handleOverlayClose);
-  }
+  // function openModal(modal) {
+  //   modal.classList.add("modal_opened");
+  //   document.addEventListener("keydown", handleEscClose);
+  //   document.addEventListener("mousedown", handleOverlayClose);
+  // }
 
-  function closeModal(modal) {
-    modal.classList.remove("modal_opened");
-    document.removeEventListener("keydown", handleEscClose);
-    document.removeEventListener("mousedown", handleOverlayClose);
-  }
+  // function closeModal(modal) {
+  //   modal.classList.remove("modal_opened");
+  //   document.removeEventListener("keydown", handleEscClose);
+  //   document.removeEventListener("mousedown", handleOverlayClose);
+  // }
 
   /*~----=)>. Universal close modal overlay event handler '<(=----~*/
   function handleOverlayClose(evt) {
@@ -102,14 +105,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to handle closing modal on 'Esc' key
-  function handleEscClose(evt) {
-    if (evt.key === "Escape" || evt.key === "Esc") {
-      const openModal = document.querySelector(".modal_opened");
-      if (openModal) {
-        closeModal(openModal);
-      }
-    }
-  }
+  // function handleEscClose(evt) {
+  //   if (evt.key === "Escape" || evt.key === "Esc") {
+  //     const openModal = document.querySelector(".modal_opened");
+  //     if (openModal) {
+  //       closeModal(openModal);
+  //     }
+  //   }
+  // }
 
   /*~----=)>. Close functionality '<(=----~*/
   closeButtons.forEach((button) => {
@@ -126,6 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /*~----=)>. Profile modal setup '<(=----~*/
+
+  const newCardPopup = new PopupWithForm(modals.profile, () => {});
+
   addOpenModalListeners(
     modals.profile,
     document.getElementById("profileEditButton"),
