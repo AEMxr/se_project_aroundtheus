@@ -84,17 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // const cardsGrid = document.querySelector(".cards__grid");
 
   /*~----=)>. Open/close modal functions '<(=----~*/
-  // function openModal(modal) {
-  //   modal.classList.add("modal_opened");
-  //   document.addEventListener("keydown", handleEscClose);
-  //   document.addEventListener("mousedown", handleOverlayClose);
-  // }
+  function openModal(modal) {
+    modal.classList.add("modal_opened");
+    document.addEventListener("keydown", handleEscClose);
+    document.addEventListener("mousedown", handleOverlayClose);
+  }
 
-  // function closeModal(modal) {
-  //   modal.classList.remove("modal_opened");
-  //   document.removeEventListener("keydown", handleEscClose);
-  //   document.removeEventListener("mousedown", handleOverlayClose);
-  // }
+  function closeModal(modal) {
+    modal.classList.remove("modal_opened");
+    document.removeEventListener("keydown", handleEscClose);
+    document.removeEventListener("mousedown", handleOverlayClose);
+  }
 
   /*~----=)>. Universal close modal overlay event handler '<(=----~*/
   function handleOverlayClose(evt) {
@@ -105,14 +105,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to handle closing modal on 'Esc' key
-  // function handleEscClose(evt) {
-  //   if (evt.key === "Escape" || evt.key === "Esc") {
-  //     const openModal = document.querySelector(".modal_opened");
-  //     if (openModal) {
-  //       closeModal(openModal);
-  //     }
-  //   }
-  // }
+  function handleEscClose(evt) {
+    if (evt.key === "Escape" || evt.key === "Esc") {
+      const openModal = document.querySelector(".modal_opened");
+      if (openModal) {
+        closeModal(openModal);
+      }
+    }
+  }
 
   /*~----=)>. Close functionality '<(=----~*/
   closeButtons.forEach((button) => {
@@ -130,25 +130,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /*~----=)>. Profile modal setup '<(=----~*/
 
-  const newCardPopup = new PopupWithForm(modals.profile, () => {});
+  // const profilePopup = new PopupWithForm(
+  //   "#profileModal",
+  //   document
+  //     .getElementById("profileEditButton")
+  //     .addEventListener("click", () => {
+  //       profilePopup.open();
+  //       inputs.profile.name.value = profileName.textContent;
+  //       inputs.profile.description.value = profileJob.textContent;
+  //       profileForm.resetValidation();
+  //     })
+  // );
 
-  addOpenModalListeners(
-    modals.profile,
-    document.getElementById("profileEditButton"),
-    () => {
-      inputs.profile.name.value = profileName.textContent;
-      inputs.profile.description.value = profileJob.textContent;
-      profileForm.resetValidation();
-    }
-  );
-
-  forms.profile.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-    profileName.textContent = inputs.profile.name.value;
-    profileJob.textContent = inputs.profile.description.value;
-    closeModal(modals.profile);
-    profileForm.disableButton();
+  const profilePopup = new PopupWithForm("#profileModal", (formData) => {
+    title.textContent = formData.title;
+    description.textContent = formData.description;
+    profilePopup.close();
   });
+  profilePopup.setEventListeners();
+
+  document.getElementById("profileEditButton").addEventListener("click", () => {
+    inputs.profile.name.value = profileName.textContent;
+    inputs.profile.description.value = profileJob.textContent;
+    profileForm.resetValidation();
+    profilePopup.open();
+  });
+
+  // addOpenModalListeners(
+  //   modals.profile,
+  //   document.getElementById("profileEditButton"),
+  //   () => {
+  //     inputs.profile.name.value = profileName.textContent;
+  //     inputs.profile.description.value = profileJob.textContent;
+  //     profileForm.resetValidation();
+  //   }
+  // );
+
+  // forms.profile.addEventListener("submit", (evt) => {
+  //   evt.preventDefault();
+  //   profileName.textContent = inputs.profile.name.value;
+  //   profileJob.textContent = inputs.profile.description.value;
+  //   closeModal(modals.profile);
+  //   profileForm.disableButton();
+  // });
 
   /*~----=)>. Image modal setup '<(=----~*/
   addOpenModalListeners(
@@ -181,7 +205,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderCard(cardData, method = "prepend") {
     const card = new Card(cardData, "#card-template", handlePreviewModal);
     const cardElement = card.getCardElement();
-    cardsContainer[method](cardElement);
+    if (method === "prepend") {
+      cardsContainer.prepend(cardElement);
+    } else {
+      cardsContainer.append(cardElement);
+    }
   }
 
   /*~----=)>. Initiate initial cards object '<(=----~*/
