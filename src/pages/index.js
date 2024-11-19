@@ -143,8 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // );
 
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
-    title.textContent = formData.title;
-    description.textContent = formData.description;
+    profileName.textContent = formData.name;
+    profileJob.textContent = formData.description;
     profilePopup.close();
   });
   profilePopup.setEventListeners();
