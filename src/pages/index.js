@@ -70,8 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardsContainer = document.querySelector(".cards__grid");
 
   /*~----=)>. Profile elements '<(=----~*/
-  const profileName = document.querySelector(".profile__name");
-  const profileJob = document.querySelector(".profile__profession");
+  const profileName =
+    document.querySelector(
+      ".profile__name"
+    ); /*<h1 class="profile__name">Jacques Cousteau</h1>*/
+  const profileJob = document.querySelector(
+    ".profile__profession"
+  ); /*<p class="profile__profession">Explorer</p>*/
+
+  /*~----=)>. Add Image elements '<(=----~*/
+  const imageTitle = document.querySelector(".card__label");
+  const imageLink = document.querySelector(".profile__profession");
 
   /*~----=)>. Universal close button handler '<(=----~*/
   const closeButtons = document.querySelectorAll(".modal__close");
@@ -162,26 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
   //   profileForm.disableButton();
   // });
 
-  /*~----=)>. Image modal setup '<(=----~*/
-
-  const addImagePopup = new PopupWithForm("#imageEditButton", (formData) => {
-    inputs.image.title = formData.title;
-    inputs.image.link = formData.link;
-    addImagePopup.close();
-  });
-
-  addImagePopup.setEventListeners();
-
-  const newCardData = {
-    name: inputs.image.title,
-    link: inputs.image.link,
-  };
-
-  renderCard(newCardData);
-  evt.target.reset();
-  addImagePopup.close();
-  addImageForm.disableButton();
-
   /*~----=)>. Universal function for rendering cards '<(=----~*/
   function renderCard(cardData, method = "prepend") {
     const card = new Card(cardData, "#card-template", handlePreviewModal);
@@ -192,6 +181,58 @@ document.addEventListener("DOMContentLoaded", () => {
       cardsContainer.append(cardElement);
     }
   }
+
+  /*~----=)>. Image modal setup '<(=----~*/
+
+  const addImagePopup = new PopupWithForm("#imageEditButton", (formData) => {
+    inputs.image.title.textContent = formData.name;
+    inputs.image.link.textContent = formData.link;
+
+    addImagePopup.close();
+  });
+
+  profilePopup.setEventListeners();
+
+  const newCardData = {
+    name: inputs.image.title.value,
+    link: inputs.image.link.value,
+  };
+
+  renderCard(newCardData);
+  evt.target.reset();
+  addImageForm.disableButton();
+
+  // addOpenModalListeners(
+  //   modals.image,
+  //   document.getElementById("imageEditButton")
+  // );
+
+  // document.getElementById("imageEditButton").addEventListener("click", () => {
+  //   inputs.image.title.value = inputs.image.title.textContent;
+  //   inputs.image.link.value = inputs.image.link.textContent;
+  //   addImageForm.resetValidation();
+  //   addImagePopup.open();
+  // });
+
+  // const newCardData = {
+  //   name: inputs.image.title.value,
+  //   link: inputs.image.link.value,
+  // };
+
+  // renderCard(newCardData);
+  // evt.target.reset();
+  // addImageForm.disableButton();
+
+  // /*~----=)>. Universal function for rendering cards '<(=----~*/
+  // function renderCard(cardData, method = "prepend") {
+  //   const card = new Card(cardData, "#card-template", handlePreviewModal);
+  //   const cardElement = card.getCardElement();
+  //   if (method === "prepend") {
+  //     cardsContainer.prepend(cardElement);
+  //   } else {
+  //     cardsContainer.append(cardElement);
+  //   }
+  // }
 
   // addOpenModalListeners(
   //   modals.image,
