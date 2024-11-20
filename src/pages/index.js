@@ -130,18 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /*~----=)>. Profile modal setup '<(=----~*/
 
-  // const profilePopup = new PopupWithForm(
-  //   "#profileModal",
-  //   document
-  //     .getElementById("profileEditButton")
-  //     .addEventListener("click", () => {
-  //       profilePopup.open();
-  //       inputs.profile.name.value = profileName.textContent;
-  //       inputs.profile.description.value = profileJob.textContent;
-  //       profileForm.resetValidation();
-  //     })
-  // );
-
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
     profileName.textContent = formData.name;
     profileJob.textContent = formData.description;
@@ -175,31 +163,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // });
 
   /*~----=)>. Image modal setup '<(=----~*/
-  addOpenModalListeners(
-    modals.image,
-    document.getElementById("imageEditButton")
-  );
 
-  forms.image.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-    const newCardData = {
-      name: inputs.image.title.value,
-      link: inputs.image.link.value,
-    };
-
-    renderCard(newCardData);
-    evt.target.reset();
-    closeModal(modals.image);
-    addImageForm.disableButton();
+  const addImagePopup = new PopupWithForm("#imageEditButton", (formData) => {
+    inputs.image.title = formData.title;
+    inputs.image.link = formData.link;
+    addImagePopup.close();
   });
 
-  /*~----=)>. Preview image modal '<(=----~*/
-  function handlePreviewModal(card) {
-    previewImage.src = card.link;
-    previewImage.alt = card.name;
-    imageViewTitle.textContent = card.name;
-    openModal(modals.preview);
-  }
+  addImagePopup.setEventListeners();
+
+  const newCardData = {
+    name: inputs.image.title,
+    link: inputs.image.link,
+  };
+
+  renderCard(newCardData);
+  evt.target.reset();
+  addImagePopup.close();
+  addImageForm.disableButton();
 
   /*~----=)>. Universal function for rendering cards '<(=----~*/
   function renderCard(cardData, method = "prepend") {
@@ -210,6 +191,32 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       cardsContainer.append(cardElement);
     }
+  }
+
+  // addOpenModalListeners(
+  //   modals.image,
+  //   document.getElementById("imageEditButton")
+  // );
+
+  // forms.image.addEventListener("submit", (evt) => {
+  //   evt.preventDefault();
+  //   const newCardData = {
+  //     name: inputs.image.title.value,
+  //     link: inputs.image.link.value,
+  //   };
+
+  // renderCard(newCardData);
+  // evt.target.reset();
+  // closeModal(modals.image);
+  // addImageForm.disableButton();
+  // });
+
+  /*~----=)>. Preview image modal '<(=----~*/
+  function handlePreviewModal(card) {
+    previewImage.src = card.link;
+    previewImage.alt = card.name;
+    imageViewTitle.textContent = card.name;
+    openModal(modals.preview);
   }
 
   /*~----=)>. Initiate initial cards object '<(=----~*/
