@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /*~----=)>. Modal opener '<(=----~*/
-  function addOpenModalListeners(modal, openButton, openCallback) {
+  function addOpenModalListeners({ modal, openButton, openCallback }) {
     openButton.addEventListener("click", () => {
       openCallback && openCallback();
       openModal(modal);
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addImagePopup.close();
   });
 
-  profilePopup.setEventListeners();
+  addImagePopup.setEventListeners();
 
   const newCardData = {
     name: inputs.image.title.value,
