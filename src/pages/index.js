@@ -70,13 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardsContainer = document.querySelector(".cards__grid");
 
   /*~----=)>. Profile elements '<(=----~*/
-  const profileName =
-    document.querySelector(
-      ".profile__name"
-    ); /*<h1 class="profile__name">Jacques Cousteau</h1>*/
-  const profileJob = document.querySelector(
-    ".profile__profession"
-  ); /*<p class="profile__profession">Explorer</p>*/
+  const profileName = document.querySelector(".profile__name");
+  const profileJob = document.querySelector(".profile__profession");
 
   /*~----=)>. Add Image elements '<(=----~*/
   const imageTitle = document.querySelector(".card__label");
@@ -174,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /*~----=)>. Universal function for rendering cards '<(=----~*/
   function renderCard(cardData, method = "prepend") {
     const card = new Card(cardData, "#card-template", handlePreviewModal);
-    const cardElement = card.getCardElement();
+    const cardElement = card.getCardElement(); /*do i need this still?*/
     if (method === "prepend") {
       cardsContainer.prepend(cardElement);
     } else {
@@ -184,55 +179,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /*~----=)>. Image modal setup '<(=----~*/
 
-  const addImagePopup = new PopupWithForm("#imageEditButton", (formData) => {
+  const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
     inputs.image.title.textContent = formData.name;
-    inputs.image.link.textContent = formData.link;
+    inputs.image.link.link = formData.link;
 
+    const newCardData = {
+      name: inputs.image.title.value,
+      link: inputs.image.link.value,
+    };
+
+    renderCard(newCardData);
+    // evt.target.reset();
+    addImagePopup.close();
+    addImageForm.disableButton();
     addImagePopup.close();
   });
-
   addImagePopup.setEventListeners();
 
-  const newCardData = {
-    name: inputs.image.title.value,
-    link: inputs.image.link.value,
-  };
-
-  renderCard(newCardData);
-  evt.target.reset();
-  addImageForm.disableButton();
-
-  // addOpenModalListeners(
-  //   modals.image,
-  //   document.getElementById("imageEditButton")
-  // );
-
-  // document.getElementById("imageEditButton").addEventListener("click", () => {
-  //   inputs.image.title.value = inputs.image.title.textContent;
-  //   inputs.image.link.value = inputs.image.link.textContent;
-  //   addImageForm.resetValidation();
-  //   addImagePopup.open();
-  // });
-
-  // const newCardData = {
-  //   name: inputs.image.title.value,
-  //   link: inputs.image.link.value,
-  // };
-
-  // renderCard(newCardData);
-  // evt.target.reset();
-  // addImageForm.disableButton();
-
-  // /*~----=)>. Universal function for rendering cards '<(=----~*/
-  // function renderCard(cardData, method = "prepend") {
-  //   const card = new Card(cardData, "#card-template", handlePreviewModal);
-  //   const cardElement = card.getCardElement();
-  //   if (method === "prepend") {
-  //     cardsContainer.prepend(cardElement);
-  //   } else {
-  //     cardsContainer.append(cardElement);
-  //   }
-  // }
+  document.getElementById("imageEditButton").addEventListener("click", () => {
+    inputs.image.title.value = inputs.image.title.textContent;
+    inputs.image.link.value = inputs.image.link.textContent;
+    addImageForm.resetValidation();
+    addImagePopup.open();
+  });
 
   // addOpenModalListeners(
   //   modals.image,
