@@ -4,6 +4,7 @@ import FormValidator from "../scripts/components/FormValidator.js";
 import Popup from "../scripts/components/Popup.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 // import PopupWithImage from "../scripts/components/PopupWithImage.js";
+// import Section from "../scripts/components/Section.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const initialCards = [
@@ -169,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /*~----=)>. Universal function for rendering cards '<(=----~*/
   function renderCard(cardData, method = "prepend") {
     const card = new Card(cardData, "#card-template", handlePreviewModal);
-    const cardElement = card.getCardElement(); /*do i need this still?*/
+    const cardElement = card.getCardElement();
     if (method === "prepend") {
       cardsContainer.prepend(cardElement);
     } else {
@@ -192,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // evt.target.reset();
     addImagePopup.close();
     addImageForm.disableButton();
-    addImagePopup.close();
+    // addImagePopup.close();
   });
   addImagePopup.setEventListeners();
 
