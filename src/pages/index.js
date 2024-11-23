@@ -4,7 +4,7 @@ import FormValidator from "../scripts/components/FormValidator.js";
 import Popup from "../scripts/components/Popup.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 // import PopupWithImage from "../scripts/components/PopupWithImage.js";
-// import Section from "../scripts/components/Section.js";
+import Section from "../scripts/components/Section.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const initialCards = [
@@ -188,12 +188,12 @@ document.addEventListener("DOMContentLoaded", () => {
       name: inputs.image.title.value,
       link: inputs.image.link.value,
     };
-
-    renderCard(newCardData);
+    const newCard = new Section({ newCardData, renderCard }, "#card-template");
+    newCard.renderItems();
+    // renderCard(newCardData);
     // evt.target.reset();
     addImagePopup.close();
     addImageForm.disableButton();
-    // addImagePopup.close();
   });
   addImagePopup.setEventListeners();
 
