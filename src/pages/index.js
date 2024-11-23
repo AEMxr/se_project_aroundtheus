@@ -184,12 +184,17 @@ document.addEventListener("DOMContentLoaded", () => {
     inputs.image.title.textContent = formData.name;
     inputs.image.link.link = formData.link;
 
-    const newCardData = {
-      name: inputs.image.title.value,
-      link: inputs.image.link.value,
-    };
+    const newCardData = [
+      {
+        name: inputs.image.title.value,
+        link: inputs.image.link.value,
+      },
+    ];
+
     const newCard = new Section({ newCardData, renderCard }, "#card-template");
     newCard.renderItems();
+    newCard.addItem();
+
     // renderCard(newCardData);
     // evt.target.reset();
     addImagePopup.close();
@@ -203,6 +208,10 @@ document.addEventListener("DOMContentLoaded", () => {
     addImageForm.resetValidation();
     addImagePopup.open();
   });
+
+  // const newCard = new Section({ initialCards, renderCard }, "#card-template");
+  // newCard.renderItems();
+  // newCard.addItem();
 
   // addOpenModalListeners(
   //   modals.image,

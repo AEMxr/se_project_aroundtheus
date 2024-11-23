@@ -2,19 +2,19 @@ import PopupWithForm from "./PopupWithForm.js";
 import Card from "./Card.js";
 
 export default class Section {
-  constructor({ items, renderer }, cssClassSelector) {
+  constructor({ items, renderer }, cssSelector) {
     this._items = Array.isArray(items) ? items : [items];
     /*array of data which adds to the page when loads*/
     this._renderer = renderer;
     /*a function that creates and adds a single item to the page*/
-    this._cssClassSelector = document.querySelector(cssClassSelector);
+    this._cssSelector = document.querySelector(cssSelector);
     /*add the card elements*/
   }
 
   renderItems() {
     // should iterate through the items array.
-    this._items.forEach((item) => {
-      this._renderer(item);
+    this._items.forEach(() => {
+      this._renderer;
     });
     // renders all elements on the page.
     // call the renderer() function on each item.
@@ -23,7 +23,7 @@ export default class Section {
 
   addItem() {
     // takes a DOM element and adds it to the container.
-    this._cssClassSelector.prepend(element);
+    this._cssSelector.prepend();
     // should be called when adding an individual card to the DOM.
   }
 }
@@ -38,8 +38,28 @@ export default class Section {
 
 // /*~----=)>. Universal function for rendering cards '<(=----~*/
 // function renderCard(cardData, method = "prepend") {
-//   const card = new Card(cardData, "#card-template", handlePreviewModal);
-//   const cardElement = card.getCardElement();
+
+//   const card = new Card({ name, link }, cardSelector, handleImageClick);
+
+//   const cardElement = card.getCardElement(){
+//     const cardTemplate = document
+//       .querySelector("#card-template")
+//       .content.cloneNode(true);
+
+//     this._cardElement = cardTemplate.querySelector(".card");
+
+//     const cardImage = cardTemplate.querySelector(".card__image");
+//     const cardLabel = cardTemplate.querySelector(".card__label");
+
+//     cardImage.src = this._link;
+//     cardImage.alt = this._name;
+//     cardLabel.textContent = this._name;
+
+//     this._setEventListeners();
+
+//     return cardTemplate;
+//   };
+
 //   if (method === "prepend") {
 //     cardsContainer.prepend(cardElement);
 //   } else {
@@ -51,3 +71,11 @@ export default class Section {
 // initialCards.forEach((cardData) => {
 //   renderCard(cardData, "append");
 // });
+
+// /*~----=)>. Preview image modal '<(=----~*/
+// function handlePreviewModal(card) {
+//   previewImage.src = card.link;
+//   previewImage.alt = card.name;
+//   imageViewTitle.textContent = card.name;
+//   openModal(modals.preview);
+// }
