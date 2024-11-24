@@ -184,18 +184,16 @@ document.addEventListener("DOMContentLoaded", () => {
     inputs.image.title.textContent = formData.name;
     inputs.image.link.link = formData.link;
 
-    const newCardData = [
-      {
-        name: inputs.image.title.value,
-        link: inputs.image.link.value,
-      },
-    ];
+    const newCardData = {
+      name: inputs.image.title.value,
+      link: inputs.image.link.value,
+    };
 
-    const newCard = new Section({ newCardData, renderCard }, "#card-template");
-    newCard.renderItems();
-    newCard.addItem();
+    // const newCard = new Section({ newCardData, renderCard }, "#card-template");
+    // newCard.renderItems();
+    // newCard.addItem();
 
-    // renderCard(newCardData);
+    renderCard(newCardData);
     // evt.target.reset();
     addImagePopup.close();
     addImageForm.disableButton();
@@ -232,17 +230,33 @@ document.addEventListener("DOMContentLoaded", () => {
   // });
 
   /*~----=)>. Preview image modal '<(=----~*/
-  function handlePreviewModal(card) {
+  function handleImageClick(card) {
     previewImage.src = card.link;
     previewImage.alt = card.name;
     imageViewTitle.textContent = card.name;
     openModal(modals.preview);
   }
 
-  /*~----=)>. Initiate initial cards object '<(=----~*/
-  initialCards.forEach((cardData) => {
-    renderCard(cardData, "append");
-  });
+  // /*~----=)>. Initiate initial cards object '<(=----~*/
+  // initialCards.forEach((cardData) => {
+  //   renderCard(cardData, "append");
+  // });
+
+  const cardSelector = "#card-template";
+
+  const cardSection = new Section(
+    {
+      items: initialCards,
+      renderer: (item) => {
+        const card = new Card(item, cardSelector, handleImageClick);
+        const cardElement = card.getCardElement();
+        cardSection.addItem(cardElement);
+      },
+    },
+    ".cards"
+  );
+
+  cardSection.renderItems();
 
   /*~----=)>. Validation class call '<(=----~*/
   const profileForm = new FormValidator(validationConfig, forms.profile);
