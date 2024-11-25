@@ -189,11 +189,27 @@ document.addEventListener("DOMContentLoaded", () => {
       link: inputs.image.link.value,
     };
 
+    const cardSelector = "#card-template";
+
+    const cardSection = new Section(
+      {
+        items: newCardData,
+        renderer: (item) => {
+          const card = new Card(item, cardSelector, handleImageClick);
+          const cardElement = card.getCardElement();
+          cardSection.addItem(cardElement);
+        },
+      },
+      ".cards"
+    );
+
+    cardSection.renderItems();
+
     // const newCard = new Section({ newCardData, renderCard }, "#card-template");
     // newCard.renderItems();
     // newCard.addItem();
 
-    renderCard(newCardData);
+    // renderCard(newCardData);
     // evt.target.reset();
     addImagePopup.close();
     addImageForm.disableButton();
