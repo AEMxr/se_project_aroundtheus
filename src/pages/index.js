@@ -88,50 +88,50 @@ document.addEventListener("DOMContentLoaded", () => {
   // /*~----=)>. Cards grid for initial card render '<(=----~*/
   // const cardsGrid = document.querySelector(".cards__grid");
 
-  /*~----=)>. Open/close modal functions '<(=----~*/
-  function openModal(modal) {
-    modal.classList.add("modal_opened");
-    document.addEventListener("keydown", handleEscClose);
-    document.addEventListener("mousedown", handleOverlayClose);
-  }
+  // /*~----=)>. Open/close modal functions '<(=----~*/
+  // function openModal(modal) {
+  //   modal.classList.add("modal_opened");
+  //   document.addEventListener("keydown", handleEscClose);
+  //   document.addEventListener("mousedown", handleOverlayClose);
+  // }
 
-  function closeModal(modal) {
-    modal.classList.remove("modal_opened");
-    document.removeEventListener("keydown", handleEscClose);
-    document.removeEventListener("mousedown", handleOverlayClose);
-  }
+  // function closeModal(modal) {
+  //   modal.classList.remove("modal_opened");
+  //   document.removeEventListener("keydown", handleEscClose);
+  //   document.removeEventListener("mousedown", handleOverlayClose);
+  // }
 
-  /*~----=)>. Universal close modal overlay event handler '<(=----~*/
-  function handleOverlayClose(evt) {
-    // Close modal when clicking outside of the modal
-    if (evt.target.classList.contains("modal_opened")) {
-      closeModal(evt.target);
-    }
-  }
+  // /*~----=)>. Universal close modal overlay event handler '<(=----~*/
+  // function handleOverlayClose(evt) {
+  //   // Close modal when clicking outside of the modal
+  //   if (evt.target.classList.contains("modal_opened")) {
+  //     closeModal(evt.target);
+  //   }
+  // }
 
-  // Function to handle closing modal on 'Esc' key
-  function handleEscClose(evt) {
-    if (evt.key === "Escape" || evt.key === "Esc") {
-      const openModal = document.querySelector(".modal_opened");
-      if (openModal) {
-        closeModal(openModal);
-      }
-    }
-  }
+  // // Function to handle closing modal on 'Esc' key
+  // function handleEscClose(evt) {
+  //   if (evt.key === "Escape" || evt.key === "Esc") {
+  //     const openModal = document.querySelector(".modal_opened");
+  //     if (openModal) {
+  //       closeModal(openModal);
+  //     }
+  //   }
+  // }
 
-  /*~----=)>. Close functionality '<(=----~*/
-  closeButtons.forEach((button) => {
-    const popup = button.closest(".modal");
-    button.addEventListener("click", () => closeModal(popup));
-  });
+  // /*~----=)>. Close functionality '<(=----~*/
+  // closeButtons.forEach((button) => {
+  //   const popup = button.closest(".modal");
+  //   button.addEventListener("click", () => closeModal(popup));
+  // });
 
-  /*~----=)>. Modal opener '<(=----~*/
-  function addOpenModalListeners({ modal, openButton, openCallback }) {
-    openButton.addEventListener("click", () => {
-      openCallback && openCallback();
-      openModal(modal);
-    });
-  }
+  // /*~----=)>. Modal opener '<(=----~*/
+  // function addOpenModalListeners({ modal, openButton, openCallback }) {
+  //   openButton.addEventListener("click", () => {
+  //     openCallback && openCallback();
+  //     openModal(modal);
+  //   });
+  // }
 
   /*~----=)>. Profile modal setup '<(=----~*/
 
@@ -167,16 +167,16 @@ document.addEventListener("DOMContentLoaded", () => {
   //   profileForm.disableButton();
   // });
 
-  /*~----=)>. Universal function for rendering cards '<(=----~*/
-  function renderCard(cardData, method = "prepend") {
-    const card = new Card(cardData, "#card-template", handlePreviewModal);
-    const cardElement = card.getCardElement();
-    if (method === "prepend") {
-      cardsContainer.prepend(cardElement);
-    } else {
-      cardsContainer.append(cardElement);
-    }
-  }
+  // /*~----=)>. Universal function for rendering cards '<(=----~*/
+  // function renderCard(cardData, method = "prepend") {
+  //   const card = new Card(cardData, "#card-template", handlePreviewModal);
+  //   const cardElement = card.getCardElement();
+  //   if (method === "prepend") {
+  //     cardsContainer.prepend(cardElement);
+  //   } else {
+  //     cardsContainer.append(cardElement);
+  //   }
+  // }
 
   /*~----=)>. Image modal setup '<(=----~*/
 
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     previewImage.src = card.link;
     previewImage.alt = card.name;
     imageViewTitle.textContent = card.name;
-    openModal(modals.preview);
+    Popup.open();
   }
 
   // /*~----=)>. Initiate initial cards object '<(=----~*/
