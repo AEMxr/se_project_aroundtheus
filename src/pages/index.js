@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
           cardSection.addItem(cardElement);
         },
       },
-      ".cards"
+      ".cards__grid"
     );
 
     cardSection.renderItems();
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cardSection.addItem(cardElement);
       },
     },
-    ".cards"
+    ".cards__grid"
   );
 
   cardSection.renderItems();
