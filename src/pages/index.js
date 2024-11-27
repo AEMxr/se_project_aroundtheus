@@ -44,13 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
     errorClass: "form__input-error_visible",
   };
 
-  /*~----=)>. Modals and forms '<(=----~*/
-  const modals = {
-    profile: document.getElementById("profileModal"),
-    image: document.getElementById("imageModal"),
-    preview: document.getElementById("previewModal"),
-  };
-
   const forms = {
     profile: document.forms.profileForm,
     image: document.forms.imageForm,
@@ -67,26 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  /*~----=)>. Template and containers '<(=----~*/
-  const cardsContainer = document.querySelector(".cards__grid");
-
   /*~----=)>. Profile elements '<(=----~*/
   const profileName = document.querySelector(".profile__name");
   const profileJob = document.querySelector(".profile__profession");
 
-  /*~----=)>. Add Image elements '<(=----~*/
-  const imageTitle = document.querySelector(".card__label");
-  const imageLink = document.querySelector(".profile__profession");
-
-  /*~----=)>. Universal close button handler '<(=----~*/
-  const closeButtons = document.querySelectorAll(".modal__close");
-
-  /*~----=)>. Preview image modal '<(=----~*/
-  const previewImage = document.getElementById("previewImage");
-  const imageViewTitle = document.getElementById("imageViewTitle");
-
-  // /*~----=)>. Cards grid for initial card render '<(=----~*/
-  // const cardsGrid = document.querySelector(".cards__grid");
+  const cardSelector = "#card-template";
 
   /*~----=)>. Profile modal setup '<(=----~*/
 
@@ -95,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     profileJob.textContent = formData.description;
     profilePopup.close();
   });
+
   profilePopup.setEventListeners();
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
@@ -104,15 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
     profilePopup.open();
   });
 
+  /*~----=)>. Preview image modal '<(=----~*/
   const previewPopup = new PopupWithImage("#previewModal");
 
-  /*~----=)>. Preview image modal '<(=----~*/
   function handleImageClick(card) {
     previewPopup.open(card);
   }
 
   /*~----=)>. Image modal setup '<(=----~*/
-
   const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
     inputs.image.title.textContent = formData.name;
     inputs.image.link.link = formData.link;
@@ -128,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addImagePopup.close();
     addImageForm.disableButton();
   });
+
   addImagePopup.setEventListeners();
   previewPopup.setEventListeners();
 
@@ -137,10 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addImageForm.resetValidation();
     addImagePopup.open();
   });
-
-  // handleImageClick.open(newCardData);
-
-  const cardSelector = "#card-template";
 
   const cardSection = new Section(
     {

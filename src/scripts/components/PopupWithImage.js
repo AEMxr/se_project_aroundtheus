@@ -8,8 +8,6 @@ export default class PopupWithImage extends Popup {
     this._popupAlt = document.getElementById("previewImage");
   }
   open({ name, link }) {
-    // set the image's src and alt
-    // set the caption's textContent
     this._previewImage.src = link;
     this._popupAlt.alt = name;
     this._popupCaption.textContent = name;
