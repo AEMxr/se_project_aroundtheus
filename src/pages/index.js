@@ -104,7 +104,12 @@ document.addEventListener("DOMContentLoaded", () => {
     profilePopup.open();
   });
 
-  const handleImageClick = new PopupWithImage("#previewImage");
+  const previewPopup = new PopupWithImage("#previewModal");
+
+  /*~----=)>. Preview image modal '<(=----~*/
+  function handleImageClick(card) {
+    previewPopup.open(card);
+  }
 
   /*~----=)>. Image modal setup '<(=----~*/
 
@@ -117,15 +122,14 @@ document.addEventListener("DOMContentLoaded", () => {
       link: inputs.image.link.value,
     };
 
-    const card = new Card(newCardData, cardSelector, handleImageClick);
-    const cardElement = card.getCardElement();
+    const newCard = new Card(newCardData, cardSelector, handleImageClick);
+    const cardElement = newCard.getCardElement();
     cardSection.addItem(cardElement);
     addImagePopup.close();
     addImageForm.disableButton();
-    handleImageClick.open(newCardData);
   });
   addImagePopup.setEventListeners();
-  handleImageClick.setEventListeners();
+  previewPopup.setEventListeners();
 
   document.getElementById("imageEditButton").addEventListener("click", () => {
     inputs.image.title.value = inputs.image.title.textContent;
@@ -133,14 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addImageForm.resetValidation();
     addImagePopup.open();
   });
-
-  // /*~----=)>. Preview image modal '<(=----~*/
-  // function handleImageClick(card) {
-  //   previewImage.src = card.link;
-  //   previewImage.alt = card.name;
-  //   imageViewTitle.textContent = card.name;
-  //   PopupWithImage.open();
-  // }
 
   // handleImageClick.open(newCardData);
 
