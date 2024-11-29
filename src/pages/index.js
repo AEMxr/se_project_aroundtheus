@@ -5,6 +5,7 @@ import Popup from "../scripts/components/Popup.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
+import UserInfo from "../scripts/components/UserInfo.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const initialCards = [
@@ -60,25 +61,27 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  /*~----=)>. Profile elements '<(=----~*/
-  const profileName = document.querySelector(".profile__name");
-  const profileJob = document.querySelector(".profile__profession");
+  const profile = new UserInfo({
+    nameSelector: ".profile__name",
+    jobSelector: ".profile__profession",
+  });
 
   const cardSelector = "#card-template";
 
   /*~----=)>. Profile modal setup '<(=----~*/
 
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
-    profileName.textContent = formData.name;
-    profileJob.textContent = formData.description;
+    profile.setUserInfo({
+      name: formData.name,
+      job: formData.description,
+    });
     profilePopup.close();
   });
 
   profilePopup.setEventListeners();
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
-    inputs.profile.name.value = profileName.textContent;
-    inputs.profile.description.value = profileJob.textContent;
+    profile.getUserInfo();
     profileForm.resetValidation();
     profilePopup.open();
   });
