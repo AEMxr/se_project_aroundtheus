@@ -6,69 +6,21 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
+import {
+  initialCards,
+  validationConfig,
+  forms,
+  inputs,
+  profile,
+  cardSelector,
+} from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const initialCards = [
-    {
-      name: "Yosemite Valley",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-    },
-    {
-      name: "Lake Louise",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-    },
-    {
-      name: "Bald Mountains",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-    },
-    {
-      name: "Latemar",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-    },
-    {
-      name: "Vanoise National Park",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-    },
-    {
-      name: "Lago di Braies",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-    },
-  ];
-
-  /*~----=)>. Validation configuration object '<(=----~*/
-  const validationConfig = {
-    formSelector: ".form",
-    inputSelector: ".form__input",
-    submitButtonSelector: ".modal__submit",
-    inactiveButtonClass: "modal__submit_disabled",
-    inputErrorClass: "form__input-error",
-    errorClass: "form__input-error_visible",
-  };
-
-  const forms = {
-    profile: document.forms.profileForm,
-    image: document.forms.imageForm,
-  };
-
-  const inputs = {
-    profile: {
-      name: document.getElementById("name"),
-      description: document.getElementById("description"),
-    },
-    image: {
-      title: document.getElementById("title"),
-      link: document.getElementById("link"),
-    },
-  };
-
+  /*~----=)>. Profile modal setup '<(=----~*/
   const profile = new UserInfo({
     nameSelector: ".profile__name",
     jobSelector: ".profile__profession",
   });
-
-  const cardSelector = "#card-template";
-
-  /*~----=)>. Profile modal setup '<(=----~*/
 
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
     profile.setUserInfo({

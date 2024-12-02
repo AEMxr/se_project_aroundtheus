@@ -1,4 +1,3 @@
-import PopupWithForm from "./PopupWithForm.js";
 import Card from "./Card.js";
 
 export default class Section {

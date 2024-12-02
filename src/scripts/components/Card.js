@@ -42,7 +42,7 @@ export default class Card {
 
   getCardElement() {
     const cardTemplate = document
-      .querySelector("#card-template")
+      .querySelector(this._cardSelector)
       .content.cloneNode(true);
 
     this._cardElement = cardTemplate.querySelector(".card");
