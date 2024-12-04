@@ -11,10 +11,7 @@ import {
   validationConfig,
   forms,
   inputs,
-  profile,
   cardSelector,
-  profileName,
-  profileJob,
 } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
     const userData = profile.getUserInfo();
-    inputs.profile.name.value = profileName.textContent;
-    inputs.profile.description.value = profileJob.textContent;
+    inputs.profile.name.value = userData.name;
+    inputs.profile.description.value = userData.job;
     profilePopup.open();
   });
 
@@ -85,9 +82,25 @@ document.addEventListener("DOMContentLoaded", () => {
   cardSection.renderItems();
 
   /*~----=)>. Validation class call '<(=----~*/
-  const profileForm = new FormValidator(validationConfig, forms.profile);
-  profileForm.enableValidation();
+  const formValidators = {};
 
-  const addImageForm = new FormValidator(validationConfig, forms.image);
+  const enableValidation = (validationConfig) => {
+    const formList = Array.from(
+      document.querySelectorAll(validationConfig.formSelector)
+    );
+    formList.forEach((formElement) => {
+      const validator = new FormValidator(validationConfig, formElement);
+      const formName = formElement.getAttribute("name");
+
+      formValidators[formName] = validator;
+      validator.enableValidation();
+    });
+  };
+
+  enableValidation(validationConfig);
+
+  const profileForm = formValidators["profileForm"];
+  profileForm.enableValidation();
+  const addImageForm = formValidators["imageForm"];
   addImageForm.enableValidation();
 });

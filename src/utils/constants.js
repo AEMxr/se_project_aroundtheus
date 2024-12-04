@@ -25,16 +25,6 @@ export const initialCards = [
   },
 ];
 
-/*~----=)>. Validation configuration object '<(=----~*/
-export const validationConfig = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".modal__submit",
-  inactiveButtonClass: "modal__submit_disabled",
-  inputErrorClass: "form__input-error",
-  errorClass: "form__input-error_visible",
-};
-
 export const forms = {
   profile: document.forms.profileForm,
   image: document.forms.imageForm,
@@ -51,8 +41,15 @@ export const inputs = {
   },
 };
 
-/*~----=)>. Profile elements '<(=----~*/
-export const profileName = document.querySelector(".profile__name");
-export const profileJob = document.querySelector(".profile__profession");
+/*~----=)>. Validation configuration object '<(=----~*/
+export const validationConfig = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".modal__submit",
+  inactiveButtonClass: "modal__submit_disabled",
+  inputErrorClass: "form__input-error",
+  errorClass: "form__input-error_visible",
+};
 
+/*~----=)>. Profile elements '<(=----~*/
 export const cardSelector = "#card-template";
