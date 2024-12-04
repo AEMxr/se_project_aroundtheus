@@ -33,8 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
   profilePopup.setEventListeners();
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
-    profile.getUserInfo();
-    profileForm.resetValidation();
+    const userData = UserInfo.getUserInfo();
+    nameInput.value = userData.name;
+    jobInput.value = userData.job;
     profilePopup.open();
   });
 
@@ -45,18 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
     previewPopup.open(card);
   }
 
+  function createCard(item) {
+    const card = new Card(item, cardSelector, handleImageClick);
+    return card.getCardElement();
+  }
+
   /*~----=)>. Image modal setup '<(=----~*/
   const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
-    inputs.image.title.textContent = formData.name;
-    inputs.image.link.link = formData.link;
-
     const newCardData = {
-      name: inputs.image.title.value,
-      link: inputs.image.link.value,
+      name: formData.title,
+      link: formData.link,
     };
 
-    const newCard = new Card(newCardData, cardSelector, handleImageClick);
-    const cardElement = newCard.getCardElement();
+    createCard(newCardData);
+    // const newCard = new Card(newCardData, cardSelector, handleImageClick);
+    // const cardElement = newCard.getCardElement();
     cardSection.addItem(cardElement);
     addImagePopup.close();
     addImageForm.disableButton();
@@ -66,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
   previewPopup.setEventListeners();
 
   document.getElementById("imageEditButton").addEventListener("click", () => {
-    inputs.image.title.value = inputs.image.title.textContent;
-    inputs.image.link.value = inputs.image.link.textContent;
-    addImageForm.resetValidation();
+    // inputs.image.title.value = inputs.image.title.textContent;
+    // inputs.image.link.value = inputs.image.link.textContent;
+    // addImageForm.resetValidation();
     addImagePopup.open();
   });
 
@@ -76,8 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       items: initialCards,
       renderer: (item) => {
-        const card = new Card(item, cardSelector, handleImageClick);
-        const cardElement = card.getCardElement();
+        const cardElement = createCard(item);
+        // const card = new Card(item, cardSelector, handleImageClick);
+        // const cardElement = card.getCardElement();
         cardSection.addItem(cardElement);
       },
     },

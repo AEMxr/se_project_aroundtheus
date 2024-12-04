@@ -4,7 +4,7 @@ export default class Section {
   constructor({ items, renderer }, cssSelector) {
     this._items = Array.isArray(items) ? items : [items];
     this._renderer = renderer;
-    this._cssSelector = document.querySelector(cssSelector);
+    this._cardGrid = document.querySelector(cssSelector);
   }
 
   renderItems() {
@@ -14,6 +14,6 @@ export default class Section {
   }
 
   addItem(element) {
-    this._cssSelector.prepend(element);
+    this._cardGrid.prepend(element);
   }
 }
