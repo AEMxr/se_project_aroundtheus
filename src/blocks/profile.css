@@ -19,7 +19,7 @@
 }
 
 .profile__info {
-  max-width: 109px;
+  max-width: 375px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
