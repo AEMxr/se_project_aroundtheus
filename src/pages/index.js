@@ -13,6 +13,8 @@ import {
   inputs,
   profile,
   cardSelector,
+  profileName,
+  profileJob,
 } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,9 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
   profilePopup.setEventListeners();
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
-    const userData = UserInfo.getUserInfo();
-    nameInput.value = userData.name;
-    jobInput.value = userData.job;
+    const userData = profile.getUserInfo();
+    inputs.profile.name.value = profileName.textContent;
+    inputs.profile.description.value = profileJob.textContent;
     profilePopup.open();
   });
 
@@ -58,10 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link: formData.link,
     };
 
-    createCard(newCardData);
-    // const newCard = new Card(newCardData, cardSelector, handleImageClick);
-    // const cardElement = newCard.getCardElement();
-    cardSection.addItem(cardElement);
+    cardSection.addItem(createCard(newCardData));
     addImagePopup.close();
     addImageForm.disableButton();
   });
@@ -70,9 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
   previewPopup.setEventListeners();
 
   document.getElementById("imageEditButton").addEventListener("click", () => {
-    // inputs.image.title.value = inputs.image.title.textContent;
-    // inputs.image.link.value = inputs.image.link.textContent;
-    // addImageForm.resetValidation();
     addImagePopup.open();
   });
 
@@ -80,10 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       items: initialCards,
       renderer: (item) => {
-        const cardElement = createCard(item);
-        // const card = new Card(item, cardSelector, handleImageClick);
-        // const cardElement = card.getCardElement();
-        cardSection.addItem(cardElement);
+        cardSection.addItem(createCard(item));
       },
     },
     ".cards__grid"

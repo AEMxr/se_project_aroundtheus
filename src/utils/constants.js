@@ -51,4 +51,8 @@ export const inputs = {
   },
 };
 
+/*~----=)>. Profile elements '<(=----~*/
+export const profileName = document.querySelector(".profile__name");
+export const profileJob = document.querySelector(".profile__profession");
+
 export const cardSelector = "#card-template";
