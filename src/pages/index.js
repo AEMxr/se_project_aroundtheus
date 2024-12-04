@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     cardSection.addItem(createCard(newCardData));
+    forms.image.reset();
     addImagePopup.close();
     addImageForm.disableButton();
   });
