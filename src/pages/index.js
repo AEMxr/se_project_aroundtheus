@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
       name: formData.name,
       job: formData.description,
     });
+    profilePopup.getForm().reset();
+    formValidators["profileForm"].disableButton();
     profilePopup.close();
   });
 
@@ -60,9 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     cardSection.addItem(createCard(newCardData));
-    forms.image.reset();
-    addImagePopup.close();
+    addImagePopup.getForm().reset();
     formValidators["imageForm"].disableButton();
+    addImagePopup.close();
   });
 
   addImagePopup.setEventListeners();
