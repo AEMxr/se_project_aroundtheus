@@ -26,8 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
       name: formData.name,
       job: formData.description,
     });
-    profilePopup.getForm().reset();
-    formValidators["profileForm"].disableButton();
     profilePopup.close();
   });
 
@@ -71,9 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
   previewPopup.setEventListeners();
 
   document.getElementById("imageEditButton").addEventListener("click", () => {
-    const addImageForm = addImagePopup.getForm();
     addImagePopup.open();
-    addImageForm.reset();
   });
 
   const cardSection = new Section(
