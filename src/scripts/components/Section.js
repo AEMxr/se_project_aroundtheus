@@ -1,5 +1,3 @@
-import Card from "./Card.js";
-
 export default class Section {
   constructor({ items, renderer }, cssSelector) {
     this._items = Array.isArray(items) ? items : [items];

@@ -33,8 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
     const userData = profile.getUserInfo();
-    inputs.profile.name.value = userData.name;
-    inputs.profile.description.value = userData.job;
+    profilePopup.setInputValues({
+      name: userData.name,
+      description: userData.job,
+    });
     profilePopup.open();
   });
 
@@ -60,14 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
     cardSection.addItem(createCard(newCardData));
     forms.image.reset();
     addImagePopup.close();
-    addImageForm.disableButton();
+    formValidators["imageForm"].disableButton();
   });
 
   addImagePopup.setEventListeners();
   previewPopup.setEventListeners();
 
   document.getElementById("imageEditButton").addEventListener("click", () => {
+    const addImageForm = addImagePopup.getForm();
     addImagePopup.open();
+    addImageForm.reset();
   });
 
   const cardSection = new Section(
@@ -99,7 +103,4 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   enableValidation(validationConfig);
-
-  const profileForm = formValidators["profileForm"];
-  const addImageForm = formValidators["imageForm"];
 });
