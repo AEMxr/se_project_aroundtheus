@@ -101,7 +101,5 @@ document.addEventListener("DOMContentLoaded", () => {
   enableValidation(validationConfig);
 
   const profileForm = formValidators["profileForm"];
-  profileForm.enableValidation();
   const addImageForm = formValidators["imageForm"];
-  addImageForm.enableValidation();
 });
