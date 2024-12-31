@@ -6,6 +6,7 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
+import Api from "../scripts/components/Api.js";
 import {
   initialCards,
   validationConfig,
@@ -15,11 +16,29 @@ import {
 } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  /*~----=)>. API call '<(=----~*/
+  const api = new Api({
+    baseUrl: "https://around-api.en.tripleten-services.com/v1",
+    headers: {
+      authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+      "Content-Type": "application/json",
+    },
+  });
+
   /*~----=)>. Profile modal setup '<(=----~*/
   const profile = new UserInfo({
     nameSelector: ".profile__name",
     jobSelector: ".profile__profession",
+    avatarSelector: ".profile__avatar",
   });
+
+  // api.LoadUserInfo();
+  // .then((userData) => {
+  //   profile.setUserInfo({
+  //     name: userData.name,
+  //     job: userData.about,
+  //   });
+  // });
 
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
     profile.setUserInfo({
@@ -30,6 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   profilePopup.setEventListeners();
+
+  api.userInformation().then((userData) => {
+    profile.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      avatar: userData.avatar,
+    });
+  });
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
     const userData = profile.getUserInfo();
@@ -74,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const cardSection = new Section(
     {
-      items: initialCards,
+      items: [],
       renderer: (item) => {
         cardSection.addItem(createCard(item));
       },
@@ -82,7 +109,42 @@ document.addEventListener("DOMContentLoaded", () => {
     ".cards__grid"
   );
 
-  cardSection.renderItems();
+  // cardSection.renderItems();
+
+  api
+    .getInitialCards()
+    .then((cards) => {
+      cards.forEach((card) => {
+        cardSection.addItem(createCard(card));
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  // const cardSection = new Section(
+  //   {
+  //     items: [],
+  //     renderer: (item) => {
+  //       cardSection.addItem(createCard(item));
+  //     },
+  //   },
+  //   ".cards__grid"
+  // );
+
+  // api
+  //   .getInitialCards()
+  //   .then((response) => {
+  //     console.log("API Response:", response);
+  //     if (response) {
+  //       response.forEach((card) => {
+  //         cardSection.addItem(createCard(card));
+  //       });
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
 
   /*~----=)>. Validation class call '<(=----~*/
   const formValidators = {};
