@@ -12,10 +12,41 @@
   box-sizing: border-box;
 }
 
+.profile__avatar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .profile__avatar {
+  position: relative;
   width: 120px;
   height: 120px;
   border-radius: 50%;
+}
+
+.profile__avatar_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border: none;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile__avatar-container:hover .profile__avatar_overlay {
+  opacity: 1;
+}
+
+.profile__avatar_edit {
+  width: 26px;
+  height: 26px;
 }
 
 .profile__info {

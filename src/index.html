@@ -28,7 +28,16 @@
     <main>
       <section class="profile">
         <div class="profile__container">
-          <img class="profile__avatar" src="#" alt="Jacques Cousteau" />
+          <div class="profile__avatar-container">
+            <img class="profile__avatar" src="#" alt="Profile Avatar" />
+            <button class="profile__avatar_overlay" type="button">
+              <img
+                class="profile__avatar_edit"
+                src="<%= require('../src/images/profile-imgs/AvatarEdit.svg')%>"
+                alt="Profile Avatar Edit"
+              />
+            </button>
+          </div>
           <div class="profile__info">
             <div class="profile__bar">
               <h1 class="profile__name">Jacques Cousteau</h1>
