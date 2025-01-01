@@ -42,12 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   profilePopup.setEventListeners();
 
-  api.userInformation().then((userData) => {
+  api.loadUserInformation().then((userData) => {
     profile.setUserInfo({
       name: userData.name,
       job: userData.about,
       avatar: userData.avatar,
     });
+  });
+
+  api.setUserInformation().then((response) => {
+    console.log("API Response:", response);
   });
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
