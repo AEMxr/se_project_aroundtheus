@@ -4,6 +4,7 @@ import FormValidator from "../scripts/components/FormValidator.js";
 import Popup from "../scripts/components/Popup.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
+import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import Api from "../scripts/components/Api.js";
@@ -16,6 +17,30 @@ import {
 } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  /*~----=)>. Card function '<(=----~*/
+  const deleteConfirmModal = new PopupWithConfirmation(
+    "#deletConfirmationModal"
+  );
+  deleteConfirmModal.setEventListeners();
+
+  function handleDeleteClick(card) {
+    deleteConfirmModal.setSubmitAction(() => {
+      card.deleteCard();
+      deleteConfirmModal.close();
+    });
+    deleteConfirmModal.open();
+  }
+
+  function createCard(item) {
+    const card = new Card(
+      item,
+      cardSelector,
+      handleImageClick,
+      handleDeleteClick
+    );
+    return card.getCardElement();
+  }
+
   /*~----=)>. API call '<(=----~*/
   const api = new Api({
     baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -23,6 +48,33 @@ document.addEventListener("DOMContentLoaded", () => {
       authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
       "Content-Type": "application/json",
     },
+  });
+
+  const cardSection = new Section(
+    {
+      items: [],
+      renderer: (item) => {
+        cardSection.addItem(createCard(item));
+      },
+    },
+    ".cards__grid"
+  );
+
+  api
+    .getInitialCards()
+    .then((cards) => {
+      if (Array.isArray(cards)) {
+        cards.forEach((card) => {
+          cardSection.addItem(createCard(card));
+        });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  api.postNewCard().then((response) => {
+    console.log("API Response:", response);
   });
 
   /*~----=)>. Profile modal setup '<(=----~*/
@@ -91,11 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
     previewPopup.open(card);
   }
 
-  function createCard(item) {
-    const card = new Card(item, cardSelector, handleImageClick);
-    return card.getCardElement();
-  }
-
   /*~----=)>. Image modal setup '<(=----~*/
   const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
     const newCardData = {
@@ -116,34 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addImagePopup.open();
   });
 
-  const cardSection = new Section(
-    {
-      items: [],
-      renderer: (item) => {
-        cardSection.addItem(createCard(item));
-      },
-    },
-    ".cards__grid"
-  );
-
   // cardSection.renderItems();
-
-  api.postNewCard().then((response) => {
-    console.log("API Response:", response);
-  });
-
-  api
-    .getInitialCards()
-    .then((cards) => {
-      if (Array.isArray(cards)) {
-        cards.forEach((card) => {
-          cardSection.addItem(createCard(card));
-        });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 
   // const cardSection = new Section(
   //   {
