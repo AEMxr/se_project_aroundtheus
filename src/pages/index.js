@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
     profile.setUserInfo({
-      avatarSelector: formData.link,
+      avatar: formData.src,
     });
     avatarPopup.close();
   });
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("avatarEditButton").addEventListener("click", () => {
     const userData = profile.getUserInfo();
     avatarPopup.setInputValues({
-      avatar: userData.src,
+      avatar: userData.link,
     });
     avatarPopup.open();
   });

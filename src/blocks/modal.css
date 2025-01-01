@@ -26,6 +26,11 @@
   margin: auto;
 }
 
+.modal__avatar {
+  padding: 34px 36px 36px;
+  height: 238px;
+}
+
 .modal__close {
   position: absolute;
   right: -45px;
