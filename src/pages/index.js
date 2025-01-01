@@ -32,14 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     avatarSelector: ".profile__avatar",
   });
 
-  // api.LoadUserInfo();
-  // .then((userData) => {
-  //   profile.setUserInfo({
-  //     name: userData.name,
-  //     job: userData.about,
-  //   });
-  // });
-
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
     profile.setUserInfo({
       name: formData.name,
@@ -65,6 +57,25 @@ document.addEventListener("DOMContentLoaded", () => {
       description: userData.job,
     });
     profilePopup.open();
+  });
+
+  /*~----=)>. Avatar modal setup '<(=----~*/
+
+  const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
+    profile.setUserInfo({
+      avatarSelector: formData.link,
+    });
+    avatarPopup.close();
+  });
+
+  avatarPopup.setEventListeners();
+
+  document.getElementById("avatarEditButton").addEventListener("click", () => {
+    const userData = profile.getUserInfo();
+    avatarPopup.setInputValues({
+      avatar: userData.src,
+    });
+    avatarPopup.open();
   });
 
   /*~----=)>. Preview image modal '<(=----~*/

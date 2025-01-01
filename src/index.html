@@ -30,7 +30,11 @@
         <div class="profile__container">
           <div class="profile__avatar-container">
             <img class="profile__avatar" src="#" alt="Profile Avatar" />
-            <button class="profile__avatar_overlay" type="button">
+            <button
+              id="avatarEditButton"
+              class="profile__avatar_overlay"
+              type="button"
+            >
               <img
                 class="profile__avatar_edit"
                 src="<%= require('../src/images/profile-imgs/AvatarEdit.svg')%>"
@@ -88,6 +92,39 @@
     <footer class="footer">
       <p class="footer__copywrite">&copy; 2024 AEM</p>
     </footer>
+
+    <div id="avatarModal" class="modal">
+      <div class="modal__container">
+        <button class="modal__close" id="avatarClose"></button>
+        <h2 class="modal__title">Change profile picture</h2>
+
+        <form class="form" name="avatarEdit" autocomplete="off" novalidate>
+          <fieldset class="form__fieldset" id="avatarEditFieldset">
+            <div class="form__input-container">
+              <input
+                type="text"
+                class="form__input"
+                id="name"
+                placeholder="Name"
+                minlength="2"
+                maxlength="40"
+                required
+              />
+              <span class="form__input-error" id="name-error"></span>
+            </div>
+
+            <button
+              type="submit"
+              id="modalSubmit"
+              class="modal__submit modal__submit_disabled"
+              disabled
+            >
+              Save
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
 
     <div id="profileModal" class="modal">
       <div class="modal__container">
