@@ -4,7 +4,7 @@ export default class Api {
     this._headers = headers;
   }
 
-  loadUserInformation() {
+  getUserInformation() {
     return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
       method: "GET",
       headers: {
@@ -31,8 +31,8 @@ export default class Api {
       });
   }
 
-  setUserInformation() {
-    fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
+  patchUserInformation() {
+    return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
       method: "PATCH",
       headers: {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
@@ -48,10 +48,6 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((data) => {
-        console.log("API Response:", data);
-        return data;
       })
       .catch((err) => {
         console.error(err);
@@ -71,12 +67,46 @@ export default class Api {
         }
         return Promise.reject(`Error: ${res.status}`);
       })
-      .then((data) => {
-        console.log("API Response:", data);
-        return data;
-      })
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  // postNewCard(cardData) {
+  //   return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+  //     method: "POST",
+  //     headers: {
+  //       authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       name: cardData.name,
+  //       link: cardData.link,
+  //     }),
+  //   }).then((res) => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     }
+  //     return Promise.reject(`Error: ${res.status}`);
+  //   });
+  // }
+
+  postNewCard(cardData) {
+    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+      method: "POST",
+      headers: {
+        authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "Bald Mountains",
+        link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
   }
 }

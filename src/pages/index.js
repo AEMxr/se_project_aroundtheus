@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   profilePopup.setEventListeners();
 
-  api.loadUserInformation().then((userData) => {
+  api.getUserInformation().then((userData) => {
     profile.setUserInfo({
       name: userData.name,
       job: userData.about,
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  api.setUserInformation().then((response) => {
+  api.patchUserInformation().then((response) => {
     console.log("API Response:", response);
   });
 
@@ -128,12 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // cardSection.renderItems();
 
+  api.postNewCard().then((response) => {
+    console.log("API Response:", response);
+  });
+
   api
     .getInitialCards()
     .then((cards) => {
-      cards.forEach((card) => {
-        cardSection.addItem(createCard(card));
-      });
+      if (Array.isArray(cards)) {
+        cards.forEach((card) => {
+          cardSection.addItem(createCard(card));
+        });
+      }
     })
     .catch((error) => {
       console.error(error);
