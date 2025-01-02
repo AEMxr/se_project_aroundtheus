@@ -26,6 +26,10 @@
   margin: auto;
 }
 
+.modal__container_confirm {
+  height: 111px;
+}
+
 .modal__avatar {
   padding: 34px 36px 36px;
   height: 238px;
@@ -60,6 +64,10 @@
   line-height: 29.05px;
 }
 
+.modal__title_confirm {
+  margin: 0 0 38px;
+}
+
 .modal__title_image-view {
   color: white;
   font-weight: 400;
@@ -86,6 +94,10 @@
   font-weight: 400;
   line-height: 21.78px;
   text-align: center;
+}
+
+.modal__submit_confirm {
+  margin: 0;
 }
 
 .modal__submit:hover {

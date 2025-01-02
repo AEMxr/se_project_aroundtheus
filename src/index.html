@@ -94,13 +94,17 @@
     </footer>
 
     <div id="deletConfirmationModal" class="modal">
-      <div class="modal__container modal__delete">
+      <div class="modal__container modal__container_confirm">
         <button class="modal__close" id="modalConfirmClose"></button>
-        <h2 class="modal__title">Are you sure?</h2>
+        <h2 class="modal__title modal__title_confirm">Are you sure?</h2>
 
         <form class="form" name="closeConfirmation" novalidate>
           <fieldset class="form__fieldset" id="closeConfirmationFieldset">
-            <button type="submit" id="confirmDelete" class="modal__submit">
+            <button
+              type="submit"
+              id="confirmDelete"
+              class="modal__submit modal__submit_confirm"
+            >
               Yes
             </button>
           </fieldset>
