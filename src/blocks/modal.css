@@ -159,6 +159,10 @@
     padding: 25px 22px;
   }
 
+  .modal__container_confirm {
+    height: 111px;
+  }
+
   .modal__title {
     height: 22px;
     font-size: 18px;
