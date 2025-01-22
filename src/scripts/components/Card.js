@@ -8,10 +8,15 @@ export default class Card {
   ) {
     this._name = name;
     this._link = link;
+    this._id = _id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
+  }
+
+  getId() {
+    return this._id;
   }
 
   _setEventListeners() {

@@ -67,9 +67,6 @@ export default class Api {
         }
         return Promise.reject(`Error: ${res.status}`);
       })
-      .then((result) => {
-        console.log(result);
-      })
       .catch((err) => {
         console.error(err);
       });
@@ -113,7 +110,7 @@ export default class Api {
     });
   }
 
-  deleteCard() {
+  deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: {

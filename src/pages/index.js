@@ -17,6 +17,15 @@ import {
 } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  /*~----=)>. API call '<(=----~*/
+  const api = new Api({
+    baseUrl: "https://around-api.en.tripleten-services.com/v1",
+    headers: {
+      authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+      "Content-Type": "application/json",
+    },
+  });
+
   /*~----=)>. Card function '<(=----~*/
   const deleteConfirmModal = new PopupWithConfirmation(
     "#deletConfirmationModal"
@@ -24,9 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
   deleteConfirmModal.setEventListeners();
 
   function handleDeleteClick(card) {
+    console.log("Card being deleted:", card);
     deleteConfirmModal.setSubmitAction(() => {
-      card.deleteCard();
-      deleteConfirmModal.close();
+      api
+        .deleteCard(card.getId())
+        .then(() => {
+          card.deleteCard();
+          deleteConfirmModal.close();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     });
     deleteConfirmModal.open();
   }
@@ -47,15 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return card.getCardElement();
   }
 
-  /*~----=)>. API call '<(=----~*/
-  const api = new Api({
-    baseUrl: "https://around-api.en.tripleten-services.com/v1",
-    headers: {
-      authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
-      "Content-Type": "application/json",
-    },
-  });
-
   /*~----=)>. Card grid setup '<(=----~*/
   const cardSection = new Section(
     {
@@ -73,9 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((cards) => {
       if (Array.isArray(cards)) {
         cardSection.renderItems(cards);
+        cards.reverse().forEach((card) => {
+          cardSection.addItem(createCard(card));
+        });
       }
     })
-
     .catch((error) => {
       console.error(error);
     });
