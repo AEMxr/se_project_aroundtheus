@@ -31,12 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteConfirmModal.open();
   }
 
+  function handleLikeClick(cardId, isLiked) {
+    console.log("Card ID:", cardId, "isLiked:", isLiked);
+    return isLiked ? api.removeLike(cardId) : api.addLike(cardId);
+  }
+
   function createCard(item) {
     const card = new Card(
       item,
       cardSelector,
       handleImageClick,
-      handleDeleteClick
+      handleDeleteClick,
+      handleLikeClick
     );
     return card.getCardElement();
   }
@@ -50,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
+  /*~----=)>. Card grid setup '<(=----~*/
   const cardSection = new Section(
     {
       items: [],
@@ -60,22 +67,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ".cards__grid"
   );
 
+  /*~----=)>. Get initial cards '<(=----~*/
   api
     .getInitialCards()
     .then((cards) => {
       if (Array.isArray(cards)) {
-        cards.forEach((card) => {
-          cardSection.addItem(createCard(card));
-        });
+        cardSection.renderItems(cards);
       }
     })
+
     .catch((error) => {
       console.error(error);
     });
 
-  api.postNewCard().then((response) => {
-    console.log("API Response:", response);
-  });
+  // api.postNewCard().then((response) => {
+  //   console.log("API Response:", response);
+  // });
 
   /*~----=)>. Profile modal setup '<(=----~*/
   const profile = new UserInfo({
