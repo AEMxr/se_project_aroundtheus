@@ -86,6 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     })
+    .then((response) => {
+      console.log("API Response:", response);
+    })
     .catch((error) => {
       console.error(error);
     });
