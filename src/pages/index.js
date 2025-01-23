@@ -104,16 +104,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
-    profile.setUserInfo({
-      name: formData.name,
-      job: formData.description,
-    });
-    profilePopup.close();
+    console.log("Sending to server:", formData);
+    api
+      .patchUserInformation({
+        name: formData.name,
+        about: formData.description,
+      })
+      .then((userData) => {
+        console.log("Server response:", userData);
+        profile.setUserInfo({
+          name: userData.name,
+          job: userData.about,
+          avatar: userData.avatar,
+        });
+        profilePopup.close();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
 
   profilePopup.setEventListeners();
 
   api.getUserInformation().then((userData) => {
+    console.log("Initial user data:", userData);
     profile.setUserInfo({
       name: userData.name,
       job: userData.about,
@@ -121,9 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  api.patchUserInformation().then((response) => {
-    console.log("API Response:", response);
-  });
+  // api.patchUserInformation().then((response) => {
+  //   console.log("API Response:", response);
+  // });
 
   document.getElementById("profileEditButton").addEventListener("click", () => {
     const userData = profile.getUserInfo();
@@ -164,15 +178,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /*~----=)>. Image modal setup '<(=----~*/
   const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
-    const newCardData = {
-      name: formData.title,
-      link: formData.link,
-    };
-
-    cardSection.addItem(createCard(newCardData));
-    addImagePopup.getForm().reset();
-    formValidators["imageForm"].disableButton();
-    addImagePopup.close();
+    api
+      .postNewCard({ name: formData.title, link: formData.link })
+      .then((CardData) => {
+        cardSection.addItem(createCard(CardData));
+        addImagePopup.getForm().reset();
+        formValidators["imageForm"].disableButton();
+        addImagePopup.close();
+      });
   });
 
   addImagePopup.setEventListeners();

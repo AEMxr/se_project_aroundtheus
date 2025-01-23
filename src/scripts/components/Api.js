@@ -5,16 +5,10 @@ export default class Api {
   }
 
   getUserInformation() {
+    console.log("Headers being sent:", this._headers);
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: {
-        about: "Placeholder description",
-        avatar:
-          "https://practicum-content.s3.amazonaws.com/resources/default-avatar_1704458546.png",
-        name: "Placeholder name",
-        _id: "f4e39d2a7f9c1bd764a38d2a",
-        authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
-      },
+      headers: this._headers,
     })
       .then((res) => {
         if (res.ok) {
@@ -31,16 +25,13 @@ export default class Api {
       });
   }
 
-  patchUserInformation() {
+  patchUserInformation(userData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: {
-        authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
-        name: "Marie Skłodowska Curie",
-        about: "Physicist and Chemist",
+        name: userData.name,
+        about: userData.about,
       }),
     })
       .then((res) => {
@@ -55,7 +46,7 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
@@ -99,10 +90,7 @@ export default class Api {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: "Bald Mountains",
-        link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-      }),
+      body: JSON.stringify(cardData),
     }).then((res) => {
       if (res.ok) {
         return res.json();
