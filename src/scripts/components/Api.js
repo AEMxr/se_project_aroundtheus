@@ -4,6 +4,29 @@ export default class Api {
     this._headers = headers;
   }
 
+  patchAvatar(avatarData) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarData.avatar,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        console.log("API Response:", data);
+        return data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   getUserInformation() {
     console.log("Headers being sent:", this._headers);
     return fetch(`${this._baseUrl}/users/me`, {

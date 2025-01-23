@@ -151,12 +151,18 @@ document.addEventListener("DOMContentLoaded", () => {
   /*~----=)>. Avatar modal setup '<(=----~*/
 
   const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
-    profile.setUserInfo({
-      name: profile.getUserInfo().name,
-      job: profile.getUserInfo().job,
-      avatar: formData.avatar,
-    });
-    avatarPopup.close();
+    api
+      .patchAvatar({
+        avatar: formData.avatar,
+      })
+      .then((userData) => {
+        profile.setUserInfo({
+          name: userData.name,
+          job: userData.about,
+          avatar: userData.avatar,
+        });
+        avatarPopup.close();
+      });
   });
 
   avatarPopup.setEventListeners();
