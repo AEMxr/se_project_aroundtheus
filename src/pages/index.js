@@ -54,12 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function createCard(item) {
+    console.log("Card data:", item);
     const card = new Card(
       item,
       cardSelector,
       handleImageClick,
       handleDeleteClick,
-      handleLikeClick
+      handleLikeClick,
+      profile._id
     );
     return card.getCardElement();
   }
@@ -85,9 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
           cardSection.addItem(createCard(card));
         });
       }
-    })
-    .then((response) => {
-      console.log("API Response:", response);
     })
     .catch((error) => {
       console.error(error);

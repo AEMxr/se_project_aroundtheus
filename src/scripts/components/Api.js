@@ -5,7 +5,7 @@ export default class Api {
   }
 
   getUserInformation() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
         about: "Placeholder description",
@@ -32,7 +32,7 @@ export default class Api {
   }
 
   patchUserInformation() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
@@ -63,6 +63,7 @@ export default class Api {
     })
       .then((res) => {
         if (res.ok) {
+          console.log("API Response:", res);
           return res.json();
         }
         return Promise.reject(`Error: ${res.status}`);
@@ -92,7 +93,7 @@ export default class Api {
   // }
 
   postNewCard(cardData) {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
@@ -115,7 +116,6 @@ export default class Api {
       method: "DELETE",
       headers: {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
-        headers: this._headers,
       },
     }).then((res) => {
       if (res.ok) {
@@ -128,7 +128,10 @@ export default class Api {
   addLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: {
+        authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -140,7 +143,10 @@ export default class Api {
   removeLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
