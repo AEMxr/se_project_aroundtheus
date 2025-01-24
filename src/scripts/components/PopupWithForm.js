@@ -26,6 +26,11 @@ export default class PopupWithForm extends Popup {
     return this._form;
   }
 
+  renderLoading(isLoading, loadingText = "Saving...") {
+    const submitButton = this._form.querySelector(".modal__submit");
+    submitButton.textContent = isLoading ? loadingText : "Save";
+  }
+
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {

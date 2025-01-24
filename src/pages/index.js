@@ -104,14 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const profilePopup = new PopupWithForm("#profileModal", (formData) => {
-    console.log("Sending to server:", formData);
+    profilePopup.renderLoading(true, "Saving...");
     api
       .patchUserInformation({
         name: formData.name,
         about: formData.description,
       })
       .then((userData) => {
-        console.log("Server response:", userData);
         profile.setUserInfo({
           name: userData.name,
           job: userData.about,
@@ -119,8 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         profilePopup.close();
       })
-      .catch((error) => {
-        console.error(error);
+      .finally(() => {
+        profilePopup.renderLoading(false);
       });
   });
 
@@ -151,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /*~----=)>. Avatar modal setup '<(=----~*/
 
   const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
+    avatarPopup.renderLoading(true, "Saving...");
     api
       .patchAvatar({
         avatar: formData.avatar,
@@ -162,6 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
           avatar: userData.avatar,
         });
         avatarPopup.close();
+      })
+      .finally(() => {
+        avatarPopup.renderLoading(false);
       });
   });
 
@@ -184,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /*~----=)>. Image modal setup '<(=----~*/
   const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
+    addImagePopup.renderLoading(true, "Saving...");
     api
       .postNewCard({ name: formData.title, link: formData.link })
       .then((CardData) => {
@@ -191,6 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
         addImagePopup.getForm().reset();
         formValidators["imageForm"].disableButton();
         addImagePopup.close();
+      })
+      .finally(() => {
+        addImagePopup.renderLoading(false);
       });
   });
 
