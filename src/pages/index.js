@@ -26,7 +26,42 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  /*~----=)>. Form handler '<(=----~*/
+  /*~----=)>. Profile setup '<(=----~*/
+  const profile = new UserInfo({
+    nameSelector: ".profile__name",
+    jobSelector: ".profile__profession",
+    avatarSelector: ".profile__avatar",
+  });
+
+  /*~----=)>. Card grid setup '<(=----~*/
+  const cardSection = new Section(
+    {
+      items: [],
+      renderer: (item) => {
+        cardSection.addItem(createCard(item));
+      },
+    },
+    ".cards__grid"
+  );
+
+  /*~----=)>. Validation class call '<(=----~*/
+  const formValidators = {};
+
+  const enableValidation = (validationConfig) => {
+    const formList = Array.from(
+      document.querySelectorAll(validationConfig.formSelector)
+    );
+    formList.forEach((formElement) => {
+      const validator = new FormValidator(validationConfig, formElement);
+      const formName = formElement.getAttribute("name");
+
+      formValidators[formName] = validator;
+      validator.enableValidation();
+    });
+  };
+  enableValidation(validationConfig);
+
+  /*~----=)>. Handlers '<(=----~*/
   const handleSubmit = (request, popup) => {
     return () => {
       popup.renderLoading(true, "Saving...");
@@ -36,103 +71,17 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  /*~----=)>. Profile setup '<(=----~*/
-  const profile = new UserInfo({
-    nameSelector: ".profile__name",
-    jobSelector: ".profile__profession",
-    avatarSelector: ".profile__avatar",
-  });
-
-  /*~----=)>. Popup initialization '<(=----~*/
-  const previewPopup = new PopupWithImage("#previewModal");
-
-  const deleteConfirmModal = new PopupWithConfirmation(
-    "#deletConfirmationModal"
-  );
-
-  const profilePopup = new PopupWithForm("#profileModal", (formData) => {
-    handleSubmit(
-      () =>
-        api
-          .patchUserInformation({
-            name: formData.name,
-            about: formData.description,
-          })
-          .then((userData) => {
-            profile.setUserInfo({
-              name: userData.name,
-              job: userData.about,
-              avatar: userData.avatar,
-            });
-          }),
-      profilePopup
-    )();
-  });
-
-  const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
-    avatarPopup.renderLoading(true, "Saving...");
-    api
-      .patchAvatar({
-        avatar: formData.avatar,
-      })
-      .then((userData) => {
-        profile.setUserInfo({
-          name: userData.name,
-          job: userData.about,
-          avatar: userData.avatar,
-        });
-        avatarPopup.close();
-      })
-      .finally(() => {
-        avatarPopup.renderLoading(false);
-      });
-  });
-
-  const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
-    addImagePopup.renderLoading(true, "Saving...");
-    api
-      .postNewCard({ name: formData.title, link: formData.link })
-      .then((CardData) => {
-        cardSection.addItem(createCard(CardData));
-        addImagePopup.getForm().reset();
-        formValidators["imageForm"].disableButton();
-        addImagePopup.close();
-      })
-      .finally(() => {
-        addImagePopup.renderLoading(false);
-      });
-  });
-
-  /*~----=)>. Popup event listeners '<(=----~*/
-  previewPopup.setEventListeners();
-  deleteConfirmModal.setEventListeners();
-  profilePopup.setEventListeners();
-  avatarPopup.setEventListeners();
-  addImagePopup.setEventListeners();
-
-  /*~----=)>. Button event listeners '<(=----~*/
-  document.getElementById("profileEditButton").addEventListener("click", () => {
-    const userData = profile.getUserInfo();
-    profilePopup.setInputValues({
+  function updateUserInfo(userData) {
+    profile.setUserInfo({
       name: userData.name,
-      description: userData.job,
-    });
-    profilePopup.open();
-  });
-
-  document.getElementById("avatarEditButton").addEventListener("click", () => {
-    const userData = profile.getUserInfo();
-    avatarPopup.setInputValues({
+      job: userData.about,
       avatar: userData.avatar,
     });
-    avatarPopup.open();
-  });
+  }
 
-  document.getElementById("imageEditButton").addEventListener("click", () => {
-    addImagePopup.open();
-  });
-
-  /*~----=)>. Card function '<(=----~*/
+  function handleImageClick(card) {
+    previewPopup.open(card);
+  }
 
   function handleDeleteClick(card) {
     console.log("Card being deleted:", card);
@@ -167,104 +116,91 @@ document.addEventListener("DOMContentLoaded", () => {
     return card.getCardElement();
   }
 
-  /*~----=)>. Card grid setup '<(=----~*/
-  const cardSection = new Section(
-    {
-      items: [],
-      renderer: (item) => {
-        cardSection.addItem(createCard(item));
-      },
-    },
-    ".cards__grid"
+  function setupModalTrigger(buttonId, popup, getInputValues) {
+    document.getElementById(buttonId).addEventListener("click", () => {
+      if (getInputValues) {
+        const userData = profile.getUserInfo();
+        popup.setInputValues(getInputValues(userData));
+      }
+      popup.open();
+    });
+  }
+
+  /*~----=)>. Popup initialization '<(=----~*/
+  const previewPopup = new PopupWithImage("#previewModal");
+
+  const deleteConfirmModal = new PopupWithConfirmation(
+    "#deletConfirmationModal"
   );
 
-  /*~----=)>. Get initial cards '<(=----~*/
-  api
-    .getInitialCards()
-    .then((cards) => {
-      console.log("Initial cards data:", cards);
+  const profilePopup = new PopupWithForm("#profileModal", (formData) => {
+    handleSubmit(
+      () =>
+        api
+          .patchUserInformation({
+            name: formData.name,
+            about: formData.description,
+          })
+          .then(updateUserInfo),
+      profilePopup
+    )();
+  });
+
+  const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
+    handleSubmit(
+      () => api.patchAvatar({ avatar: formData.avatar }).then(updateUserInfo),
+      avatarPopup
+    )();
+  });
+
+  const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
+    handleSubmit(
+      () =>
+        api
+          .postNewCard({ name: formData.title, link: formData.link })
+          .then((CardData) => {
+            cardSection.addItem(createCard(CardData));
+            addImagePopup.getForm().reset();
+            formValidators["imageForm"].disableButton();
+          }),
+      addImagePopup
+    )();
+  });
+
+  /*~----=)>. Initial Data Loading '<(=----~*/
+  Promise.all([api.getUserInformation(), api.getInitialCards()])
+    .then(([userData, cards]) => {
+      updateUserInfo(userData);
+
       if (Array.isArray(cards)) {
-        cardSection.renderItems(cards);
-        cards.reverse().forEach((card) => {
-          console.log("Individual card data:", card);
+        const reversedCards = cards.reverse();
+        reversedCards.forEach((card) => {
           cardSection.addItem(createCard(card));
         });
       }
     })
-    .catch((error) => {
-      console.error(error);
-    });
+    .catch(console.error);
 
-  // api.postNewCard().then((response) => {
-  //   console.log("API Response:", response);
-  // });
+  /*~----=)>. Popup event listeners '<(=----~*/
 
-  /*~----=)>. Profile modal setup '<(=----~*/
+  const popups = [
+    previewPopup,
+    deleteConfirmModal,
+    profilePopup,
+    avatarPopup,
+    addImagePopup,
+  ];
+  popups.forEach((popup) => popup.setEventListeners());
 
-  api.getUserInformation().then((userData) => {
-    console.log("Initial user data:", userData);
-    profile.setUserInfo({
-      name: userData.name,
-      job: userData.about,
-      avatar: userData.avatar,
-    });
-  });
+  /*~----=)>. Button event listeners '<(=----~*/
+  setupModalTrigger("profileEditButton", profilePopup, (userData) => ({
+    name: userData.name,
+    description: userData.job,
+  }));
 
-  // api.patchUserInformation().then((response) => {
-  //   console.log("API Response:", response);
-  // });
+  setupModalTrigger("avatarEditButton", avatarPopup, (userData) => ({
+    avatar: userData.avatar,
+  }));
 
-  /*~----=)>. Avatar modal setup '<(=----~*/
-
-  /*~----=)>. Preview image modal '<(=----~*/
-
-  function handleImageClick(card) {
-    previewPopup.open(card);
-  }
-
-  /*~----=)>. Image modal setup '<(=----~*/
-
-  // cardSection.renderItems();
-
-  // const cardSection = new Section(
-  //   {
-  //     items: [],
-  //     renderer: (item) => {
-  //       cardSection.addItem(createCard(item));
-  //     },
-  //   },
-  //   ".cards__grid"
-  // );
-
-  // api
-  //   .getInitialCards()
-  //   .then((response) => {
-  //     console.log("API Response:", response);
-  //     if (response) {
-  //       response.forEach((card) => {
-  //         cardSection.addItem(createCard(card));
-  //       });
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-
-  /*~----=)>. Validation class call '<(=----~*/
-  const formValidators = {};
-
-  const enableValidation = (validationConfig) => {
-    const formList = Array.from(
-      document.querySelectorAll(validationConfig.formSelector)
-    );
-    formList.forEach((formElement) => {
-      const validator = new FormValidator(validationConfig, formElement);
-      const formName = formElement.getAttribute("name");
-
-      formValidators[formName] = validator;
-      validator.enableValidation();
-    });
-  };
-
-  enableValidation(validationConfig);
+  setupModalTrigger("imageEditButton", addImagePopup);
 });
