@@ -17,6 +17,11 @@ import Api from "../scripts/components/Api.js";
 import { validationConfig, cardSelector } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const cardsGrid = document.querySelector(".cards__grid");
+  setTimeout(() => {
+    cardsGrid.style.animation =
+      "fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+  }, 2000);
   /*~----=)>. API call '<(=----~*/
   const api = new Api({
     baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -177,6 +182,13 @@ document.addEventListener("DOMContentLoaded", () => {
         reversedCards.forEach((card) => {
           cardSection.addItem(createCard(card));
         });
+
+        // Add this after cards are loaded
+        setTimeout(() => {
+          const cardsGrid = document.querySelector(".cards__grid");
+          cardsGrid.style.animation =
+            "fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+        }, reversedCards.length * 100 + 500); // Adjust timing based on number of cards
       }
     })
     .catch(console.error);
