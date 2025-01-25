@@ -6,6 +6,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  transition: transsform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
 .card__delete {
@@ -64,6 +70,7 @@
   border: none;
   background-color: transparent;
   margin: 31px 20px 30px auto;
+  transition: background-image 0.3s ease;
 }
 
 .card__heart:hover {
@@ -73,4 +80,53 @@
 
 .card__heart_active {
   background-image: url("../images/vector-imgs/heartFilled.svg");
+}
+
+.card__heart_clicked-active {
+  background-image: url("../images/vector-imgs/heartFilled.svg");
+  animation: heartBeat 0.8s ease-in-out;
+}
+
+.card__heart_clicked-inactive {
+  animation: heartUnlike 0.8s ease-in-out;
+}
+
+.card__heart_inactive {
+  animation: heartUnlike 0.8s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes heartUnlike {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

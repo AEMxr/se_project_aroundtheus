@@ -41,6 +41,7 @@ export default class Api {
 
   async toggleLike(cardId, isLiking) {
     const method = isLiking ? "PUT" : "DELETE";
+    console.log(`Sending ${method} request for card ${cardId}`);
     const res = await fetch(
       this._getCardEndpoint(cardId, "likes"),
       this._getRequestConfig(method)
@@ -63,7 +64,7 @@ export default class Api {
 
   async patchUserInformation(userData) {
     const res = await fetch(
-      this._getEndpoint(),
+      this._getUserEndpoint(),
       this._getRequestConfig("PATCH", {
         name: userData.name,
         about: userData.about,

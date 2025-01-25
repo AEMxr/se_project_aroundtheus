@@ -7,6 +7,7 @@ export default class Card {
     handleLikeClick,
     userId
   ) {
+    console.log("Card being constructed with isLiked:", isLiked);
     this._name = name;
     this._link = link;
     this._id = _id;
@@ -58,7 +59,17 @@ export default class Card {
     this._handleLikeClick(this._id, this._isLiked).then((card) => {
       this._likes = card.likes;
       this._isLiked = !this._isLiked;
+
+      const animationClass = this._isLiked
+        ? "card__heart_clicked-active"
+        : "card__heart_clicked-inactive";
+      this._cardHeart.classList.add(animationClass);
+
       this._setLikeButtonState();
+
+      setTimeout(() => {
+        this._cardHeart.classList.remove(animationClass);
+      }, 800);
     });
   }
 
@@ -78,7 +89,7 @@ export default class Card {
     this._cardLabel.textContent = this._name;
 
     if (this._isLiked) {
-      this._cardHeart.classList.add("card__heart_active");
+      this._setLikeButtonState();
     }
 
     this._setEventListeners();

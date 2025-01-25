@@ -1,20 +1,20 @@
+/*~----=)>. Styles '<(=----~*/
 import "./index.css";
+
+/*~----=)>. components '<(=----~*/
 import Card from "../scripts/components/Card.js";
-import FormValidator from "../scripts/components/FormValidator.js";
-import Popup from "../scripts/components/Popup.js";
+import Section from "../scripts/components/Section.js";
+import UserInfo from "../scripts/components/UserInfo.js";
+
+/*~----=)>. Popups '<(=----~*/
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation.js";
-import Section from "../scripts/components/Section.js";
-import UserInfo from "../scripts/components/UserInfo.js";
+
+/*~----=)>. Utils '<(=----~*/
+import FormValidator from "../scripts/components/FormValidator.js";
 import Api from "../scripts/components/Api.js";
-import {
-  initialCards,
-  validationConfig,
-  forms,
-  inputs,
-  cardSelector,
-} from "../utils/constants.js";
+import { validationConfig, cardSelector } from "../utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   /*~----=)>. API call '<(=----~*/
@@ -26,11 +26,113 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  /*~----=)>. Card function '<(=----~*/
+  /*~----=)>. Form handler '<(=----~*/
+  const handleSubmit = (request, popup) => {
+    return () => {
+      popup.renderLoading(true, "Saving...");
+      request()
+        .then(() => popup.close())
+        .finally(() => popup.renderLoading(false));
+    };
+  };
+
+  /*~----=)>. Profile setup '<(=----~*/
+  const profile = new UserInfo({
+    nameSelector: ".profile__name",
+    jobSelector: ".profile__profession",
+    avatarSelector: ".profile__avatar",
+  });
+
+  /*~----=)>. Popup initialization '<(=----~*/
+  const previewPopup = new PopupWithImage("#previewModal");
+
   const deleteConfirmModal = new PopupWithConfirmation(
     "#deletConfirmationModal"
   );
+
+  const profilePopup = new PopupWithForm("#profileModal", (formData) => {
+    handleSubmit(
+      () =>
+        api
+          .patchUserInformation({
+            name: formData.name,
+            about: formData.description,
+          })
+          .then((userData) => {
+            profile.setUserInfo({
+              name: userData.name,
+              job: userData.about,
+              avatar: userData.avatar,
+            });
+          }),
+      profilePopup
+    )();
+  });
+
+  const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
+    avatarPopup.renderLoading(true, "Saving...");
+    api
+      .patchAvatar({
+        avatar: formData.avatar,
+      })
+      .then((userData) => {
+        profile.setUserInfo({
+          name: userData.name,
+          job: userData.about,
+          avatar: userData.avatar,
+        });
+        avatarPopup.close();
+      })
+      .finally(() => {
+        avatarPopup.renderLoading(false);
+      });
+  });
+
+  const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
+    addImagePopup.renderLoading(true, "Saving...");
+    api
+      .postNewCard({ name: formData.title, link: formData.link })
+      .then((CardData) => {
+        cardSection.addItem(createCard(CardData));
+        addImagePopup.getForm().reset();
+        formValidators["imageForm"].disableButton();
+        addImagePopup.close();
+      })
+      .finally(() => {
+        addImagePopup.renderLoading(false);
+      });
+  });
+
+  /*~----=)>. Popup event listeners '<(=----~*/
+  previewPopup.setEventListeners();
   deleteConfirmModal.setEventListeners();
+  profilePopup.setEventListeners();
+  avatarPopup.setEventListeners();
+  addImagePopup.setEventListeners();
+
+  /*~----=)>. Button event listeners '<(=----~*/
+  document.getElementById("profileEditButton").addEventListener("click", () => {
+    const userData = profile.getUserInfo();
+    profilePopup.setInputValues({
+      name: userData.name,
+      description: userData.job,
+    });
+    profilePopup.open();
+  });
+
+  document.getElementById("avatarEditButton").addEventListener("click", () => {
+    const userData = profile.getUserInfo();
+    avatarPopup.setInputValues({
+      avatar: userData.avatar,
+    });
+    avatarPopup.open();
+  });
+
+  document.getElementById("imageEditButton").addEventListener("click", () => {
+    addImagePopup.open();
+  });
+
+  /*~----=)>. Card function '<(=----~*/
 
   function handleDeleteClick(card) {
     console.log("Card being deleted:", card);
@@ -49,8 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleLikeClick(cardId, isLiked) {
-    console.log("Card ID:", cardId, "isLiked:", isLiked);
-    return isLiked ? api.removeLike(cardId) : api.addLike(cardId);
+    return api.toggleLike(cardId, !isLiked);
   }
 
   function createCard(item) {
@@ -81,9 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
   api
     .getInitialCards()
     .then((cards) => {
+      console.log("Initial cards data:", cards);
       if (Array.isArray(cards)) {
         cardSection.renderItems(cards);
         cards.reverse().forEach((card) => {
+          console.log("Individual card data:", card);
           cardSection.addItem(createCard(card));
         });
       }
@@ -97,33 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // });
 
   /*~----=)>. Profile modal setup '<(=----~*/
-  const profile = new UserInfo({
-    nameSelector: ".profile__name",
-    jobSelector: ".profile__profession",
-    avatarSelector: ".profile__avatar",
-  });
-
-  const profilePopup = new PopupWithForm("#profileModal", (formData) => {
-    profilePopup.renderLoading(true, "Saving...");
-    api
-      .patchUserInformation({
-        name: formData.name,
-        about: formData.description,
-      })
-      .then((userData) => {
-        profile.setUserInfo({
-          name: userData.name,
-          job: userData.about,
-          avatar: userData.avatar,
-        });
-        profilePopup.close();
-      })
-      .finally(() => {
-        profilePopup.renderLoading(false);
-      });
-  });
-
-  profilePopup.setEventListeners();
 
   api.getUserInformation().then((userData) => {
     console.log("Initial user data:", userData);
@@ -138,75 +214,15 @@ document.addEventListener("DOMContentLoaded", () => {
   //   console.log("API Response:", response);
   // });
 
-  document.getElementById("profileEditButton").addEventListener("click", () => {
-    const userData = profile.getUserInfo();
-    profilePopup.setInputValues({
-      name: userData.name,
-      description: userData.job,
-    });
-    profilePopup.open();
-  });
-
   /*~----=)>. Avatar modal setup '<(=----~*/
 
-  const avatarPopup = new PopupWithForm("#avatarModal", (formData) => {
-    avatarPopup.renderLoading(true, "Saving...");
-    api
-      .patchAvatar({
-        avatar: formData.avatar,
-      })
-      .then((userData) => {
-        profile.setUserInfo({
-          name: userData.name,
-          job: userData.about,
-          avatar: userData.avatar,
-        });
-        avatarPopup.close();
-      })
-      .finally(() => {
-        avatarPopup.renderLoading(false);
-      });
-  });
-
-  avatarPopup.setEventListeners();
-
-  document.getElementById("avatarEditButton").addEventListener("click", () => {
-    const userData = profile.getUserInfo();
-    avatarPopup.setInputValues({
-      avatar: userData.avatar,
-    });
-    avatarPopup.open();
-  });
-
   /*~----=)>. Preview image modal '<(=----~*/
-  const previewPopup = new PopupWithImage("#previewModal");
 
   function handleImageClick(card) {
     previewPopup.open(card);
   }
 
   /*~----=)>. Image modal setup '<(=----~*/
-  const addImagePopup = new PopupWithForm("#imageModal", (formData) => {
-    addImagePopup.renderLoading(true, "Saving...");
-    api
-      .postNewCard({ name: formData.title, link: formData.link })
-      .then((CardData) => {
-        cardSection.addItem(createCard(CardData));
-        addImagePopup.getForm().reset();
-        formValidators["imageForm"].disableButton();
-        addImagePopup.close();
-      })
-      .finally(() => {
-        addImagePopup.renderLoading(false);
-      });
-  });
-
-  addImagePopup.setEventListeners();
-  previewPopup.setEventListeners();
-
-  document.getElementById("imageEditButton").addEventListener("click", () => {
-    addImagePopup.open();
-  });
 
   // cardSection.renderItems();
 
