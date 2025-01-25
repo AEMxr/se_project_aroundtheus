@@ -79,6 +79,9 @@ export default class Card {
       .cloneNode(true)
       .querySelector(".card");
 
+    const cards = document.querySelectorAll(".card");
+    this._cardElement.style.setProperty("--card-index", cards.length);
+
     this._cardImage = this._cardElement.querySelector(".card__image");
     this._cardLabel = this._cardElement.querySelector(".card__label");
     this._cardHeart = this._cardElement.querySelector(".card__heart");

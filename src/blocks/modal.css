@@ -8,7 +8,9 @@
   visibility: hidden;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
 }
 
 .modal_opened {
@@ -24,6 +26,12 @@
   border-radius: 10px;
   position: relative;
   margin: auto;
+  transform: scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal_opened .modal__container {
+  transform: scale(1);
 }
 
 .modal__container_confirm {
@@ -79,7 +87,10 @@
 .modal__submit {
   background: black;
   color: white;
-  border: 2px black;
+  border: 2px solid transparent;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 50px;
   width: 358px;
   margin: 48px 0 0;
@@ -101,7 +112,16 @@
 }
 
 .modal__submit:hover {
-  opacity: 80%;
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(176, 176, 196, 0.15),
+    0 2px 4px rgba(255, 51, 51, 0.1);
+  background: linear-gradient(45deg, #000000, #333333);
+}
+
+.modal__submit:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .modal__submit_disabled {

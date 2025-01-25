@@ -6,11 +6,29 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: transsform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: transform;
+  opacity: 0;
+  animation: cardReveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: calc(var(--card-index) * 0.1s);
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(176, 176, 196, 0.15),
+    0 8px 16px rgba(255, 255, 255, 0.1), 0 4px 8px rgba(255, 51, 51, 0.1);
   cursor: pointer;
 }
 
@@ -25,11 +43,14 @@
   background-size: 100%;
   background-repeat: no-repeat;
   background-color: transparent;
+  filter: drop-shadow(0 0 2px rgba(176, 176, 196, 0.15));
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .card__delete:hover {
   cursor: pointer;
   opacity: 60%;
+  filter: drop-shadow(0 0 3px rgba(255, 89, 89, 0.4));
 }
 
 .card__image {
@@ -70,12 +91,14 @@
   border: none;
   background-color: transparent;
   margin: 31px 20px 30px auto;
-  transition: background-image 0.3s ease;
+  filter: drop-shadow(0 0 2px rgba(176, 176, 196, 0.15));
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .card__heart:hover {
   opacity: 50%;
   cursor: pointer;
+  filter: drop-shadow(0 0 3px rgba(255, 51, 51, 0.4));
 }
 
 .card__heart_active {
@@ -98,18 +121,23 @@
 @keyframes heartBeat {
   0% {
     transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 51, 51, 0));
   }
   25% {
     transform: scale(1.2);
+    filter: drop-shadow(0 0 4px rgba(255, 51, 51, 0.65));
   }
   50% {
     transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(255, 51, 51, 0.4));
   }
   75% {
     transform: scale(1.1);
+    filter: drop-shadow(0 0 3px rgba(255, 51, 51, 0.5));
   }
   100% {
     transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 51, 51, 0));
   }
 }
 
