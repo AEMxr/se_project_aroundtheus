@@ -5,7 +5,8 @@ export default class Card {
     handleImageClick,
     handleDeleteClick,
     handleLikeClick,
-    userId
+    userId,
+    stateManager
   ) {
     console.log("Card being constructed with isLiked:", isLiked);
     this._name = name;
@@ -18,6 +19,7 @@ export default class Card {
     this._handleLikeClick = handleLikeClick;
     this._isLiked = isLiked;
     this._owner = owner;
+    this.stateManager = stateManager;
   }
 
   getId() {
@@ -34,7 +36,10 @@ export default class Card {
     });
 
     this._cardImage.addEventListener("click", () => {
-      this._handleImageClick({ name: this._name, link: this._link });
+      this._handleImageClick({
+        name: this._name,
+        link: this._link,
+      });
     });
   }
 
@@ -45,6 +50,12 @@ export default class Card {
   deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
+
+    this.stateManager.setState({
+      cards: this.stateManager
+        .getState()
+        .cards.filter((card) => card._id !== this._id),
+    });
   }
 
   _setLikeButtonState() {
@@ -56,25 +67,33 @@ export default class Card {
   }
 
   handleLikeIcon() {
-    this._handleLikeClick(this._id, this._isLiked).then((card) => {
-      this._likes = card.likes;
-      this._isLiked = !this._isLiked;
+    const newLikeState = !this._isLiked;
+    const animationClass = newLikeState
+      ? "card__heart_clicked-active"
+      : "card__heart_clicked-inactive";
 
-      const animationClass = this._isLiked
-        ? "card__heart_clicked-active"
-        : "card__heart_clicked-inactive";
-      this._cardHeart.classList.add(animationClass);
+    this._cardHeart.classList.add(animationClass);
 
-      this._setLikeButtonState();
-
-      setTimeout(() => {
-        this._cardHeart.classList.remove(animationClass);
-      }, 800);
-    });
+    this._handleLikeClick(this._id, !newLikeState)
+      .then((card) => {
+        this._isLiked = newLikeState;
+        this._setLikeButtonState();
+      })
+      .finally(() => {
+        setTimeout(() => {
+          this._cardHeart.classList.remove(animationClass);
+        }, 800);
+      });
   }
 
   getCardElement() {
     const cardTemplate = document.querySelector(this._cardSelector);
+    if (!cardTemplate) {
+      throw new Error(
+        `Template with selector ${this._cardSelector} not found in DOM`
+      );
+    }
+
     this._cardElement = cardTemplate.content
       .cloneNode(true)
       .querySelector(".card");

@@ -1,3 +1,5 @@
+import ErrorBoundary from "../components/ErrorBoundary.js";
+
 export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -40,60 +42,78 @@ export default class Api {
   }
 
   async toggleLike(cardId, isLiking) {
-    const method = isLiking ? "PUT" : "DELETE";
-    console.log(`Sending ${method} request for card ${cardId}`);
-    const res = await fetch(
-      this._getCardEndpoint(cardId, "likes"),
-      this._getRequestConfig(method)
-    );
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const method = isLiking ? "PUT" : "DELETE";
+      console.log(`Sending ${method} request for card ${cardId}`);
+      const res = await fetch(
+        this._getCardEndpoint(cardId, "likes"),
+        this._getRequestConfig(method)
+      );
+      return this._handleServerResponse(res);
+    }, "Card Like Update");
   }
 
   async patchAvatar(avatarData) {
-    const res = await fetch(
-      this._getUserEndpoint("avatar"),
-      this._getRequestConfig("PATCH", { avatar: avatarData.avatar })
-    );
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const res = await fetch(
+        this._getUserEndpoint("avatar"),
+        this._getRequestConfig("PATCH", { avatar: avatarData.avatar })
+      );
+      return this._handleServerResponse(res);
+    }, "Profile Update");
   }
 
   async getUserInformation() {
-    const res = await fetch(this._getUserEndpoint(), this._getRequestConfig());
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const res = await fetch(
+        this._getUserEndpoint(),
+        this._getRequestConfig()
+      );
+      return this._handleServerResponse(res);
+    }, "User Information Request");
   }
 
   async patchUserInformation(userData) {
-    const res = await fetch(
-      this._getUserEndpoint(),
-      this._getRequestConfig("PATCH", {
-        name: userData.name,
-        about: userData.about,
-      })
-    );
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const res = await fetch(
+        this._getUserEndpoint(),
+
+        this._getRequestConfig("PATCH", {
+          name: userData.name,
+          about: userData.about,
+        })
+      );
+      return this._handleServerResponse(res);
+    }, "Profile Update");
   }
 
   async getInitialCards() {
-    const res = await fetch(this._getEndpoint(), this._getRequestConfig());
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const res = await fetch(this._getEndpoint(), this._getRequestConfig());
+      return this._handleServerResponse(res);
+    }, "Initial Cards Request");
   }
 
   async postNewCard(cardData) {
-    const res = await fetch(
-      this._getEndpoint(),
-      this._getRequestConfig("POST", {
-        name: cardData.name,
-        link: cardData.link,
-      })
-    );
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const res = await fetch(
+        this._getEndpoint(),
+        this._getRequestConfig("POST", {
+          name: cardData.name,
+          link: cardData.link,
+        })
+      );
+      return this._handleServerResponse(res);
+    }, "Card Creation");
   }
 
   async deleteCard(cardId) {
-    const res = await fetch(
-      this._getEndpoint("cards", cardId),
-      this._getRequestConfig("DELETE")
-    );
-    return this._handleServerResponse(res);
+    return ErrorBoundary.tryCatch(async () => {
+      const res = await fetch(
+        this._getEndpoint("cards", cardId),
+        this._getRequestConfig("DELETE")
+      );
+      return this._handleServerResponse(res);
+    }, "Card Delete");
   }
 }
