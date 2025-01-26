@@ -20,6 +20,8 @@ export default class Card {
     this._isLiked = isLiked;
     this._owner = owner;
     this.stateManager = stateManager;
+    this._imageLoaded = false;
+    this._observer = null;
   }
 
   getId() {
@@ -106,7 +108,8 @@ export default class Card {
     this._cardHeart = this._cardElement.querySelector(".card__heart");
     this._cardDelete = this._cardElement.querySelector(".card__delete");
 
-    this._cardImage.src = this._link;
+    this._cardImage.loading = "lazy";
+    this._setupIntersectionObserver();
     this._cardImage.alt = this._name;
     this._cardLabel.textContent = this._name;
 
@@ -117,5 +120,24 @@ export default class Card {
     this._setEventListeners();
 
     return this._cardElement;
+  }
+
+  _setupIntersectionObserver() {
+    this._observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this._imageLoaded) {
+            this._cardImage.src = this._link;
+            this._imageLoaded = true;
+            this._observer.unobserve(this._cardImage);
+          }
+        });
+      },
+      {
+        rootMargin: "50px",
+      }
+    );
+
+    this._observer.observe(this._cardImage);
   }
 }
