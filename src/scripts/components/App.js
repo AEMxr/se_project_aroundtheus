@@ -72,20 +72,12 @@ export default class App {
       if (state.user) {
         this.profile.setUserInfo(state.user);
       }
-      // Only render cards when we have them and loading is complete
       if (state.cards && state.cards.length > 0 && !state.isLoading) {
         this.sectionManager.renderInitialCards(state.cards);
       }
     });
 
-    this.popupManager = new PopupManager(
-      this.api,
-      this.profile,
-      this.formValidators,
-      this.stateManager
-    );
-    this.popupManager.initializePopups();
-
+    // Create sectionManager first
     this.sectionManager = new SectionManager(
       cardSelector,
       this.api,
@@ -95,6 +87,16 @@ export default class App {
       (cardId, isLiked) => this.popupManager._handleLikeClick(cardId, isLiked),
       this.stateManager
     );
+
+    // Then create popupManager with sectionManager
+    this.popupManager = new PopupManager(
+      this.api,
+      this.profile,
+      this.formValidators,
+      this.stateManager,
+      this.sectionManager
+    );
+    this.popupManager.initializePopups();
 
     this.initializeEventListeners();
 

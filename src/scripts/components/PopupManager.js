@@ -4,11 +4,12 @@ import PopupWithImage from "./PopupWithImage.js";
 import PopupWithConfirmation from "./PopupWithConfirmation.js";
 
 export default class PopupManager {
-  constructor(api, profile, formValidators, stateManager) {
+  constructor(api, profile, formValidators, stateManager, sectionManager) {
     this._api = api;
     this._profile = profile;
     this._formValidators = formValidators;
     this._stateManager = stateManager;
+    this._sectionManager = sectionManager;
 
     this._handleDeleteClick = (card) => {
       this.openPopup("delete");
@@ -112,18 +113,19 @@ export default class PopupManager {
           });
         } else if (action === "postNewCard") {
           const currentCards = this._stateManager.getState().cards;
+          const newCard = {
+            name: response.name,
+            link: response.link,
+            _id: response._id,
+            isLiked: false,
+            owner: response.owner,
+          };
+
           this._stateManager.setState({
-            cards: [
-              {
-                name: response.name,
-                link: response.link,
-                _id: response._id,
-                isLiked: false,
-                owner: response.owner,
-              },
-              ...currentCards,
-            ],
+            cards: [newCard, ...currentCards],
           });
+
+          this._sectionManager.addCard(newCard);
         }
 
         this._stateManager.setState({

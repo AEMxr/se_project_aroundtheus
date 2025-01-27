@@ -18,26 +18,26 @@ export default class SectionManager {
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
     this._stateManager = stateManager;
+    this._initialRenderComplete = false;
   }
 
   renderInitialCards(cards) {
-    if (Array.isArray(cards)) {
-      // Clear existing cards first
+    if (Array.isArray(cards) && !this._initialRenderComplete) {
       this._cardsGrid.innerHTML = "";
-
-      // Render new cards
-      cards.forEach((cardData) => {
-        this.addCard(cardData);
-      });
+      // Add cards in reverse order using append instead of prepend
+      for (let i = 0; i < cards.length; i++) {
+        const cardElement = this._createCard(cards[i]);
+        this._cardsGrid.append(cardElement);
+      }
 
       setTimeout(() => {
         this._cardsGrid.style.animation =
-          "fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+          "fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+        this._initialRenderComplete = true;
       }, cards.length * 100 + 500);
     }
   }
 
-  // Add this new method
   updateCard(cardId, newData) {
     const cardElement = this._cardsGrid.querySelector(
       `[data-card-id="${cardId}"]`
@@ -46,6 +46,11 @@ export default class SectionManager {
       const updatedCardElement = this._createCard(newData);
       cardElement.replaceWith(updatedCardElement);
     }
+  }
+
+  _addInitialCard(cardData) {
+    const cardElement = this._createCard(cardData);
+    this._cardsGrid.prepend(cardElement);
   }
 
   addCard(cardData) {
