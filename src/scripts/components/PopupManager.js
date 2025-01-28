@@ -1,6 +1,7 @@
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithConfirmation from "./PopupWithConfirmation.js";
+import ConfigManager from "./ConfigManager.js";
 
 export default class PopupManager {
   constructor(api, profile, formValidators, stateManager, sectionManager) {
@@ -21,21 +22,6 @@ export default class PopupManager {
     ].forEach((method) => (this[method] = this[method].bind(this)));
   }
 
-  _handleStateUpdate(action, data) {
-    const stateUpdates = {
-      modal: (name) => ({ currentModal: name }),
-      loading: (isLoading) => ({
-        isLoading,
-        loadingAction: isLoading ? action : null,
-      }),
-      error: (error) => ({
-        errors: [...this._stateManager.getState().errors, error],
-      }),
-      data: (newData) => newData,
-    };
-    this._stateManager.setState(stateUpdates[action](data));
-  }
-
   _createPopup(type, config = {}) {
     const popupTypes = {
       form: (config) =>
@@ -44,17 +30,20 @@ export default class PopupManager {
           (data) => this._handleSubmit(config.name, config.formatData(data)),
           this._formValidators[config.name]
         ),
-      image: () => new PopupWithImage("#previewModal"),
-      confirmation: () => new PopupWithConfirmation("#deletConfirmationModal"),
+      image: () =>
+        new PopupWithImage(ConfigManager.config.selectors.modals.preview),
+      confirmation: () =>
+        new PopupWithConfirmation(ConfigManager.config.selectors.modals.delete),
     };
     return popupTypes[type](config);
   }
 
   _initializePopupConfig() {
+    const formSelectors = ConfigManager.config.selectors.forms;
     return {
       profileForm: {
         name: "profileForm",
-        selector: "#profileModal",
+        selector: formSelectors.profile,
         type: "form",
         action: "patchUserInformation",
         formatData: (data) => ({
@@ -71,7 +60,7 @@ export default class PopupManager {
       },
       avatarEdit: {
         name: "avatarEdit",
-        selector: "#avatarModal",
+        selector: formSelectors.avatar,
         type: "form",
         action: "patchAvatar",
         formatData: (data) => ({ avatar: data.avatar }),
@@ -84,7 +73,7 @@ export default class PopupManager {
       },
       imageForm: {
         name: "imageForm",
-        selector: "#imageModal",
+        selector: formSelectors.image,
         type: "form",
         action: "postNewCard",
         formatData: (data) => ({
@@ -107,6 +96,7 @@ export default class PopupManager {
     };
   }
 
+  // Rest of the methods remain the same
   _initializePopups() {
     const formPopups = Object.entries(this._popupConfig).reduce(
       (acc, [name, config]) => ({
@@ -121,6 +111,21 @@ export default class PopupManager {
       preview: this._createPopup("image"),
       delete: this._createPopup("confirmation"),
     };
+  }
+
+  _handleStateUpdate(action, data) {
+    const stateUpdates = {
+      modal: (name) => ({ currentModal: name }),
+      loading: (isLoading) => ({
+        isLoading,
+        loadingAction: isLoading ? action : null,
+      }),
+      error: (error) => ({
+        errors: [...this._stateManager.getState().errors, error],
+      }),
+      data: (newData) => newData,
+    };
+    this._stateManager.setState(stateUpdates[action](data));
   }
 
   _executeApiAction(action, data, onSuccess) {

@@ -1,4 +1,12 @@
+import ConfigManager from "./ConfigManager.js";
+
 export default class Card {
+  static classes = {
+    heartActive: "card__heart_active",
+    heartClickedActive: "card__heart_clicked-active",
+    heartClickedInactive: "card__heart_clicked-inactive",
+  };
+
   constructor(
     { name, link, _id, isLiked, owner },
     cardSelector,
@@ -8,136 +16,134 @@ export default class Card {
     userId,
     stateManager
   ) {
-    console.log("Card being constructed with isLiked:", isLiked);
-    this._name = name;
-    this._link = link;
-    this._id = _id;
+    this._data = { name, link, _id, isLiked, owner };
+    this._cardSelector = ConfigManager.config.selectors.cardTemplate;
+    this._handlers = { handleImageClick, handleDeleteClick, handleLikeClick };
     this._userId = userId;
-    this._cardSelector = cardSelector;
-    this._handleImageClick = handleImageClick;
-    this._handleDeleteClick = handleDeleteClick;
-    this._handleLikeClick = handleLikeClick;
-    this._isLiked = isLiked;
-    this._owner = owner;
     this.stateManager = stateManager;
-    this._imageLoaded = false;
-    this._observer = null;
+    this._state = {
+      imageLoaded: false,
+      observer: null,
+      elements: {},
+    };
   }
 
   getId() {
-    return this._id;
+    return this._data._id;
   }
 
-  _setEventListeners() {
-    this._cardHeart.addEventListener("click", () => {
-      this.handleLikeIcon();
-    });
+  _initializeElements() {
+    const template = document.querySelector(this._cardSelector);
+    if (!template) {
+      throw new Error(`Template ${this._cardSelector} not found`);
+    }
 
-    this._cardDelete.addEventListener("click", () => {
-      this._handleDeleteButton();
-    });
+    this._state.elements.card = template.content
+      .cloneNode(true)
+      .querySelector(".card");
 
-    this._cardImage.addEventListener("click", () => {
-      this._handleImageClick({
-        name: this._name,
-        link: this._link,
-      });
+    const elementSelectors = {
+      image: ".card__image",
+      label: ".card__label",
+      heart: ".card__heart",
+      delete: ".card__delete",
+    };
+
+    Object.entries(elementSelectors).forEach(([key, selector]) => {
+      this._state.elements[key] =
+        this._state.elements.card.querySelector(selector);
     });
   }
 
-  _handleDeleteButton() {
-    this._handleDeleteClick(this);
+  _attachEventListeners() {
+    const { heart, delete: deleteBtn, image } = this._state.elements;
+
+    const eventMap = new Map([
+      [heart, () => this.handleLikeIcon()],
+      [deleteBtn, () => this._handlers.handleDeleteClick(this)],
+      [
+        image,
+        () =>
+          this._handlers.handleImageClick({
+            name: this._data.name,
+            link: this._data.link,
+          }),
+      ],
+    ]);
+
+    eventMap.forEach((handler, element) => {
+      element.addEventListener("click", handler);
+    });
   }
 
   deleteCard() {
-    this._cardElement.remove();
-    this._cardElement = null;
+    this._state.elements.card.remove();
+    this._state.elements.card = null;
 
     this.stateManager.setState({
       cards: this.stateManager
         .getState()
-        .cards.filter((card) => card._id !== this._id),
+        .cards.filter((card) => card._id !== this._data._id),
     });
   }
 
-  _setLikeButtonState() {
-    if (this._isLiked) {
-      this._cardHeart.classList.add("card__heart_active");
-    } else {
-      this._cardHeart.classList.remove("card__heart_active");
-    }
+  _updateLikeState(isLiked) {
+    const { heart } = this._state.elements;
+    heart.classList.toggle(Card.classes.heartActive, isLiked);
   }
 
-  handleLikeIcon() {
-    const newLikeState = !this._isLiked;
+  async handleLikeIcon() {
+    const newLikeState = !this._data.isLiked;
     const animationClass = newLikeState
-      ? "card__heart_clicked-active"
-      : "card__heart_clicked-inactive";
+      ? Card.classes.heartClickedActive
+      : Card.classes.heartClickedInactive;
 
-    this._cardHeart.classList.add(animationClass);
-
-    this._handleLikeClick(this._id, !newLikeState)
-      .then((card) => {
-        this._isLiked = newLikeState;
-        this._setLikeButtonState();
-      })
-      .finally(() => {
-        setTimeout(() => {
-          this._cardHeart.classList.remove(animationClass);
-        }, 800);
-      });
+    try {
+      this._state.elements.heart.classList.add(animationClass);
+      await this._handlers.handleLikeClick(this._data._id, !newLikeState);
+      this._data.isLiked = newLikeState;
+      this._updateLikeState(newLikeState);
+    } finally {
+      setTimeout(() => {
+        this._state.elements.heart.classList.remove(animationClass);
+      }, 800);
+    }
   }
 
-  getCardElement() {
-    const cardTemplate = document.querySelector(this._cardSelector);
-    if (!cardTemplate) {
-      throw new Error(
-        `Template with selector ${this._cardSelector} not found in DOM`
-      );
-    }
+  _setupLazyLoading() {
+    const { image } = this._state.elements;
+    image.loading = "lazy";
 
-    this._cardElement = cardTemplate.content
-      .cloneNode(true)
-      .querySelector(".card");
-
-    const cards = document.querySelectorAll(".card");
-    this._cardElement.style.setProperty("--card-index", cards.length);
-
-    this._cardImage = this._cardElement.querySelector(".card__image");
-    this._cardLabel = this._cardElement.querySelector(".card__label");
-    this._cardHeart = this._cardElement.querySelector(".card__heart");
-    this._cardDelete = this._cardElement.querySelector(".card__delete");
-
-    this._cardImage.loading = "lazy";
-    this._setupIntersectionObserver();
-    this._cardImage.alt = this._name;
-    this._cardLabel.textContent = this._name;
-
-    if (this._isLiked) {
-      this._setLikeButtonState();
-    }
-
-    this._setEventListeners();
-
-    return this._cardElement;
-  }
-
-  _setupIntersectionObserver() {
-    this._observer = new IntersectionObserver(
+    this._state.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !this._imageLoaded) {
-            this._cardImage.src = this._link;
-            this._imageLoaded = true;
-            this._observer.unobserve(this._cardImage);
+          if (entry.isIntersecting && !this._state.imageLoaded) {
+            image.src = this._data.link;
+            this._state.imageLoaded = true;
+            this._state.observer.unobserve(image);
           }
         });
       },
-      {
-        rootMargin: "50px",
-      }
+      { rootMargin: "50px" }
     );
 
-    this._observer.observe(this._cardImage);
+    this._state.observer.observe(image);
+  }
+
+  getCardElement() {
+    this._initializeElements();
+
+    const { card, image, label } = this._state.elements;
+    const cards = document.querySelectorAll(".card");
+
+    card.style.setProperty("--card-index", cards.length);
+    image.alt = this._data.name;
+    label.textContent = this._data.name;
+
+    this._setupLazyLoading();
+    this._updateLikeState(this._data.isLiked);
+    this._attachEventListeners();
+
+    return card;
   }
 }

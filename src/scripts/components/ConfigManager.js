@@ -1,58 +1,66 @@
 export default class ConfigManager {
-  constructor() {
-    this.apiConfig = {
+  static config = {
+    api: {
       baseUrl: "https://around-api.en.tripleten-services.com/v1",
       headers: {
         authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
         "Content-Type": "application/json",
       },
-    };
+    },
 
-    this.validationConfig = {
+    validation: {
       formSelector: ".modal__form",
       inputSelector: ".modal__input",
       submitButtonSelector: ".modal__button",
       inactiveButtonClass: "modal__button_disabled",
       inputErrorClass: "modal__input_type_error",
       errorClass: "modal__error_visible",
-    };
+    },
 
-    this.selectors = {
+    selectors: {
       cardTemplate: "#card-template",
-      profileName: ".profile__name",
-      profileJob: ".profile__profession",
-      profileAvatar: ".profile__avatar",
+      profile: {
+        name: ".profile__name",
+        job: ".profile__profession",
+        avatar: ".profile__avatar",
+      },
+      buttons: {
+        profileEdit: "#profileEditButton",
+        avatarEdit: "#avatarEditButton",
+        imageEdit: "#imageEditButton",
+      },
+      forms: {
+        profile: "#profileModal",
+        avatar: "#avatarModal",
+        image: "#imageModal",
+      },
+      modals: {
+        preview: "#previewModal",
+        delete: "#deletConfirmationModal",
+      },
       cardsGrid: ".cards__grid",
-      profileEditButton: "#profileEditButton",
-      avatarEditButton: "#avatarEditButton",
-      imageEditButton: "#imageEditButton",
-      profileForm: "#profileModal",
-      avatarForm: "#avatarModal",
-      imageForm: "#imageModal",
-      previewModal: "#previewModal",
-      deleteConfirmModal: "#deletConfirmationModal",
-    };
+    },
 
-    this.buttonConfig = {
+    buttonActions: {
       profileEditButton: "profileForm",
       avatarEditButton: "avatarEdit",
       imageEditButton: "imageForm",
-    };
-  }
+    },
+  };
 
   getApiConfig() {
-    return this.apiConfig;
+    return ConfigManager.config.api;
   }
 
   getValidationConfig() {
-    return this.validationConfig;
+    return ConfigManager.config.validation;
   }
 
   getSelectors() {
-    return this.selectors;
+    return ConfigManager.config.selectors;
   }
 
   getButtonConfig() {
-    return this.buttonConfig;
+    return ConfigManager.config.buttonActions;
   }
 }
