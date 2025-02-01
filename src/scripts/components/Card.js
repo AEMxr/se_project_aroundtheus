@@ -76,10 +76,16 @@ export default class Card {
 
     this._cardHeart.classList.add(animationClass);
 
-    this._handleLikeClick(this._id, !newLikeState)
-      .then((card) => {
+    this._handleLikeClick(this._id, newLikeState) // Changed to pass newLikeState
+      .then(() => {
         this._isLiked = newLikeState;
         this._setLikeButtonState();
+
+        const currentState = this.stateManager.getState();
+        const updatedCards = currentState.cards.map((card) =>
+          card._id === this._id ? { ...card, isLiked: newLikeState } : card
+        );
+        this.stateManager.setState({ cards: updatedCards });
       })
       .finally(() => {
         setTimeout(() => {
