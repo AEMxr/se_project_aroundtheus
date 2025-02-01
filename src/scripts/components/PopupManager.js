@@ -1,7 +1,7 @@
-import Card from "./Card.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithConfirmation from "./PopupWithConfirmation.js";
+import ConfigManager from "./ConfigManager.js";
 
 export default class PopupManager {
   constructor(api, profile, formValidators, stateManager, sectionManager) {
@@ -10,146 +10,182 @@ export default class PopupManager {
     this._formValidators = formValidators;
     this._stateManager = stateManager;
     this._sectionManager = sectionManager;
+    this._popupConfig = this._initializePopupConfig();
+    this._popups = this._initializePopups();
 
-    this._handleDeleteClick = (card) => {
-      this.openPopup("delete");
-      const deletePopup = this._popups.delete;
-      deletePopup.setSubmitAction(() => {
-        this._api
-          .deleteCard(card.getId())
-          .then(() => {
-            card.deleteCard();
-            deletePopup.close();
-          })
-          .catch(console.error);
-      });
+    [
+      "_handleDeleteClick",
+      "_handleLikeClick",
+      "_handleImageClick",
+      "_handleError",
+      "_handleStateUpdate",
+    ].forEach((method) => (this[method] = this[method].bind(this)));
+  }
+
+  _createPopup(type, config = {}) {
+    const popupTypes = {
+      form: (config) =>
+        new PopupWithForm(
+          config.selector,
+          (data) => this._handleSubmit(config.name, config.formatData(data)),
+          this._formValidators[config.name]
+        ),
+      image: () =>
+        new PopupWithImage(ConfigManager.config.selectors.modals.preview),
+      confirmation: () =>
+        new PopupWithConfirmation(ConfigManager.config.selectors.modals.delete),
     };
+    return popupTypes[type](config);
+  }
 
-    this._handleLikeClick = (cardId, isLiked) => {
-      return this._api.toggleLike(cardId, isLiked);
-    };
-
-    this._handleImageClick = (cardData) => {
-      this._stateManager.setState({ currentModal: "preview" });
-      this._popups.preview.open(cardData);
-    };
-
-    this._popupConfig = {
+  _initializePopupConfig() {
+    const formSelectors = ConfigManager.config.selectors.forms;
+    return {
       profileForm: {
-        selector: "#profileModal",
+        name: "profileForm",
+        selector: formSelectors.profile,
+        type: "form",
         action: "patchUserInformation",
         formatData: (data) => ({
           name: data.name,
           about: data.description,
         }),
+        updateState: (response, formData) => ({
+          user: {
+            ...this._stateManager.getState().user,
+            name: formData.name,
+            job: formData.about,
+          },
+        }),
       },
       avatarEdit: {
-        selector: "#avatarModal",
+        name: "avatarEdit",
+        selector: formSelectors.avatar,
+        type: "form",
         action: "patchAvatar",
         formatData: (data) => ({ avatar: data.avatar }),
+        updateState: (response, formData) => ({
+          user: {
+            ...this._stateManager.getState().user,
+            avatar: formData.avatar,
+          },
+        }),
       },
       imageForm: {
-        selector: "#imageModal",
+        name: "imageForm",
+        selector: formSelectors.image,
+        type: "form",
         action: "postNewCard",
         formatData: (data) => ({
           name: data.title,
           link: data.link,
         }),
+        updateState: (response) => ({
+          cards: [
+            {
+              name: response.name,
+              link: response.link,
+              _id: response._id,
+              isLiked: false,
+              owner: response.owner,
+            },
+            ...this._stateManager.getState().cards,
+          ],
+        }),
       },
     };
+  }
 
-    this._popups = {
-      ...Object.entries(this._popupConfig).reduce(
-        (acc, [name, config]) => ({
-          ...acc,
-          [name]: new PopupWithForm(
-            config.selector,
-            (formData) =>
-              this._handleSubmit(config.action, config.formatData(formData)),
-            this._formValidators[name]
-          ),
-        }),
-        {}
-      ),
-      preview: new PopupWithImage("#previewModal"),
-      delete: new PopupWithConfirmation("#deletConfirmationModal"),
+  // Rest of the methods remain the same
+  _initializePopups() {
+    const formPopups = Object.entries(this._popupConfig).reduce(
+      (acc, [name, config]) => ({
+        ...acc,
+        [name]: this._createPopup(config.type, { ...config, name }),
+      }),
+      {}
+    );
+
+    return {
+      ...formPopups,
+      preview: this._createPopup("image"),
+      delete: this._createPopup("confirmation"),
     };
+  }
+
+  _handleStateUpdate(action, data) {
+    const stateUpdates = {
+      modal: (name) => ({ currentModal: name }),
+      loading: (isLoading) => ({
+        isLoading,
+        loadingAction: isLoading ? action : null,
+      }),
+      error: (error) => ({
+        errors: [...this._stateManager.getState().errors, error],
+      }),
+      data: (newData) => newData,
+    };
+    this._stateManager.setState(stateUpdates[action](data));
+  }
+
+  _executeApiAction(action, data, onSuccess) {
+    this._handleStateUpdate("loading", true);
+    return this._api[action](data)
+      .then(onSuccess)
+      .catch(this._handleError)
+      .finally(() => this._handleStateUpdate("loading", false));
+  }
+
+  _handleError(error) {
+    this._handleStateUpdate("error", error);
+    console.error("Error:", error);
+  }
+
+  _handleDeleteClick(card) {
+    const popup = this._popups.delete;
+    this._handleStateUpdate("modal", "delete");
+    popup.open();
+    popup.setSubmitAction(() => {
+      this._executeApiAction("deleteCard", card.getId(), () => {
+        card.deleteCard();
+        this._handleStateUpdate("modal", null);
+        popup.close();
+      });
+    });
+  }
+
+  _handleLikeClick(cardId, isLiked) {
+    return this._api.toggleLike(cardId, isLiked);
+  }
+
+  _handleImageClick(cardData) {
+    this._handleStateUpdate("modal", "preview");
+    this._popups.preview.open(cardData);
   }
 
   _handleSubmit(action, formData) {
-    this._stateManager.setState({
-      isLoading: true,
-      loadingAction: action,
-    });
-
-    const currentPopup =
-      this._popups[
-        action === "patchAvatar"
-          ? "avatarEdit"
-          : action === "postNewCard"
-          ? "imageForm"
-          : "profileForm"
-      ];
-
+    const config = this._popupConfig[action];
+    const currentPopup = this._popups[action];
     const submitButton = currentPopup.getSubmitButton();
+
     submitButton.textContent = "Saving...";
 
-    return this._api[action](formData)
-      .then((response) => {
-        if (action === "patchUserInformation") {
-          this._stateManager.setState({
-            user: {
-              ...this._stateManager.getState().user,
-              name: formData.name,
-              job: formData.about,
-            },
-          });
-        } else if (action === "patchAvatar") {
-          this._stateManager.setState({
-            user: {
-              ...this._stateManager.getState().user,
-              avatar: formData.avatar,
-            },
-          });
-        } else if (action === "postNewCard") {
-          const currentCards = this._stateManager.getState().cards;
-          const newCard = {
-            name: response.name,
-            link: response.link,
-            _id: response._id,
-            isLiked: false,
-            owner: response.owner,
-          };
+    return this._executeApiAction(config.action, formData, (response) => {
+      const newState = config.updateState(response, formData);
+      this._handleStateUpdate("data", newState);
 
-          this._stateManager.setState({
-            cards: [newCard, ...currentCards],
-          });
+      if (action === "imageForm") {
+        this._sectionManager.addCard(newState.cards[0]);
+      }
 
-          this._sectionManager.addCard(newCard);
-        }
-
-        this._stateManager.setState({
-          currentModal: null,
-          isLoading: false,
-          loadingAction: null,
-        });
-
-        currentPopup.close();
-      })
-      .catch((error) => {
-        this._stateManager.setState({
-          errors: [...this._stateManager.getState().errors, error],
-          isLoading: false,
-          loadingAction: null,
-        });
-      })
-      .finally(() => {
-        submitButton.textContent = "Save";
-      });
+      this._handleStateUpdate("modal", null);
+      currentPopup.close();
+      submitButton.textContent = "Save";
+    });
   }
 
   openPopup(name) {
-    this._stateManager.setState({ currentModal: name });
+    this._handleStateUpdate("modal", name);
     this._popups[name].open();
   }
 

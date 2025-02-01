@@ -1,15 +1,20 @@
 import Card from "./Card.js";
 
 export default class CardManager {
+  static selectors = {
+    cardsGrid: ".cards__grid",
+  };
+
   constructor(api, cardSelector, userId, handleImageClick, handleDeleteClick) {
     this._api = api;
     this._cardSelector = cardSelector;
     this._userId = userId;
-    this._handleImageClick = handleImageClick;
-    this._handleDeleteClick = handleDeleteClick;
-    this._cardSection = document.querySelector(".cards__grid");
-
-    this._handleLikeClick = this._handleLikeClick.bind(this);
+    this._handlers = {
+      image: handleImageClick,
+      delete: handleDeleteClick,
+      like: this._handleLikeClick.bind(this),
+    };
+    this._cardSection = document.querySelector(CardManager.selectors.cardsGrid);
   }
 
   createCard(cardData) {
@@ -35,15 +40,14 @@ export default class CardManager {
   }
 
   addCard(cardData) {
-    const cardElement = this.createCard(cardData);
-    this._cardSection.prepend(cardElement);
+    this._cardSection.prepend(this.createCard(cardData));
   }
 
   loadInitialCards(cards) {
-    const reversedCards = cards.reverse();
-    reversedCards.forEach((cardData) => {
-      const cardElement = this.createCard(cardData);
-      this._cardSection.append(cardElement);
-    });
+    cards
+      .reverse()
+      .forEach((cardData) =>
+        this._cardSection.append(this.createCard(cardData))
+      );
   }
 }

@@ -1,17 +1,33 @@
+import ConfigManager from "./ConfigManager.js";
+
 export default class Section {
   constructor({ items, renderer }, cssSelector) {
-    this._items = Array.isArray(items) ? items : [items];
+    this._items = this._normalizeItems(items);
     this._renderer = renderer;
-    this._cardGrid = document.querySelector(cssSelector);
+    this._container = document.querySelector(
+      cssSelector || ConfigManager.config.selectors.cardsGrid
+    );
+    this._renderQueue = new Set();
   }
 
-  renderItems() {
-    this._items.forEach((item) => {
-      this._renderer(item);
-    });
+  _normalizeItems(items) {
+    return Array.isArray(items) ? items : [items].filter(Boolean);
   }
 
-  addItem(element) {
-    this._cardGrid.prepend(element);
+  renderItems(items = this._items) {
+    const normalizedItems = this._normalizeItems(items);
+    normalizedItems.forEach((item) => this._renderer(item));
+  }
+
+  addItem(element, position = "start") {
+    const insertMethods = {
+      start: () => this._container.prepend(element),
+      end: () => this._container.append(element),
+    };
+    insertMethods[position]();
+  }
+
+  clear() {
+    this._container.innerHTML = "";
   }
 }

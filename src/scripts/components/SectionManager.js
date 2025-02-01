@@ -1,6 +1,15 @@
 import Card from "./Card.js";
 
 export default class SectionManager {
+  static selectors = {
+    cardsGrid: ".cards__grid",
+    card: "[data-card-id]",
+  };
+
+  static animations = {
+    fadeInDown: "fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+  };
+
   constructor(
     cardSelector,
     api,
@@ -13,11 +22,11 @@ export default class SectionManager {
     this._cardSelector = cardSelector;
     this._api = api;
     this._profile = profile;
-    this._cardsGrid = document.querySelector(".cards__grid");
-    this._handleImageClick = handleImageClick;
-    this._handleDeleteClick = handleDeleteClick;
-    this._handleLikeClick = handleLikeClick;
+    this._handlers = { handleImageClick, handleDeleteClick, handleLikeClick };
     this._stateManager = stateManager;
+    this._cardsGrid = document.querySelector(
+      SectionManager.selectors.cardsGrid
+    );
     this._initialRenderComplete = false;
   }
 
@@ -67,12 +76,43 @@ export default class SectionManager {
         owner: cardData.owner,
       },
       this._cardSelector,
-      this._handleImageClick,
-      this._handleDeleteClick,
-      this._handleLikeClick,
+      this._handlers.handleImageClick,
+      this._handlers.handleDeleteClick,
+      this._handlers.handleLikeClick,
       this._profile._id,
       this._stateManager
     );
     return card.getCardElement();
+  }
+
+  renderInitialCards(cards) {
+    if (!Array.isArray(cards) || this._initialRenderComplete) return;
+
+    this._cardsGrid.innerHTML = "";
+    cards.forEach((card) => {
+      this._cardsGrid.append(this._createCard(card));
+    });
+
+    this._animateCards(cards.length);
+  }
+
+  _animateCards(cardCount) {
+    setTimeout(() => {
+      this._cardsGrid.style.animation = SectionManager.animations.fadeInDown;
+      this._initialRenderComplete = true;
+    }, cardCount * 100 + 500);
+  }
+
+  updateCard(cardId, newData) {
+    const cardElement = this._cardsGrid.querySelector(
+      `${SectionManager.selectors.card}[data-card-id="${cardId}"]`
+    );
+    if (cardElement) {
+      cardElement.replaceWith(this._createCard(newData));
+    }
+  }
+
+  addCard(cardData) {
+    this._cardsGrid.prepend(this._createCard(cardData));
   }
 }

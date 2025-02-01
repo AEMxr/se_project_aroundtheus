@@ -1,29 +1,49 @@
-export const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+export const apiConfig = {
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "4b5891e6-236c-4083-9664-b0567d688b97",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+};
+
+export const validationConfig = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+export const selectors = {
+  cardTemplate: "#card-template",
+  profile: {
+    name: ".profile__name",
+    job: ".profile__profession",
+    avatar: ".profile__avatar",
   },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+  buttons: {
+    profileEdit: "#profileEditButton",
+    avatarEdit: "#avatarEditButton",
+    imageEdit: "#imageEditButton",
   },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+  forms: {
+    profile: "#profileModal",
+    avatar: "#avatarModal",
+    image: "#imageModal",
   },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+  modals: {
+    preview: "#previewModal",
+    delete: "#deletConfirmationModal",
   },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
+  cardsGrid: ".cards__grid",
+};
+
+export const buttonActions = {
+  profileEditButton: "profileForm",
+  avatarEditButton: "avatarEdit",
+  imageEditButton: "imageForm",
+};
 
 export const forms = {
   profile: document.forms.profileForm,
@@ -40,16 +60,3 @@ export const inputs = {
     link: document.getElementById("link"),
   },
 };
-
-/*~----=)>. Validation configuration object '<(=----~*/
-export const validationConfig = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".modal__submit",
-  inactiveButtonClass: "modal__submit_disabled",
-  inputErrorClass: "form__input-error",
-  errorClass: "form__input-error_visible",
-};
-
-/*~----=)>. Profile elements '<(=----~*/
-export const cardSelector = "#card-template";
