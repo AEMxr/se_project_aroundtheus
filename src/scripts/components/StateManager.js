@@ -1,12 +1,15 @@
 export default class StateManager {
+  static initialState = {
+    user: null,
+    cards: [],
+    isLoading: false,
+    currentModal: null,
+    errors: [],
+    forms: {},
+  };
+
   constructor() {
-    this._state = {
-      user: null,
-      cards: [],
-      isLoading: false,
-      currentModal: null,
-      errors: [],
-    };
+    this._state = { ...StateManager.initialState };
     this._subscribers = new Set();
   }
 
@@ -15,8 +18,21 @@ export default class StateManager {
   }
 
   setState(newState) {
-    this._state = { ...this._state, ...newState };
+    this._state = this._mergeState(newState);
     this._notifySubscribers();
+  }
+
+  _mergeState(newState) {
+    return Object.entries(newState).reduce(
+      (merged, [key, value]) => ({
+        ...merged,
+        [key]:
+          value instanceof Object && !Array.isArray(value)
+            ? { ...merged[key], ...value }
+            : value,
+      }),
+      { ...this._state }
+    );
   }
 
   subscribe(callback) {

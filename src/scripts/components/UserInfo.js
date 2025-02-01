@@ -1,23 +1,35 @@
+import ConfigManager from "./ConfigManager.js";
+
 export default class UserInfo {
   constructor({ nameSelector, jobSelector, avatarSelector, stateManager }) {
-    this._nameElement = document.querySelector(nameSelector);
-    this._jobElement = document.querySelector(jobSelector);
-    this._avatarElement = document.querySelector(avatarSelector);
+    const profileSelectors = ConfigManager.config.selectors.profile;
+
+    this._elements = {
+      name: document.querySelector(nameSelector || profileSelectors.name),
+      job: document.querySelector(jobSelector || profileSelectors.job),
+      avatar: document.querySelector(avatarSelector || profileSelectors.avatar),
+    };
     this._stateManager = stateManager;
   }
 
   getUserInfo() {
     return {
-      name: this._nameElement.textContent,
-      job: this._jobElement.textContent,
-      avatar: this._avatarElement.src,
+      name: this._elements.name.textContent,
+      job: this._elements.job.textContent,
+      avatar: this._elements.avatar.src,
     };
   }
 
-  setUserInfo({ name, job, avatar }) {
-    // Only update DOM
-    if (name) this._nameElement.textContent = name;
-    if (job) this._jobElement.textContent = job;
-    if (avatar) this._avatarElement.src = avatar;
+  setUserInfo(userData = {}) {
+    const { name, job, avatar } = userData;
+    if (name && this._elements.name) {
+      this._elements.name.textContent = name;
+    }
+    if (job && this._elements.job) {
+      this._elements.job.textContent = job;
+    }
+    if (avatar && this._elements.avatar) {
+      this._elements.avatar.src = avatar;
+    }
   }
 }
