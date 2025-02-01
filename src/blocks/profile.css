@@ -51,18 +51,18 @@
 }
 
 .profile__info {
+  display: flex;
+  flex-direction: column;
   max-width: 375px;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   white-space: nowrap;
 }
 
 .profile__bar {
   display: flex;
-  max-width: 417px;
   align-items: center;
+  margin-bottom: 7px;
 }
 
 .profile__name {
