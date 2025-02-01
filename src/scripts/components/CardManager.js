@@ -24,7 +24,7 @@ export default class CardManager {
       this._cardSelector,
       this._handleImageClick,
       this._handleDeleteClick,
-      this._handleLikeClick, // Now properly bound
+      this._handleLikeClick,
       this._userId
     );
     return card.getCardElement();

@@ -77,7 +77,6 @@ export default class App {
       }
     });
 
-    // Create sectionManager first
     this.sectionManager = new SectionManager(
       cardSelector,
       this.api,
@@ -88,7 +87,6 @@ export default class App {
       this.stateManager
     );
 
-    // Then create popupManager with sectionManager
     this.popupManager = new PopupManager(
       this.api,
       this.profile,

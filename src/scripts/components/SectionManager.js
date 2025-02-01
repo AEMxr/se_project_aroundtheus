@@ -24,7 +24,6 @@ export default class SectionManager {
   renderInitialCards(cards) {
     if (Array.isArray(cards) && !this._initialRenderComplete) {
       this._cardsGrid.innerHTML = "";
-      // Add cards in reverse order using append instead of prepend
       for (let i = 0; i < cards.length; i++) {
         const cardElement = this._createCard(cards[i]);
         this._cardsGrid.append(cardElement);

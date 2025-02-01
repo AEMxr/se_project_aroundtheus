@@ -76,7 +76,7 @@ export default class Card {
 
     this._cardHeart.classList.add(animationClass);
 
-    this._handleLikeClick(this._id, newLikeState) // Changed to pass newLikeState
+    this._handleLikeClick(this._id, newLikeState)
       .then(() => {
         this._isLiked = newLikeState;
         this._setLikeButtonState();

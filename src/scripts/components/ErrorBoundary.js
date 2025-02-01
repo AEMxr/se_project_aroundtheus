@@ -6,7 +6,6 @@ export default class ErrorBoundary {
   static handleError(error, context) {
     console.error(`Error in ${context}:`, error);
 
-    // Add error to state management
     this._stateManager.setState({
       errors: [
         ...this._stateManager.getState().errors,
