@@ -16,10 +16,16 @@ export default class FormValidator {
     this._formName = this._formElement.getAttribute("name");
   }
 
+  _getErrorElement(inputElement) {
+    const errorSelector =
+      inputElement.id === "avatar"
+        ? "#name-error"
+        : `#${inputElement.id}-error`;
+    return this._formElement.querySelector(errorSelector);
+  }
+
   _showInputError(inputElement) {
-    const errorMessageElement = this._formElement.querySelector(
-      `#${inputElement.id}-error`
-    );
+    const errorMessageElement = this._getErrorElement(inputElement);
     if (!errorMessageElement) return;
 
     inputElement.classList.add(this._inputErrorClass);
@@ -30,9 +36,7 @@ export default class FormValidator {
   }
 
   _hideInputError(inputElement) {
-    const errorMessageElement = this._formElement.querySelector(
-      `#${inputElement.id}-error`
-    );
+    const errorMessageElement = this._getErrorElement(inputElement);
     if (!errorMessageElement) return;
 
     inputElement.classList.remove(this._inputErrorClass);
