@@ -98,41 +98,23 @@ export default class Card {
       ? Card.classes.heartClickedActive
       : Card.classes.heartClickedInactive;
 
-<<<<<<< HEAD
-    this._cardHeart.classList.add(animationClass);
-
-    this._handleLikeClick(this._id, newLikeState)
-      .then(() => {
-        this._isLiked = newLikeState;
-        this._setLikeButtonState();
-
-        // Update the state with the new like status
-        const currentState = this.stateManager.getState();
-        const updatedCards = currentState.cards.map((card) =>
-          card._id === this._id ? { ...card, isLiked: newLikeState } : card
-        );
-
-        this.stateManager.setState({
-          cards: updatedCards,
-        });
-      })
-      .finally(() => {
-        setTimeout(() => {
-          this._cardHeart.classList.remove(animationClass);
-        }, 800);
-      });
-=======
     try {
       this._state.elements.heart.classList.add(animationClass);
       await this._handlers.handleLikeClick(this._data._id, !newLikeState);
       this._data.isLiked = newLikeState;
       this._updateLikeState(newLikeState);
+
+      // Update state manager
+      const currentState = this.stateManager.getState();
+      const updatedCards = currentState.cards.map((card) =>
+        card._id === this._data._id ? { ...card, isLiked: newLikeState } : card
+      );
+      this.stateManager.setState({ cards: updatedCards });
     } finally {
       setTimeout(() => {
         this._state.elements.heart.classList.remove(animationClass);
       }, 800);
     }
->>>>>>> a311bc355b484c7b0c7360f2bbc4e2678bc2e103
   }
 
   _setupLazyLoading() {

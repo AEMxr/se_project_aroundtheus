@@ -22,63 +22,25 @@ export default class FormValidator {
     this._formName = this._form.getAttribute("name");
   }
 
-<<<<<<< HEAD
-  _getErrorElement(inputElement) {
-    const errorSelector =
-      inputElement.id === "avatar"
-        ? "#name-error"
-        : `#${inputElement.id}-error`;
-    return this._formElement.querySelector(errorSelector);
-  }
-
-  _showInputError(inputElement) {
-    const errorMessageElement = this._getErrorElement(inputElement);
-    if (!errorMessageElement) return;
-=======
   _updateElementState(element, { error = false, message = "" }) {
-    const errorElement = this._form.querySelector(
-      FormValidator.selectors.error(element.id)
-    );
+    const errorSelector =
+      element.id === "avatar"
+        ? "#name-error"
+        : FormValidator.selectors.error(element.id);
+    const errorElement = this._form.querySelector(errorSelector);
     if (!errorElement) return;
->>>>>>> a311bc355b484c7b0c7360f2bbc4e2678bc2e103
 
     element.classList.toggle(this._config.inputError, error);
     errorElement.classList.toggle(this._config.error, error);
     errorElement.textContent = message;
   }
 
-<<<<<<< HEAD
-  _hideInputError(inputElement) {
-    const errorMessageElement = this._getErrorElement(inputElement);
-    if (!errorMessageElement) return;
-
-    inputElement.classList.remove(this._inputErrorClass);
-    errorMessageElement.textContent = "";
-    errorMessageElement.classList.remove(this._errorClass);
-
-    this._updateFormState();
-  }
-
-  _checkInputValidity(inputElement) {
-    if (!inputElement.validity.valid) {
-      this._showInputError(inputElement);
-    } else {
-      this._hideInputError(inputElement);
-    }
-  }
-
-  _hasInvalidInput() {
-    return this._inputElements.some(
-      (inputElement) => !inputElement.validity.valid
-    );
-=======
   _validateInput(input) {
     const isValid = input.validity.valid;
     this._updateElementState(input, {
       error: !isValid,
       message: input.validationMessage,
     });
->>>>>>> a311bc355b484c7b0c7360f2bbc4e2678bc2e103
   }
 
   _updateFormState() {
