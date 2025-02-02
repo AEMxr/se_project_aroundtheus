@@ -6,114 +6,89 @@ export default class Api {
     this._headers = headers;
   }
 
-  _getRequestConfig(method = "GET", body = null) {
-    const config = {
-      method,
-      headers: this._headers,
-    };
-    if (body) {
-      config.body = JSON.stringify(body);
-    }
-    return config;
+  _request(endpoint, options = {}) {
+    return ErrorBoundary.tryCatch(async () => {
+      const finalOptions = {
+        headers: this._headers,
+        ...options,
+      };
+      const url = `${this._baseUrl}${endpoint}`;
+      const res = await fetch(url, finalOptions);
+      return this._handleServerResponse(res);
+    }, options.errorContext || "API Request");
   }
 
   _getEndpoint(type = "cards", id = "", action = "") {
-    const base = `${this._baseUrl}/${type}`;
-    if (!id) return base;
-    const path = `${base}/${id}`;
-    if (!action) return path;
-    return `${path}/${action}`;
+    const parts = [type];
+    if (id) parts.push(id);
+    if (action) parts.push(action);
+    return `/${parts.join("/")}`;
   }
 
   _getUserEndpoint(action = "") {
-    const base = `${this._baseUrl}/users/me`;
-    return action ? `${base}/${action}` : base;
-  }
-
-  _getCardEndpoint(id = "", action = "") {
-    return this._getEndpoint("cards", id, action);
+    return this._getEndpoint("users/me", "", action);
   }
 
   async _handleServerResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
+    if (res.ok) return res.json();
     throw new Error(`Error: ${res.status}`);
   }
 
-  async toggleLike(cardId, isLiking) {
-    return ErrorBoundary.tryCatch(async () => {
-      const method = isLiking ? "PUT" : "DELETE";
-      console.log(`Sending ${method} request for card ${cardId}`);
-      const res = await fetch(
-        this._getCardEndpoint(cardId, "likes"),
-        this._getRequestConfig(method)
-      );
-      return this._handleServerResponse(res);
-    }, "Card Like Update");
+  getUserInformation() {
+    return this._request(this._getUserEndpoint(), {
+      errorContext: "User Information Request",
+    });
   }
 
-  async patchAvatar(avatarData) {
-    return ErrorBoundary.tryCatch(async () => {
-      const res = await fetch(
-        this._getUserEndpoint("avatar"),
-        this._getRequestConfig("PATCH", { avatar: avatarData.avatar })
-      );
-      return this._handleServerResponse(res);
-    }, "Profile Update");
+  patchUserInformation(userData) {
+    return this._request(this._getUserEndpoint(), {
+      method: "PATCH",
+      body: JSON.stringify({
+        name: userData.name,
+        about: userData.about,
+      }),
+      errorContext: "Profile Update",
+    });
   }
 
-  async getUserInformation() {
-    return ErrorBoundary.tryCatch(async () => {
-      const res = await fetch(
-        this._getUserEndpoint(),
-        this._getRequestConfig()
-      );
-      return this._handleServerResponse(res);
-    }, "User Information Request");
+  patchAvatar(avatarData) {
+    return this._request(this._getUserEndpoint("avatar"), {
+      method: "PATCH",
+      body: JSON.stringify({
+        avatar: avatarData.avatar,
+      }),
+      errorContext: "Profile Update",
+    });
   }
 
-  async patchUserInformation(userData) {
-    return ErrorBoundary.tryCatch(async () => {
-      const res = await fetch(
-        this._getUserEndpoint(),
-
-        this._getRequestConfig("PATCH", {
-          name: userData.name,
-          about: userData.about,
-        })
-      );
-      return this._handleServerResponse(res);
-    }, "Profile Update");
+  getInitialCards() {
+    return this._request(this._getEndpoint(), {
+      errorContext: "Initial Cards Request",
+    });
   }
 
-  async getInitialCards() {
-    return ErrorBoundary.tryCatch(async () => {
-      const res = await fetch(this._getEndpoint(), this._getRequestConfig());
-      return this._handleServerResponse(res);
-    }, "Initial Cards Request");
+  postNewCard(cardData) {
+    return this._request(this._getEndpoint(), {
+      method: "POST",
+      body: JSON.stringify({
+        name: cardData.name,
+        link: cardData.link,
+      }),
+      errorContext: "Card Creation",
+    });
   }
 
-  async postNewCard(cardData) {
-    return ErrorBoundary.tryCatch(async () => {
-      const res = await fetch(
-        this._getEndpoint(),
-        this._getRequestConfig("POST", {
-          name: cardData.name,
-          link: cardData.link,
-        })
-      );
-      return this._handleServerResponse(res);
-    }, "Card Creation");
+  deleteCard(cardId) {
+    return this._request(this._getEndpoint("cards", cardId), {
+      method: "DELETE",
+      errorContext: "Card Delete",
+    });
   }
 
-  async deleteCard(cardId) {
-    return ErrorBoundary.tryCatch(async () => {
-      const res = await fetch(
-        this._getEndpoint("cards", cardId),
-        this._getRequestConfig("DELETE")
-      );
-      return this._handleServerResponse(res);
-    }, "Card Delete");
+  toggleLike(cardId, isLiking) {
+    return this._request(this._getEndpoint("cards", cardId, "likes"), {
+      method: isLiking ? "PUT" : "DELETE",
+      errorContext: "Card Like Update",
+    });
   }
 }

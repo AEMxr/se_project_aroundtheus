@@ -6,6 +6,7 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._form = this._popupElement.querySelector(".form");
     this._inputList = Array.from(this._form.querySelectorAll(".form__input"));
+    this._submitButton = this._form.querySelector(".modal__submit");
     this._validator = validator;
   }
 
@@ -34,12 +35,11 @@ export default class PopupWithForm extends Popup {
   }
 
   getSubmitButton() {
-    return this._form.querySelector(".modal__submit");
+    return this._submitButton;
   }
 
   renderLoading(isLoading, loadingText = "Saving...") {
-    const submitButton = this._form.querySelector(".modal__submit");
-    submitButton.textContent = isLoading ? loadingText : "Save";
+    this._submitButton.textContent = isLoading ? loadingText : "Save";
   }
 
   setEventListeners() {

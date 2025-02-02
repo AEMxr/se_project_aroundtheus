@@ -149,6 +149,13 @@ export default class PopupManager {
   }
 
   openPopup(name) {
+    if (name === "profileForm") {
+      const currentUserData = this._stateManager.getState().user;
+      this._popups[name].setInputValues({
+        name: currentUserData.name,
+        description: currentUserData.job,
+      });
+    }
     this._stateManager.setState({ currentModal: name });
     this._popups[name].open();
   }
