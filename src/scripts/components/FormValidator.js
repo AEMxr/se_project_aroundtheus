@@ -1,6 +1,7 @@
 export default class FormValidator {
-  constructor(options, formElement) {
+  constructor(options, formElement, stateManager) {
     this._formElement = formElement;
+    this._stateManager = stateManager;
     this._submitButton = this._formElement.querySelector(
       options.submitButtonSelector
     );
@@ -12,9 +13,9 @@ export default class FormValidator {
     this._inactiveButtonClass = options.inactiveButtonClass;
     this._inputErrorClass = options.inputErrorClass;
     this._errorClass = options.errorClass;
+    this._formName = this._formElement.getAttribute("name");
   }
 
-  /*~----=)>. Function to show input error message '<(=----~*/
   _showInputError(inputElement) {
     const errorMessageElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
@@ -24,9 +25,10 @@ export default class FormValidator {
     inputElement.classList.add(this._inputErrorClass);
     errorMessageElement.textContent = inputElement.validationMessage;
     errorMessageElement.classList.add(this._errorClass);
+
+    this._updateFormState();
   }
 
-  /*~----=)>. Function to hide input error message '<(=----~*/
   _hideInputError(inputElement) {
     const errorMessageElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
@@ -36,9 +38,10 @@ export default class FormValidator {
     inputElement.classList.remove(this._inputErrorClass);
     errorMessageElement.textContent = "";
     errorMessageElement.classList.remove(this._errorClass);
+
+    this._updateFormState();
   }
 
-  /*~----=)>. Function to check input validity and show/hide error messages accordingly '<(=----~*/
   _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement);
@@ -47,32 +50,42 @@ export default class FormValidator {
     }
   }
 
-  /*~----=)>. Function to check if any input in the list is invalid '<(=----~*/
   _hasInvalidInput() {
     return this._inputElements.some(
       (inputElement) => !inputElement.validity.valid
     );
   }
 
-  /*~----=)>. Function to disable the submit button '<(=----~*/
+  _updateFormState() {
+    const isValid = !this._hasInvalidInput();
+    this._stateManager.setState({
+      forms: {
+        ...this._stateManager.getState().forms,
+        [this._formName]: {
+          isValid,
+          isDirty: true,
+        },
+      },
+    });
+  }
+
   _disableButton() {
     this._submitButton.classList.add(this._inactiveButtonClass);
     this._submitButton.disabled = true;
   }
 
-  /*~----=)>. Function to enable the submit button '<(=----~*/
   _enableButton() {
     this._submitButton.classList.remove(this._inactiveButtonClass);
     this._submitButton.disabled = false;
   }
 
-  /*~----=)>. Function to toggle the button state based on input validity '<(=----~*/
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._disableButton();
     } else {
       this._enableButton();
     }
+    this._updateFormState();
   }
 
   resetValidation() {
@@ -82,9 +95,7 @@ export default class FormValidator {
     });
   }
 
-  /*~----=)>. Function to set event listeners on form inputs '<(=----~*/
-  _setEventListeners(formElement) {
-    // const inputElements = Array.from(this._inputElements);
+  _setEventListeners() {
     if (!this._submitButton) return;
 
     this._inputElements.forEach((inputElement) => {
@@ -95,13 +106,13 @@ export default class FormValidator {
     });
   }
 
-  /*~----=)>. Function to enable validation on all specified forms '<(=----~*/
   enableValidation() {
     this._formElement.addEventListener("submit", (e) => {
       e.preventDefault();
     });
     this._setEventListeners();
   }
+
   disableButton() {
     this._disableButton();
   }
